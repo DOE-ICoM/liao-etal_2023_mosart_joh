@@ -1,41 +1,78 @@
-[![DOI](https://zenodo.org/badge/265119113.svg)](https://zenodo.org/badge/latestdoi/265119113)
 
-# metarepo
-Template repository for a single point of access meta-repository to reproduce an experiment
 
-## Purpose
-A meta-repository creates a single point of access for someone to find all of the components that were used to create a published work for the purpose of reproducibility.  This repository should contain references to all minted data and software as well as house any ancillary code used to transform the source data, create figures for your publication, conduct the experiment, and / or execute the contributing software.
+# Liao. et al
 
-## Using the template
-Simply click `Use this template` on the main repository page (shows up to the left of `Clone or download`) and fill in your `Repository name`, the `Description`, select whether you want the repository to be `Public` or `Private`, and leave `Include all branches` unchecked.
+**Evaluation of river routing on a unstructured grid for coupled earth system modeling**
 
-## Naming your meta-repository
-The following naming conventions should be used when naming your repository:  
-- Single author:  `lastname_year_journal`
-- Multi author:  `lastname-etal_year_journal`
-- Multiple publications in the same journal:  `lastname-etal_year-letter_journal` (e.g., `human-etal_2020-b_nature`)
+Chang Liao<sup>1\*</sup>, 
+Donghui Xu<sup>1</sup>,
+Darren Engwirda<sup>2</sup>, 
+Matt Cooper<sup>1</sup>,
+Tian Zhou<sup>1\*</sup>,
+Gautam Bisht<sup>1</sup>,
+Hong-Yi Li<sup>3</sup>,
+Ning Sun<sup>1</sup>,
+and L. Ruby Leung<sup>1</sup>
 
-## Customize your `.gitignore` file
-A general `.gitignore` for use with Python or R development is included.  However, you may wish to customize this to the needs of your project.  The `.gitignore` file lets Git know what to push to the remote repository and what needs to be ignored and stay local.
+<sup>1 </sup> Atmospheric Sciences and Global Change, Pacific Northwest National Laboratory, Richland, WA, USA
 
-## Suggestions
-- Don't bog down your repository with a bunch of raw data.  Instead archive and mint a DOI for your data and provide the reference in this repository with instructions for use.
-- Create complete and tested documentation for how to use what is in this repository to reproduce your experiment.
+<sup>2 </sup> T-3 Fluid Dynamics and Solid Mechanics Group, Los Alamos National Laboratory, Los Alamos, NM, USA
 
-## Creating a minted release for your meta-repository
-It is important to version and release your meta-repository as well due to changes that may occur during the publication review process.  If you do not know how to conduct a release on GitHub when linked with Zenodo, please contact chris.vernon@pnnl.gov to get set up.  
+<sup>3 </sup> University of Houston, Houston, TX, USA
 
-## The meta-repository markdown template
-A sample meta-repository template is provided in this repository in the file `metarepo_template.md`.  
+\* corresponding author:  chang.liao@pnnl.gov; tian.zhou@pnnl.gov
 
-To use it, do the following:
-1. Create the template repository as mentioned above in [Using the template](#using-the-template)
-2. Clone your new repository to you local machine
-3. Change directories into your new meta-repository directory you just cloned
-4. Run `git rm README.md` to delete this file (`README.md`) and commit it using `git commit -m 'remove instructions'`
-5. Rename `metarepo_template.md` as `README.md`
-6. Run `git add README.md` to stage the new file that will show up on load in your remote GitHub repository
-7. Run `git rm metarepo_template.md` to remove the original template
-8. Run `git commit -m 'set up new template as readme'` to set the changes
-9. Run `git push` to send the changes to your remote GitHub repository
-10. Modify the `README.md` file to represent your experiement and use the `add`, `commit`, `push` workflow to update your remote repository
+## Abstract
+
+Spatial discretization is critical in robustly modeling spatially distributed hydrologic processes, particularly runoff routing. Flow routing models that use a Cartesian grid have several limitations including inconstancy in travel time in different directions, inaccurate representation of watershed boundary with sharp corners, and lacking of interface connection between land and ocean in Earth Systems Models (ESMs), in which ocean models routinely use a variable-resolution Voronoi grid. The different types of grids used by the river, land and ocean components in ESMs leads to significant challenges in capturing river-land-ocean continuum. Earlier studies have suggested that use of a hexagonal grid within flow routing models has the potential to resolve aforementioned limitations, yet the applications of such grids are rare in ESMs. In this study, we extend MOSART, the flow routing model of the Energy Exascale Earth System Model (E3SM), to use a hexagonal grid. We evaluate MOSART simulation that use hexagonal and cartesian grids against multiple observational datasets and compare the performance at multiple spatial resolutions. This study improves our understanding of the impacts of spatial discretization on flow routing model performance and the corresponding uncertainties. It also paves the way to better coupling river, land and ocean components in ESMs. 
+
+## Journal reference
+Liao. et al. (2022). Evaluation of river routing on a unstructured grid for coupled earth system modeling. Energy Economics, 5(2), 74-88. DOI: https://doi.org/10.1016/0140-9883(83)90014-2
+
+## Code reference
+
+References for each minted software release for all code involved.  
+
+Liao, Chang, & Cooper, Matt. (2022). Pyflowline: a mesh-independent river networks generator for hydrologic models (0.1.22). Zenodo. https://doi.org/10.5281/zenodo.6604337
+
+Liao, Chang. (2022). HexWatershed: a mesh independent flow direction model for hydrologic models (0.1.12). Zenodo. https://doi.org/10.5281/zenodo.6551861
+
+
+## Data reference
+
+### Input data
+Reference for each minted data source for your input data.  For example:
+
+
+
+### Output data
+Reference for each minted data source for your output data.  For example:
+
+
+
+## Contributing modeling software
+
+| Model | Version | Repository Link | DOI |
+|-------|---------|-----------------|-----|
+| PyFlowline | version | https://doi.org/10.5281/zenodo.6604337 | link to DOI dataset |
+| HexWatershed | version | https://doi.org/10.5281/zenodo.6551861 | link to DOI dataset |
+
+
+## Reproduce my experiment
+
+Fill in detailed info here or link to other documentation that is a thorough walkthrough of how to use what is in this repository to reproduce your experiment.
+
+
+1. Install the software components required to conduct the experiement from [Contributing modeling software](#contributing-modeling-software)
+2. Download and install the supporting input data required to conduct the experiement from [Input data](#input-data)
+3. Run the following scripts in the `workflow` directory to re-create this experiment:
+4. Download and unzip the output data from my experiment [Output data](#output-data)
+5. Run the following scripts in the `workflow` directory to compare my outputs to those from the publication
+
+
+
+## Reproduce my figures
+
+Use the scripts found in the `figures` directory to reproduce the figures used in this publication.
+
+
