@@ -60,14 +60,11 @@ Reference for each minted data source for your output data.  For example:
 
 ## Reproduce my experiment
 
-Fill in detailed info here or link to other documentation that is a thorough walkthrough of how to use what is in this repository to reproduce your experiment.
+You need to follow three major steps to reproduce this study: 
 
-
-1. Install the software components required to conduct the experiement from [Contributing modeling software](#contributing-modeling-software)
-2. Download and install the supporting input data required to conduct the experiement from [Input data](#input-data)
-3. Run the following scripts in the `workflow` directory to re-create this experiment:
-4. Download and unzip the output data from my experiment [Output data](#output-data)
-5. Run the following scripts in the `workflow` directory to compare my outputs to those from the publication
+1. Run the [MPAS tool](https://github.com/DOE-ICoM/mpas_mosart/blob/main/workflow/jigsaw_mpas.md)
+2. Run the [HexWaterhshed tool](https://github.com/DOE-ICoM/mpas_mosart/blob/main/workflow/hexwatershed.md)
+3. Run the [MOSART model](https://github.com/DOE-ICoM/mpas_mosart/blob/main/workflow/mosart.md)
 
 
 
