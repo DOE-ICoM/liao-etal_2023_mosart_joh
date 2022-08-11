@@ -61,8 +61,8 @@ Reference for each minted data source for your output data.  For example:
 
 You need to follow three major steps to reproduce this study: 
 
-1. Run the [MPAS tool](https://github.com/DOE-ICoM/mpas_mosart/blob/main/workflow/jigsaw_mpas.md)
-2. Run the [HexWaterhshed tool](https://github.com/DOE-ICoM/mpas_mosart/blob/main/workflow/hexwatershed.md)
+1. Run the [MPAS model](https://github.com/DOE-ICoM/mpas_mosart/blob/main/workflow/jigsaw_mpas.md)
+2. Run the [HexWaterhshed model](https://github.com/DOE-ICoM/mpas_mosart/blob/main/workflow/hexwatershed.md)
 3. Run the [MOSART model](https://github.com/DOE-ICoM/mpas_mosart/blob/main/workflow/mosart.md)
 
 

@@ -1,6 +1,6 @@
-## How to create the MPAS mesh
+## How to run the HexWatershed model
 
-## Hydroshed flowline post-processing
+### Hydroshed flowline post-processing
 The filtered flowlines are converted to the GeoJSON format.
 
 ### Install the HexWatershed python package
