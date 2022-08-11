@@ -1,6 +1,5 @@
 
-
-# Liao. et al
+# Liao. et al. 2022 Journal of Hydrology
 
 **Evaluation of river routing on a unstructured grid for coupled earth system modeling**
 
@@ -27,7 +26,7 @@ and L. Ruby Leung<sup>1</sup>
 Spatial discretization is critical in robustly modeling spatially distributed hydrologic processes, particularly runoff routing. Flow routing models that use a Cartesian grid have several limitations including inconstancy in travel time in different directions, inaccurate representation of watershed boundary with sharp corners, and lacking of interface connection between land and ocean in Earth Systems Models (ESMs), in which ocean models routinely use a variable-resolution Voronoi grid. The different types of grids used by the river, land and ocean components in ESMs leads to significant challenges in capturing river-land-ocean continuum. Earlier studies have suggested that use of a hexagonal grid within flow routing models has the potential to resolve aforementioned limitations, yet the applications of such grids are rare in ESMs. In this study, we extend MOSART, the flow routing model of the Energy Exascale Earth System Model (E3SM), to use a hexagonal grid. We evaluate MOSART simulation that use hexagonal and cartesian grids against multiple observational datasets and compare the performance at multiple spatial resolutions. This study improves our understanding of the impacts of spatial discretization on flow routing model performance and the corresponding uncertainties. It also paves the way to better coupling river, land and ocean components in ESMs. 
 
 ## Journal reference
-Liao. et al. (2022). Evaluation of river routing on a unstructured grid for coupled earth system modeling. Energy Economics, 5(2), 74-88. DOI: https://doi.org/10.1016/0140-9883(83)90014-2
+Liao. et al. (2022). Evaluation of river routing on a unstructured grid for coupled earth system modeling. 
 
 ## Code reference
 
