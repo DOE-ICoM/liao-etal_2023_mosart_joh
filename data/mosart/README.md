@@ -1,0 +1,1 @@
+/compyfs/icom/xudo627/inputdata
