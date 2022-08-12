@@ -69,7 +69,7 @@ echo "${files}"
 cp ${CASE_DIR}/${CASE_NAME}/CaseDocs/dlnd.streams.txt.lnd.gpcc ${CASE_DIR}/${CASE_NAME}/user_dlnd.streams.txt.lnd.gpcc
 chmod +rw ${CASE_DIR}/${CASE_NAME}/user_dlnd.streams.txt.lnd.gpcc
 perl -w -i -p -e "s@/compyfs/inputdata/lnd/dlnd7/hcru_hcru@/compyfs/xudo627/inputdata@" ${CASE_DIR}/${CASE_NAME}/user_dlnd.streams.txt.lnd.gpcc
-perl -pi -e '$a=1 if(!$a && s/GPCC.daily.nc/ming_daily_1979.nc/);' {CASE_DIR}/${CASE_NAME}/user_dlnd.streams.txt.lnd.gpcc
+perl -pi -e '$a=1 if(!$a && s/GPCC.daily.nc/ming_daily_1979.nc/);' ${CASE_DIR}/${CASE_NAME}/user_dlnd.streams.txt.lnd.gpcc
 perl -w -i -p -e "s@GPCC.daily.nc@${files}@" ${CASE_DIR}/${CASE_NAME}/user_dlnd.streams.txt.lnd.gpcc
 sed -i '/ZBOT/d' ${CASE_DIR}/${CASE_NAME}/user_dlnd.streams.txt.lnd.gpcc
 ./case.setup
