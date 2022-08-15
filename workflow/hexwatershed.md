@@ -30,3 +30,9 @@ Two types of output are available under the outpur folder
 1. JSON files, contain information of mesh and flowline topological relationship;
 2. GeoJSON files, contain conceptual flowlines in the `GIS` format.
 
+### Post-processing
+
+After the MOSART simulations are finished, you can use the HexWatershed utility code to generate the figures.
+
+
+
