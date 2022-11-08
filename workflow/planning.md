@@ -19,6 +19,8 @@ CRB: 1/8, 1/2, MPAS
 
 Sag: 1/16, MPAS
 
+Amazon?
+
 * Step 2.5: run pyflowline (optional) stream burning 
 * Step 3: MPAS mesh generation (Need more discussion about resolution, w/ or w/o stream burning, etc.)
 * Step 4: Run hexwatershed, get river network
