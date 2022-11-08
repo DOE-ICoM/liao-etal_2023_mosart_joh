@@ -1,7 +1,7 @@
 
 # Liao. et al. 2022 Journal of Hydrology
 
-**Evaluation of river routing on a unstructured grid for coupled earth system modeling**
+**Evaluation of river routing on a unstructured mesh for coupled earth system modeling**
 
 Chang Liao<sup>1\*</sup>, 
 Donghui Xu<sup>1</sup>,
