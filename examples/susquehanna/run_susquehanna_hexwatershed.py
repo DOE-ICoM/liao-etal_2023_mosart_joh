@@ -7,16 +7,22 @@ from os.path import realpath
 
 import cartopy.crs as ccrs
 
-from pyhexwatershed.classes.pycase import hexwatershedcase
 from pyearth.system.define_global_variables import *
+
 from pyhexwatershed.pyhexwatershed_read_model_configuration_file import pyhexwatershed_read_model_configuration_file
+from pyhexwatershed.classes.pycase import hexwatershedcase
+
+from hexwatershed_utility.mosart.convert_hexwatershed_output_to_mosart import convert_hexwatershed_json_to_mosart_netcdf
+
+
 from pye3sm.shared.case import pycase
 from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_case_configuration_file
-from hexwatershed_utility.mosart.convert_hexwatershed_output_to_mosart import convert_hexwatershed_json_to_mosart_netcdf
 from pye3sm.case.e3sm_create_case import e3sm_create_case
 from pye3sm.shared.e3sm import pye3sm
 from pye3sm.shared.case import pycase
 from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_e3sm_configuration_file
+
+from pye3sm.mesh.convert_domain_file_to_script_file import convert_domain_file_to_script_file
 
 iFlag_run_hexwatershed  = 0
 iFlag_run_hexwatershed_utility = 1
@@ -143,6 +149,10 @@ if iFlag_run_hexwatershed_utility == 1:
             sFilename_mosart_parameter_in,
             sFilename_mosart_parameter_out,\
             sFilename_mosart_domain_out)
+
+    #create the script file
+
+    #create the mapping file
 
     if iFlag_visualization ==1:
         #visualize mosart input parameter generated
