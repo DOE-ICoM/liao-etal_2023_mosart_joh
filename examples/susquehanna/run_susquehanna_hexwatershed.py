@@ -21,8 +21,8 @@ from pye3sm.case.e3sm_create_case import e3sm_create_case
 from pye3sm.shared.e3sm import pye3sm
 from pye3sm.shared.case import pycase
 from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_e3sm_configuration_file
+from pye3sm.mesh.unstructured.e3sm_convert_unstructured_domain_file_to_scripgrid_file import e3sm_convert_unstructured_domain_file_to_scripgrid_file
 
-from pye3sm.mesh.convert_domain_file_to_script_file import convert_domain_file_to_script_file
 
 iFlag_run_hexwatershed  = 0
 iFlag_run_hexwatershed_utility = 1
@@ -30,6 +30,7 @@ iFlag_mosart =1
 iFlag_elm =0 
 iFlag_create_job = 0
 iFlag_visualization = 1
+iFlag_create_mapping_file = 1
 
 sRegion = 'susquehanna'
 sMesh_type = 'mpas'
@@ -140,8 +141,9 @@ if iFlag_run_hexwatershed_utility == 1:
         Path(sWorkspace_output).mkdir(parents=True, exist_ok=True)
  
     
-    sFilename_mosart_parameter_out = sWorkspace_output + '/mosart_susquehanna_parameter.nc'
-    sFilename_mosart_domain_out = sWorkspace_output + '/mosart_susquehanna_domain.nc'
+    sFilename_mosart_parameter_out = sWorkspace_output + '/mosart_susquehanna_parameter_mpas.nc'
+    sFilename_mosart_domain_out = sWorkspace_output + '/mosart_susquehanna_domain_mpas.nc'
+    sFilename_script_out = sWorkspace_output + '/mosart_susquehanna_script_mpas.nc'
 
 
     convert_hexwatershed_json_to_mosart_netcdf(sFilename_json_in, \
@@ -149,15 +151,25 @@ if iFlag_run_hexwatershed_utility == 1:
             sFilename_mosart_parameter_in,
             sFilename_mosart_parameter_out,\
             sFilename_mosart_domain_out)
-
+    
     #create the script file
+    e3sm_convert_unstructured_domain_file_to_scripgrid_file(sFilename_mosart_domain_out, sFilename_script_out)
 
+    
+    
     #create the mapping file
+    if iFlag_create_mapping_file==1:
+        sFilename_domain_a = sFilename_script_out
+        sFilename_domain_b= sFilename_script_out
+
+        e3sm_create_mapping_file( sFilename_domain_a, sFilename_domain_b )
+        pass
 
     if iFlag_visualization ==1:
-        #visualize mosart input parameter generated
+        #visualize mosart input parameter generated∏
         #exclude flow direction maybe
         pass
+
     aParameter_e3sm = pye3sm_read_e3sm_configuration_file(sFilename_e3sm_configuration ,\
                                                           iFlag_debug_in = 0, \
                                                           iFlag_branch_in = 0,\
