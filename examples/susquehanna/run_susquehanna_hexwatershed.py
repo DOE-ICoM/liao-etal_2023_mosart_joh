@@ -1,6 +1,6 @@
 #in practice, it is recommended to run hexwatershed using the following method, then call the post-processing
 
-import os, sys, stat
+import os
 
 from pathlib import Path
 from os.path import realpath
@@ -22,14 +22,18 @@ from pye3sm.shared.e3sm import pye3sm
 from pye3sm.shared.case import pycase
 from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_e3sm_configuration_file
 from pye3sm.mesh.unstructured.e3sm_convert_unstructured_domain_file_to_scripgrid_file import e3sm_convert_unstructured_domain_file_to_scripgrid_file
+from pye3sm.mesh.e3sm_create_structured_envelope_domain_file_1d import e3sm_create_structured_envelope_domain_file_1d
+from pye3sm.mesh.e3sm_create_mapping_file import e3sm_create_mapping_file
 
 
 iFlag_run_hexwatershed  = 0
-iFlag_run_hexwatershed_utility = 1
+iFlag_run_hexwatershed_utility = 0
+iFlag_create_e3sm_case = 1
+
 iFlag_mosart =1 
 iFlag_elm =0 
-iFlag_create_job = 0
-iFlag_visualization = 1
+iFlag_create_hexwatershed_job = 0
+iFlag_visualization_domain = 1
 iFlag_create_mapping_file = 1
 
 sRegion = 'susquehanna'
@@ -59,7 +63,7 @@ sCIME_directory ='/qfs/people/liao313/workspace/fortran/e3sm/E3SM/cime/scripts'
 
 
 #generate a bash job script
-if iFlag_create_job ==1:
+if iFlag_create_hexwatershed_job ==1:
     sFilename = sWorkspace_output + '/' + sDate  + 'submit.bash'
     ofs = open(sFilename, 'w')
     sLine  = '#!/bin/bash' + '\n'
@@ -78,12 +82,13 @@ else:
 iFlag_stream_burning_topology = 1 
 iFlag_use_mesh_dem = 1
 iFlag_elevation_profile = 1
-oPyhexwatershed = pyhexwatershed_read_model_configuration_file(sFilename_configuration_in,\
-                iCase_index_in=iCase_index,iFlag_stream_burning_topology_in=iFlag_stream_burning_topology,\
-                iFlag_use_mesh_dem_in=iFlag_use_mesh_dem,\
-                iFlag_elevation_profile_in=iFlag_elevation_profile,\
+oPyhexwatershed = pyhexwatershed_read_model_configuration_file(sFilename_configuration_in,
+                iCase_index_in=iCase_index,iFlag_stream_burning_topology_in=iFlag_stream_burning_topology,
+                iFlag_use_mesh_dem_in=iFlag_use_mesh_dem,
+                iFlag_elevation_profile_in=iFlag_elevation_profile,
                 dResolution_meter_in = dResolution_meter, sDate_in= sDate, sMesh_type_in= sMesh_type)   
-if iFlag_create_job ==1:
+
+if iFlag_create_hexwatershed_job ==1:
 
     if iFlag_run_hexwatershed == 1:
         oPyhexwatershed._create_hpc_job()
@@ -102,74 +107,73 @@ else:
     
 #post-process does not require job yet
 
+sFilename_mpas_in='/people/liao313/workspace/python/pyhexwatershed_icom/data/susquehanna/input/lnd_cull_mesh.nc'
+sFilename_mosart_parameter_in = '/compyfs/inputdata/rof/mosart/MOSART_Global_half_20210616.nc'
+
+#this one should be replace 
+sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/pye3sm/pye3sm/e3sm.xml'
+sFilename_case_configuration = '/qfs/people/liao313/workspace/python/pye3sm/pye3sm/case.xml'
+sModel  = 'e3sm'
+sWorkspace_scratch = '/compyfs/liao313'
+
+aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configuration,
+                                                          iFlag_lnd_spinup_in = 0,
+                                                          iFlag_atm_in = 0,
+                                                          iFlag_lnd_in= 0,
+                                                          iFlag_rof_in= 1,
+                                                          iYear_start_in = 1980, 
+                                                          iYear_end_in = 2019,
+                                                          iYear_data_end_in = 2009, 
+                                                          iYear_data_start_in = 1980  , 
+                                                          iCase_index_in = iCase_index, 
+                                                          sDate_in = sDate, 
+                                                          sModel_in = sModel,
+                                                          sRegion_in = sRegion,           
+                                                          sWorkspace_scratch_in =   sWorkspace_scratch )
+
+
+oCase = pycase(aParameter_case)
+sWorkspace_output = oCase.sWorkspace_case_aux
+
+if not os.path.exists(sWorkspace_output):
+    Path(sWorkspace_output).mkdir(parents=True, exist_ok=True)
+ 
+    
+sFilename_mosart_parameter_out = sWorkspace_output + '/mosart_susquehanna_parameter_mpas.nc'
+sFilename_mosart_unstructured_domain= sWorkspace_output + '/mosart_susquehanna_domain_mpas.nc'
+sFilename_mosart_unstructured_script = sWorkspace_output + '/mosart_susquehanna_scriptgrid_mpas.nc'
+sFilename_elm_structured_domain_file_out_1d = sWorkspace_output + '/mosart_susquehanna_parameter_latlon.nc'
+sFilename_elm_structured_script_1d = sWorkspace_output + '/elm_susquehanna_scripgrid_latlon.nc'
+sFilename_map_elm_to_mosart = sWorkspace_output + '/l2r_susquehanna_mapping.nc'
 
 if iFlag_run_hexwatershed_utility == 1:
     #the json should replaced
     sFilename_json_in='/compyfs/liao313/04model/pyhexwatershed/susquehanna/pyhexwatershed20220607001/hexwatershed/hexwatershed.json'
     sFilename_json_in = oPyhexwatershed.sFilename_hexwatershed_json
     #sFilename_mpas_in='/people/liao313/workspace/python/pyhexwatershed_icom/data/susquehanna/input/lnd_mesh.nc'
-    sFilename_mpas_in='/people/liao313/workspace/python/pyhexwatershed_icom/data/susquehanna/input/lnd_cull_mesh.nc'
-    sFilename_mosart_parameter_in = '/compyfs/inputdata/rof/mosart/MOSART_Global_half_20210616.nc'
-
-    #this one should be replace 
-    sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/pye3sm/pye3sm/e3sm.xml'
-    sFilename_case_configuration = '/qfs/people/liao313/workspace/python/pye3sm/pye3sm/case.xml'
-    sModel  = 'e3sm'
-    sWorkspace_scratch = '/compyfs/liao313'
-    aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configuration,\
-                                                          iFlag_elm_spinup_in = 0,\
-                                                          iFlag_atm_in = 0,\
-                                                          iFlag_elm_in= 0,\
-                                                          iFlag_mosart_in= 1,\
-                                                          iYear_start_in = 1980, 
-                                                          iYear_end_in = 2019,\
-                                                          iYear_data_end_in = 2009, \
-                                                          iYear_data_start_in = 1980  , \
-                                                          iCase_index_in = iCase_index, \
-                                                          sDate_in = sDate, \
-                                                          sModel_in = sModel,\
-                                                          sRegion_in = sRegion,           
-                                                          sWorkspace_scratch_in =   sWorkspace_scratch )
-    pass
-    #print(aParameter_case)
-
-    oCase = pycase(aParameter_case)
-    sWorkspace_output = oCase.sWorkspace_case_aux
-
     
-    if not os.path.exists(sWorkspace_output):
-        Path(sWorkspace_output).mkdir(parents=True, exist_ok=True)
- 
-    
-    sFilename_mosart_parameter_out = sWorkspace_output + '/mosart_susquehanna_parameter_mpas.nc'
-    sFilename_mosart_domain_out = sWorkspace_output + '/mosart_susquehanna_domain_mpas.nc'
-    sFilename_script_out = sWorkspace_output + '/mosart_susquehanna_script_mpas.nc'
-
-
     convert_hexwatershed_json_to_mosart_netcdf(sFilename_json_in, \
         sFilename_mpas_in, \
             sFilename_mosart_parameter_in,
             sFilename_mosart_parameter_out,\
-            sFilename_mosart_domain_out)
-    
-    #create the script file
-    e3sm_convert_unstructured_domain_file_to_scripgrid_file(sFilename_mosart_domain_out, sFilename_script_out)
+            sFilename_mosart_unstructured_domain)
 
-    
-    
-    #create the mapping file
-    if iFlag_create_mapping_file==1:
-        sFilename_domain_a = sFilename_script_out
-        sFilename_domain_b= sFilename_script_out
+#create the mapping file
+if iFlag_create_mapping_file==1:
+    #create a domain using mpas domain file        
+    e3sm_create_structured_envelope_domain_file_1d(sFilename_mosart_unstructured_domain, sFilename_elm_structured_domain_file_out_1d,
+                                                                         0.5, 0.5 )
+    #convert it to script file         
+    e3sm_convert_unstructured_domain_file_to_scripgrid_file(sFilename_elm_structured_domain_file_out_1d, sFilename_elm_structured_script_1d )   
+    e3sm_create_mapping_file( sFilename_elm_structured_script_1d, sFilename_mosart_unstructured_script , sFilename_map_elm_to_mosart )
+    e3sm_convert_unstructured_domain_file_to_scripgrid_file(sFilename_mosart_unstructured_domain, sFilename_mosart_unstructured_script)
+if iFlag_visualization_domain ==1:
+    #visualize mosart input parameter generated∏
+    #exclude flow direction maybe
+    pass
 
-        e3sm_create_mapping_file( sFilename_domain_a, sFilename_domain_b )
-        pass
-
-    if iFlag_visualization ==1:
-        #visualize mosart input parameter generated∏
-        #exclude flow direction maybe
-        pass
-
+if iFlag_create_e3sm_case == 1:
+    #create the script file      
     aParameter_e3sm = pye3sm_read_e3sm_configuration_file(sFilename_e3sm_configuration ,\
                                                           iFlag_debug_in = 0, \
                                                           iFlag_branch_in = 0,\
@@ -181,9 +185,7 @@ if iFlag_run_hexwatershed_utility == 1:
                                                           COMPSET_in = compset ,\
                                                           sCIME_directory_in = sCIME_directory)
     oE3SM = pye3sm(aParameter_e3sm)
-
-    if iFlag_mosart ==1:        
-        
+    if iFlag_mosart ==1:                
         sFilename_mosart_namelist = sWorkspace_output + slash + 'user_nl_rtm_' + oCase.sDate
         ofs = open(sFilename_mosart_namelist, 'w')
         #sLine = 'rtmhist_nhtfrq=0' + '\n'
@@ -206,27 +208,26 @@ if iFlag_run_hexwatershed_utility == 1:
         #ofs.write(sLine)
         sLine = 'dtlimit=2.0e0' + '\n'
         ofs.write(sLine)
-        ofs.close()
-    
-    aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configuration,\
-                                                        
-                                                          iFlag_atm_in = 0,\
-                                                          iFlag_elm_in= 0,\
-                                                          iFlag_mosart_in= 1,\
+        ofs.close()    
+    aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configuration,                                                        
+                                                          iFlag_atm_in = 0,
+                                                          iFlag_lnd_in= 0,
+                                                          iFlag_rof_in= 1,
                                                           iYear_start_in = 1980, 
-                                                          iYear_end_in = 2019,\
-                                                          iYear_data_end_in = 1979, \
-                                                          iYear_data_start_in = 1979  , \
-                                                          iCase_index_in = iCase_index, \
-                                                          sDate_in = sDate, \
-                                                          sModel_in = sModel,\
-                                                          sRegion_in = sRegion,\
-                                                          sFilename_atm_domain_in = sFilename_mosart_domain_out,\
+                                                          iYear_end_in = 2019,
+                                                          iYear_data_end_in = 1979, 
+                                                          iYear_data_start_in = 1979  , 
+                                                          iCase_index_in = iCase_index, 
+                                                          sDate_in = sDate, 
+                                                          sModel_in = sModel,
+                                                          sRegion_in = sRegion,
+                                                          sFilename_atm_domain_in = sFilename_elm_structured_domain_file_out_1d,\
                                                           #sFilename_datm_namelist_in = sFilename_datm_namelist ,\
-                                                          sFilename_elm_namelist_in = sFilename_elm_namelist, \
-                                                          sFilename_elm_domain_in = sFilename_mosart_domain_out, \
-                                                          sFilename_mosart_namelist_in = sFilename_mosart_namelist, \
-                                                          sFilename_mosart_parameter_in = sFilename_mosart_parameter_out, \
+                                                          sFilename_lnd_namelist_in = sFilename_elm_namelist, 
+                                                          sFilename_lnd_domain_in = sFilename_elm_structured_domain_file_out_1d, 
+                                                          sFilename_l2r_mapping_in = sFilename_map_elm_to_mosart,
+                                                          sFilename_rof_namelist_in = sFilename_mosart_namelist, 
+                                                          sFilename_rof_parameter_in = sFilename_mosart_parameter_out, 
                                                           sWorkspace_scratch_in =   sWorkspace_scratch )
     pass
     #print(aParameter_case)
