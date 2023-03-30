@@ -41,7 +41,7 @@ compset = 'RMOSGPCC'
 project = 'esmd'
 
 iCase_index_hexwatershed = 1
-iCase_index_e3sm = 7
+iCase_index_e3sm = 8
 
 dResolution_meter=5000
 sDate='20230120'
@@ -85,4 +85,11 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 oCase = pycase(aParameter_case)
 
 
-mosart_save_variable_unstructured( oE3SM, oCase, sVariable)
+#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+
+
+sVariable= 'Main_Channel_STORAGE_LIQ'
+mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+
+sVariable= 'Main_Channel_Water_Depth_LIQ'
+mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)

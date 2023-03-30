@@ -41,10 +41,10 @@ compset = 'RMOSGPCC'
 project = 'esmd'
 
 iCase_index_hexwatershed = 1
-iCase_index_e3sm = 7
+iCase_index_e3sm = 1
 
 dResolution_meter=5000
-sDate='20230120'
+sDate='20230329'
 #this one should be replace 
 sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/susquehanna/e3sm.xml'
 sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/susquehanna/case.xml'
@@ -85,4 +85,4 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 oCase = pycase(aParameter_case)
 
 
-mosart_map_variable_unstructured( oE3SM, oCase, sVariable)
+mosart_map_variable_unstructured( oE3SM, oCase, sVariable_in = sVariable)

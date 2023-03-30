@@ -41,7 +41,7 @@ compset = 'RMOSGPCC'
 project = 'esmd'
 
 iCase_index_hexwatershed = 1
-iCase_index_e3sm = 7
+iCase_index_e3sm = 8
 
 dResolution_meter=5000
 sDate='20230120'
@@ -70,7 +70,7 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
                                                           iFlag_dlnd_in= 1,
                                                           iFlag_rof_in= 1,
                                                           iYear_start_in = 1980, 
-                                                          iYear_end_in = 2019,
+                                                          iYear_end_in = 2009,
                                                           iYear_data_end_in = 1979, 
                                                           iYear_data_start_in = 1979  , 
                                                           iCase_index_in = iCase_index_e3sm, 
@@ -83,6 +83,8 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 
 
 oCase = pycase(aParameter_case)
+sUnit = r"$m^3/s$"
+sTitle = 'River discharge over land (liquid)'
 
 
-mosart_map_variable_unstructured( oE3SM, oCase, sVariable)
+mosart_map_variable_unstructured(oCase, sVariable, sUnit_in= sUnit, sTitle_in=sTitle)
