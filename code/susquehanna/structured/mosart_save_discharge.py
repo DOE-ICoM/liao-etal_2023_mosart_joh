@@ -11,46 +11,30 @@ from pyearth.system.define_global_variables import *
 from pyhexwatershed.pyhexwatershed_read_model_configuration_file import pyhexwatershed_read_model_configuration_file
 from pyhexwatershed.classes.pycase import hexwatershedcase
 
-from hexwatershed_utility.mosart.convert_hexwatershed_output_to_mosart import convert_hexwatershed_json_to_mosart_netcdf
-
 
 from pye3sm.shared.e3sm import pye3sm
 from pye3sm.shared.case import pycase
 from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_case_configuration_file
 from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_e3sm_configuration_file
 
-from pye3sm.mosart.general.unstructured.map.mosart_map_variable_unstructured import mosart_map_variable_unstructured
+from pye3sm.mosart.general.unstructured.save.mosart_save_variable_unstructured import mosart_save_variable_unstructured
 
 
-iFlag_run_hexwatershed  = 0
-iFlag_run_hexwatershed_utility = 1
-iFlag_create_e3sm_case = 1
 
-iFlag_mosart =1 
-iFlag_elm =0 
-iFlag_create_hexwatershed_job = 0
-iFlag_visualization_domain = 0
-iFlag_create_mapping_file = 1
 
+
+iCase_index_e3sm = 1
 sRegion = 'susquehanna'
 sMesh_type = 'mpas'
-
 res='MOS_USRDAT'      
-res = 'MOS_USRDAT_MPAS'
 compset = 'RMOSGPCC'
 project = 'esmd'
-
-iCase_index_hexwatershed = 1
-iCase_index_e3sm = 7
-
-dResolution_meter=5000
-sDate='20230120'
-#this one should be replace 
+sDate='20230329'
+sModel  = 'e3sm'
 sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/susquehanna/e3sm.xml'
 sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/susquehanna/case.xml'
-sModel  = 'e3sm'
-sWorkspace_scratch = '/compyfs/liao313'
 
+sWorkspace_scratch = '/compyfs/liao313'
 aParameter_e3sm = pye3sm_read_e3sm_configuration_file(sFilename_e3sm_configuration ,\
                                                           iFlag_debug_in = 0, \
                                                           iFlag_branch_in = 0,\
@@ -85,4 +69,4 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 oCase = pycase(aParameter_case)
 
 
-mosart_map_variable_unstructured( oE3SM, oCase, sVariable)
+mosart_save_variable_unstructured( oE3SM, oCase, sVariable_in = sVariable)

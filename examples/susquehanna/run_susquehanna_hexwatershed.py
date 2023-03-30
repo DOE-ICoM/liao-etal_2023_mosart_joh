@@ -162,7 +162,7 @@ if iFlag_run_hexwatershed_utility == 1:
 
     
     convert_hexwatershed_json_to_mosart_netcdf(sFilename_json_in, \
-        sFilename_mpas_in, \
+            sFilename_mpas_in, \
             sFilename_mosart_parameter_in,
             sFilename_mosart_parameter_out,\
             sFilename_mosart_unstructured_domain)
@@ -182,7 +182,7 @@ if iFlag_create_mapping_file==1:
 
     e3sm_create_mapping_file(  sFilename_mosart_unstructured_script , sFilename_elm_structured_script_1d, sFilename_map_mosart_to_elm )
 
-if iFlag_visualization_domain ==1:
+if iFlag_visualization_domain == 1:
     #visualize mosart input parameter generated∏
     #exclude flow direction maybe
     pass
