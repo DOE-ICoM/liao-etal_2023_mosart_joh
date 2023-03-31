@@ -31,7 +31,7 @@ iFlag_run_hexwatershed_utility = 1
 iFlag_create_e3sm_case = 1
 
 iFlag_mosart =1 
-iFlag_elm =0 
+iFlag_elm = 0 
 iFlag_create_hexwatershed_job = 0
 iFlag_visualization_domain = 0
 iFlag_create_mapping_file = 1
@@ -40,7 +40,7 @@ sRegion = 'susquehanna'
 sMesh_type = 'mpas'
 
 iCase_index_hexwatershed = 1
-iCase_index_e3sm = 8
+iCase_index_e3sm = 9
 
 dResolution_meter=5000
 sDate='20230120'
