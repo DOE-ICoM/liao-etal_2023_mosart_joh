@@ -40,7 +40,7 @@ sRegion = 'susquehanna'
 sMesh_type = 'mpas'
 
 iCase_index_hexwatershed = 1
-iCase_index_e3sm = 9
+iCase_index_e3sm = 10
 
 dResolution_meter=5000
 sDate='20230120'

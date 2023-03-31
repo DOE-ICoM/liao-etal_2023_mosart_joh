@@ -41,7 +41,7 @@ compset = 'RMOSGPCC'
 project = 'esmd'
 
 iCase_index_hexwatershed = 1
-iCase_index_e3sm = 8
+iCase_index_e3sm = 9
 
 dResolution_meter=5000
 sDate='20230120'
@@ -69,7 +69,7 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
                                                           iFlag_lnd_in= 0,
                                                           iFlag_dlnd_in= 1,
                                                           iFlag_rof_in= 1,
-                                                          iYear_start_in = 1980, 
+                                                          iYear_start_in = 2000, 
                                                           iYear_end_in = 2009,
                                                           iYear_data_end_in = 1979, 
                                                           iYear_data_start_in = 1979  , 
