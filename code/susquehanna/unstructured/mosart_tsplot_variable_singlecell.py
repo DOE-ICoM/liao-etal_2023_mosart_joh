@@ -13,7 +13,7 @@ from pye3sm.shared.case import pycase
 from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_case_configuration_file
 from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_e3sm_configuration_file
 
-from pye3sm.mosart.general.unstructured.map.mosart_map_variable_unstructured import mosart_map_variable_unstructured
+from pye3sm.mosart.general.unstructured.plot.mosart_tsplot_variable_unstructured_singlecell import mosart_tsplot_variable_unstructured_singlecell
 
 
 iFlag_run_hexwatershed  = 0
@@ -63,8 +63,8 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
                                                           iFlag_lnd_in= 0,
                                                           iFlag_dlnd_in= 1,
                                                           iFlag_rof_in= 1,
-                                                          iYear_start_in = 2005, 
-                                                          iYear_end_in = 2005,
+                                                          iYear_start_in = 1980, 
+                                                          iYear_end_in = 2009,
                                                           iYear_data_end_in = 1979, 
                                                           iYear_data_start_in = 1979  , 
                                                           iCase_index_in = iCase_index_e3sm, 
@@ -77,27 +77,28 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 
 
 oCase = pycase(aParameter_case)
-sUnit = r"$m^3/s$"
+
+lCellID  = 88
+sLabel_y = r"$m^3/s$"
 sTitle = 'River discharge over land (liquid)'
-#mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
+mosart_tsplot_variable_unstructured_singlecell(oCase, lCellID_in=lCellID,  iFlag_monthly_in =1 ,sVariable_in = sVariable, sLabel_y_in= sLabel_y, sTitle_in=sTitle,iFlag_scientific_notation_in=1)
 
 sVariable= 'Main_Channel_Water_Depth_LIQ'
-sUnit = r"m"
+sLabel_y = r"m"
 sTitle = 'Main channel water depth (liquid)'
-#mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=0)
+mosart_tsplot_variable_unstructured_singlecell(oCase,lCellID_in=lCellID,iFlag_monthly_in =1 , sVariable_in = sVariable, sLabel_y_in= sLabel_y, sTitle_in=sTitle,iFlag_scientific_notation_in=0)
 
 sVariable= 'Main_Channel_STORAGE_LIQ'
-sUnit = r"$m^3$"
+sLabel_y = r"$m^3$"
 sTitle = 'Main channel storage (liquid)'
-#mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
-
+mosart_tsplot_variable_unstructured_singlecell(oCase,lCellID_in=lCellID,iFlag_monthly_in =1 , sVariable_in = sVariable, sLabel_y_in= sLabel_y, sTitle_in=sTitle,iFlag_scientific_notation_in=1)
 
 sVariable= 'QSUR_LIQ'
-sUnit = r"$m^3$"
+sLabel_y = r"$m^3$"
 sTitle = 'Surface runoff (liquid)'
-mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
+mosart_tsplot_variable_unstructured_singlecell(oCase,lCellID_in=lCellID,iFlag_monthly_in =1 , sVariable_in = sVariable, sLabel_y_in= sLabel_y, sTitle_in=sTitle,iFlag_scientific_notation_in=1)
 
 sVariable= 'QSUB_LIQ'
-sUnit = r"$m^3$"
+sLabel_y = r"$m^3$"
 sTitle = 'Subsurface rnuoff (liquid)'
-mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
+mosart_tsplot_variable_unstructured_singlecell(oCase,lCellID_in=lCellID, iFlag_monthly_in =1 ,sVariable_in = sVariable, sLabel_y_in= sLabel_y, sTitle_in=sTitle,iFlag_scientific_notation_in=1)
