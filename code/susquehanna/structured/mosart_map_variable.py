@@ -70,7 +70,7 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
                                                           iFlag_dlnd_in= 1,
                                                           iFlag_rof_in= 1,
                                                           iYear_start_in = 2005, 
-                                                          iYear_end_in = 2006,
+                                                          iYear_end_in = 2005,
                                                           iYear_data_end_in = 1979, 
                                                           iYear_data_start_in = 1979  , 
                                                           iCase_index_in = iCase_index_e3sm, 
@@ -86,15 +86,14 @@ oCase = pycase(aParameter_case)
 
 sUnit = r"$m^3/s$"
 sTitle = 'River discharge over land (liquid)'
-mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle)
-
+mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
 
 sVariable= 'Main_Channel_STORAGE_LIQ'
 sUnit = r"$m^3$"
 sTitle = 'Main channel storage (liquid)'
-mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle)
+mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
 
 sVariable= 'Main_Channel_Water_Depth_LIQ'
 sUnit = r"m"
 sTitle = 'Main channel water depth (liquid)'
-mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle)
+mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=0)

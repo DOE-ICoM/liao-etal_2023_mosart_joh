@@ -40,7 +40,7 @@ sRegion = 'susquehanna'
 sMesh_type = 'mpas'
 
 iCase_index_hexwatershed = 1
-iCase_index_e3sm = 11
+iCase_index_e3sm = 12
 
 dResolution_meter=5000
 sDate='20230120'
@@ -155,12 +155,13 @@ sFilename_elm_structured_script_1d = sWorkspace_output + '/elm_susquehanna_scrip
 sFilename_map_elm_to_mosart = sWorkspace_output + '/l2r_susquehanna_mapping.nc'
 sFilename_map_mosart_to_elm = sWorkspace_output + '/r2l_susquehanna_mapping.nc'
 
+sFilename_user_drof_gage_height= '/compyfs/liao313/04model/e3sm/amazon/user_drof.streams.txt.MOSART.gage_height'
+
 if iFlag_run_hexwatershed_utility == 1:
     #the json should replaced
 
     sFilename_json_in = oPyhexwatershed.sFilename_hexwatershed_json
 
-    
     convert_hexwatershed_json_to_mosart_netcdf(sFilename_json_in, \
             sFilename_mpas_in, \
             sFilename_mosart_parameter_in,
@@ -230,6 +231,7 @@ if iFlag_create_e3sm_case == 1:
                                                           iFlag_lnd_in= 0,
                                                           iFlag_dlnd_in= 1,
                                                           iFlag_rof_in= 1,
+                                                          iFlag_replace_drof_forcing_in=1,
                                                           iYear_start_in = 1980, 
                                                           iYear_end_in = 2019,
                                                           iYear_data_end_in = 1979, 
@@ -247,13 +249,13 @@ if iFlag_create_e3sm_case == 1:
                                                           sFilename_rof_namelist_in = sFilename_mosart_namelist, 
                                                           sFilename_rof_parameter_in = sFilename_mosart_parameter_out, 
                                                           sFilename_r2l_mapping_in = sFilename_map_mosart_to_elm,
-
+                                                          sFilename_user_drof_gage_height_in= sFilename_user_drof_gage_height,
                                                           sWorkspace_scratch_in =   sWorkspace_scratch )
     pass
     #print(aParameter_case)
 
     oCase = pycase(aParameter_case)
-    e3sm_create_case(oE3SM, oCase,     iFlag_replace_datm_forcing=0,    iFlag_replace_dlnd_forcing= 1)
+    e3sm_create_case(oE3SM, oCase)
 
     
     pass

@@ -8,18 +8,12 @@ import cartopy.crs as ccrs
 
 from pyearth.system.define_global_variables import *
 
-from pyhexwatershed.pyhexwatershed_read_model_configuration_file import pyhexwatershed_read_model_configuration_file
-from pyhexwatershed.classes.pycase import hexwatershedcase
-
-from hexwatershed_utility.mosart.convert_hexwatershed_output_to_mosart import convert_hexwatershed_json_to_mosart_netcdf
-
-
 from pye3sm.shared.e3sm import pye3sm
 from pye3sm.shared.case import pycase
 from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_case_configuration_file
 from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_e3sm_configuration_file
 
-from pye3sm.mosart.general.unstructured.save.mosart_save_variable_unstructured import mosart_save_variable_unstructured
+from pye3sm.mosart.general.unstructured.plot.mosart_tsplot_variable_unstructured import mosart_tsplot_variable_unstructured
 
 
 iFlag_run_hexwatershed  = 0
@@ -70,7 +64,7 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
                                                           iFlag_dlnd_in= 1,
                                                           iFlag_rof_in= 1,
                                                           iYear_start_in = 2000, 
-                                                          iYear_end_in = 2010,
+                                                          iYear_end_in = 2009,
                                                           iYear_data_end_in = 1979, 
                                                           iYear_data_start_in = 1979  , 
                                                           iCase_index_in = iCase_index_e3sm, 
@@ -83,18 +77,26 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 
 
 oCase = pycase(aParameter_case)
-
-#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+sLabel_y = r"$m^3/s$"
+sTitle = 'River discharge over land (liquid)'
+mosart_tsplot_variable_unstructured(oCase, iFlag_monthly_in =1 ,sVariable_in = sVariable, sLabel_y_in= sLabel_y, sTitle_in=sTitle,iFlag_scientific_notation_in=1)
 
 sVariable= 'Main_Channel_Water_Depth_LIQ'
-#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+sLabel_y = r"m"
+sTitle = 'Main channel water depth (liquid)'
+mosart_tsplot_variable_unstructured(oCase,iFlag_monthly_in =1 , sVariable_in = sVariable, sLabel_y_in= sLabel_y, sTitle_in=sTitle,iFlag_scientific_notation_in=0)
 
 sVariable= 'Main_Channel_STORAGE_LIQ'
-#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+sLabel_y = r"$m^3$"
+sTitle = 'Main channel storage (liquid)'
+mosart_tsplot_variable_unstructured(oCase,iFlag_monthly_in =1 , sVariable_in = sVariable, sLabel_y_in= sLabel_y, sTitle_in=sTitle,iFlag_scientific_notation_in=1)
 
 sVariable= 'QSUR_LIQ'
-mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+sLabel_y = r"$m^3$"
+sTitle = 'Surface runoff (liquid)'
+mosart_tsplot_variable_unstructured(oCase,iFlag_monthly_in =1 , sVariable_in = sVariable, sLabel_y_in= sLabel_y, sTitle_in=sTitle,iFlag_scientific_notation_in=1)
 
 sVariable= 'QSUB_LIQ'
-mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
-
+sLabel_y = r"$m^3$"
+sTitle = 'Subsurface rnuoff (liquid)'
+mosart_tsplot_variable_unstructured(oCase, iFlag_monthly_in =1 ,sVariable_in = sVariable, sLabel_y_in= sLabel_y, sTitle_in=sTitle,iFlag_scientific_notation_in=1)
