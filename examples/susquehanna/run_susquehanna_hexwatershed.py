@@ -1,7 +1,7 @@
 #in practice, it is recommended to run hexwatershed using the following method, then call the post-processing
 
 import os
-
+import shutil
 from pathlib import Path
 from os.path import realpath
 
@@ -25,6 +25,8 @@ from pye3sm.mesh.unstructured.e3sm_convert_unstructured_domain_file_to_scripgrid
 from pye3sm.mesh.e3sm_create_structured_envelope_domain_file_1d import e3sm_create_structured_envelope_domain_file_1d
 from pye3sm.mesh.e3sm_create_mapping_file import e3sm_create_mapping_file
 
+iFlag_debug =0
+iFlag_debug_case=0
 
 iFlag_run_hexwatershed  = 0
 iFlag_run_hexwatershed_utility = 1
@@ -40,7 +42,7 @@ sRegion = 'susquehanna'
 sMesh_type = 'mpas'
 
 iCase_index_hexwatershed = 1
-iCase_index_e3sm = 12
+iCase_index_e3sm = 16
 
 dResolution_meter=5000
 sDate='20230120'
@@ -129,7 +131,7 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
                                                           iFlag_rof_in= 1,
                                                           iYear_start_in = 1980, 
                                                           iYear_end_in = 2019,
-                                                          iYear_data_end_in = 2009, 
+                                                          iYear_data_end_in = 2008, 
                                                           iYear_data_start_in = 1980  , 
                                                           iCase_index_in = iCase_index_e3sm, 
                                                           sDate_in = sDate, 
@@ -155,7 +157,11 @@ sFilename_elm_structured_script_1d = sWorkspace_output + '/elm_susquehanna_scrip
 sFilename_map_elm_to_mosart = sWorkspace_output + '/l2r_susquehanna_mapping.nc'
 sFilename_map_mosart_to_elm = sWorkspace_output + '/r2l_susquehanna_mapping.nc'
 
-sFilename_user_drof_gage_height= '/compyfs/liao313/04model/e3sm/amazon/user_drof.streams.txt.MOSART.gage_height'
+
+sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd.gpcc'
+sFilename_user_dlnd_runoff = sWorkspace_output + '/dlnd.streams.txt.lnd.gpcc'
+if not os.path.exists(sFilename_user_dlnd_runoff):
+    shutil.copyfile(sFilename_user_dlnd_runoff_origin, sFilename_user_dlnd_runoff)
 
 if iFlag_run_hexwatershed_utility == 1:
     #the json should replaced
@@ -191,7 +197,7 @@ if iFlag_visualization_domain == 1:
 if iFlag_create_e3sm_case == 1:
     #create the script file      
     aParameter_e3sm = pye3sm_read_e3sm_configuration_file(sFilename_e3sm_configuration ,\
-                                                          iFlag_debug_in = 0, \
+                                                          iFlag_debug_in = iFlag_debug, \
                                                           iFlag_branch_in = 0,\
                                                           iFlag_continue_in = 0,\
                                                           iFlag_resubmit_in = 0,\
@@ -210,6 +216,8 @@ if iFlag_create_e3sm_case == 1:
         ofs.write(sLine)
         #sLine = 'rtmhist_fincl1= "area"' + '\n'
         #ofs.write(sLine)
+        sLine = 'dlevelh2r = 10'+ '\n'
+        ofs.write(sLine)
         sLine = 'routingmethod = 1'+ '\n'
         ofs.write(sLine)
         sLine = 'inundflag = .false.'+ '\n'
@@ -225,16 +233,18 @@ if iFlag_create_e3sm_case == 1:
         sLine = 'dtlimit=2.0e0' + '\n'
         ofs.write(sLine)
         ofs.close()    
-    aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configuration,                                                        
+    aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configuration,     
+                                                          iFlag_debug_case_in= iFlag_debug_case,                                                   
                                                           iFlag_atm_in = 0,
                                                           iFlag_datm_in = 1,
                                                           iFlag_lnd_in= 0,
                                                           iFlag_dlnd_in= 1,
+                                                          iFlag_replace_dlnd_forcing_in = 1,
                                                           iFlag_rof_in= 1,
                                                           iFlag_replace_drof_forcing_in=1,
                                                           iYear_start_in = 1980, 
-                                                          iYear_end_in = 2019,
-                                                          iYear_data_end_in = 1979, 
+                                                          iYear_end_in = 2009,
+                                                          iYear_data_end_in = 2008, 
                                                           iYear_data_start_in = 1979  , 
                                                           iCase_index_in = iCase_index_e3sm, 
                                                           sDate_in = sDate, 
@@ -242,14 +252,13 @@ if iFlag_create_e3sm_case == 1:
                                                           sRegion_in = sRegion,
                                                           sFilename_atm_domain_in = sFilename_elm_structured_domain_file_out_1d,
                                                           sFilename_a2r_mapping_in = sFilename_map_elm_to_mosart,
-                                                          #sFilename_datm_namelist_in = sFilename_datm_namelist ,\
                                                           sFilename_lnd_domain_in = sFilename_elm_structured_domain_file_out_1d,
                                                           sFilename_dlnd_namelist_in = sFilename_elm_namelist, 
+                                                          sFilename_user_dlnd_runoff_in = sFilename_user_dlnd_runoff,
                                                           sFilename_l2r_mapping_in = sFilename_map_elm_to_mosart,
                                                           sFilename_rof_namelist_in = sFilename_mosart_namelist, 
                                                           sFilename_rof_parameter_in = sFilename_mosart_parameter_out, 
                                                           sFilename_r2l_mapping_in = sFilename_map_mosart_to_elm,
-                                                          sFilename_user_drof_gage_height_in= sFilename_user_drof_gage_height,
                                                           sWorkspace_scratch_in =   sWorkspace_scratch )
     pass
     #print(aParameter_case)

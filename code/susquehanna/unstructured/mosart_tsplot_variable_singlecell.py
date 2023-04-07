@@ -35,7 +35,7 @@ compset = 'RMOSGPCC'
 project = 'esmd'
 
 iCase_index_hexwatershed = 1
-iCase_index_e3sm = 12
+iCase_index_e3sm = 15
 
 dResolution_meter=5000
 sDate='20230120'
@@ -64,7 +64,7 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
                                                           iFlag_dlnd_in= 1,
                                                           iFlag_rof_in= 1,
                                                           iYear_start_in = 1980, 
-                                                          iYear_end_in = 2009,
+                                                          iYear_end_in = 1992,
                                                           iYear_data_end_in = 1979, 
                                                           iYear_data_start_in = 1979  , 
                                                           iCase_index_in = iCase_index_e3sm, 
@@ -78,7 +78,7 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 
 oCase = pycase(aParameter_case)
 
-lCellID  = 88
+lCellID  = 2507 #88
 sLabel_y = r"$m^3/s$"
 sTitle = 'River discharge over land (liquid)'
 mosart_tsplot_variable_unstructured_singlecell(oCase, lCellID_in=lCellID,  iFlag_monthly_in =1 ,sVariable_in = sVariable, sLabel_y_in= sLabel_y, sTitle_in=sTitle,iFlag_scientific_notation_in=1)
@@ -86,7 +86,10 @@ mosart_tsplot_variable_unstructured_singlecell(oCase, lCellID_in=lCellID,  iFlag
 sVariable= 'Main_Channel_Water_Depth_LIQ'
 sLabel_y = r"m"
 sTitle = 'Main channel water depth (liquid)'
-mosart_tsplot_variable_unstructured_singlecell(oCase,lCellID_in=lCellID,iFlag_monthly_in =1 , sVariable_in = sVariable, sLabel_y_in= sLabel_y, sTitle_in=sTitle,iFlag_scientific_notation_in=0)
+mosart_tsplot_variable_unstructured_singlecell(oCase,lCellID_in=lCellID,iFlag_monthly_in =1 , 
+                                               dMax_y_in = 10, dMin_y_in = 0,
+                                               sVariable_in = sVariable, sLabel_y_in= sLabel_y, sTitle_in=sTitle,iFlag_scientific_notation_in=0)
+
 
 sVariable= 'Main_Channel_STORAGE_LIQ'
 sLabel_y = r"$m^3$"
