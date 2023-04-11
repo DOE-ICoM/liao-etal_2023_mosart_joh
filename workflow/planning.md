@@ -13,13 +13,13 @@
 * Step 1: prepare runoff dataset (Ming Pan) (Depend on step 3)
 * Step 2: river network dataset preparation(identify a few basins across spatial scales, with good discharge data). tentatively ICoM basins, one or two Arctic basins, Columbia, and maybe a few large basins on other continents (Need more discussion).
 
-ICoM: 1/16, 1/8, MPAS
+ICoM: 1/16, MPAS
 
-CRB: 1/8, 1/2, MPAS
+CRB: 1/16,  MPAS
 
 Sag: 1/16, MPAS
 
-Amazon?
+Amazon: 1/8, MPAS
 
 * Step 2.5: run pyflowline (optional) stream burning 
 * Step 3: MPAS mesh generation (Need more discussion about resolution, w/ or w/o stream burning, etc.)
