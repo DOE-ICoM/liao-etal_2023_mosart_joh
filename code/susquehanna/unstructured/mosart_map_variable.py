@@ -35,7 +35,7 @@ compset = 'RMOSGPCC'
 project = 'esmd'
 
 iCase_index_hexwatershed = 1
-iCase_index_e3sm = 12
+iCase_index_e3sm = 18
 
 dResolution_meter=5000
 sDate='20230120'
@@ -63,10 +63,10 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
                                                           iFlag_lnd_in= 0,
                                                           iFlag_dlnd_in= 1,
                                                           iFlag_rof_in= 1,
-                                                          iYear_start_in = 1980, 
-                                                          iYear_end_in = 1983,
+                                                          iYear_start_in = 1997, 
+                                                          iYear_end_in = 1997,
                                                           iYear_data_end_in = 1979, 
-                                                          iYear_data_start_in = 1979  , 
+                                                          iYear_data_start_in = 2009  , 
                                                           iCase_index_in = iCase_index_e3sm, 
                                                           sDate_in = sDate, 
                                                           sModel_in = sModel,
@@ -77,27 +77,27 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 
 
 oCase = pycase(aParameter_case)
-sUnit = r"$m^3/s$"
-sTitle = 'River discharge over land (liquid)'
-#mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
+sUnit = r"$\mathrm{m}^3/s$"
 
-sVariable= 'Main_Channel_Water_Depth_LIQ'
-sUnit = r"m"
-sTitle = 'Main channel water depth (liquid)'
-#mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=0)
+sTitle = 'River discharge over land (liquid)'
+mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
 
 sVariable= 'Main_Channel_STORAGE_LIQ'
-sUnit = r"$m^3$"
+sUnit = r"$\mathrm{m}^3$"
 sTitle = 'Main channel storage (liquid)'
-#mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
+mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
 
+sVariable= 'Main_Channel_Water_Depth_LIQ'
+sUnit = r"\mathrm{m}"
+sTitle = 'Main channel water depth (liquid)'
+mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=0)
 
 sVariable= 'QSUR_LIQ'
-sUnit = r"$m^3$"
+sUnit = r"$\mathrm{m}^3$"
 sTitle = 'Surface runoff (liquid)'
 mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
 
 sVariable= 'QSUB_LIQ'
-sUnit = r"$m^3$"
+sUnit = r"$\mathrm{m}^3$"
 sTitle = 'Subsurface rnuoff (liquid)'
 mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)

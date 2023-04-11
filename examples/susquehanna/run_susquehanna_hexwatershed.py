@@ -29,7 +29,7 @@ iFlag_debug =0
 iFlag_debug_case=0
 
 iFlag_run_hexwatershed  = 0
-iFlag_run_hexwatershed_utility = 1
+iFlag_run_hexwatershed_utility = 0
 iFlag_create_e3sm_case = 1
 
 iFlag_mosart =1 
@@ -42,7 +42,7 @@ sRegion = 'susquehanna'
 sMesh_type = 'mpas'
 
 iCase_index_hexwatershed = 1
-iCase_index_e3sm = 16
+iCase_index_e3sm = 19
 
 dResolution_meter=5000
 sDate='20230120'
@@ -210,16 +210,22 @@ if iFlag_create_e3sm_case == 1:
     if iFlag_mosart ==1:                
         sFilename_mosart_namelist = sWorkspace_output + slash + 'user_nl_rtm_' + oCase.sDate
         ofs = open(sFilename_mosart_namelist, 'w')
-        #sLine = 'rtmhist_nhtfrq=0' + '\n'
-        #ofs.write(sLine)
+        #sLine = 'hist_nhtfrq=0' + '\n'
+        sLine = 'rtmhist_nhtfrq = 0,-24 '+ '\n'
+        ofs.write(sLine)
+        sLine = 'rtmhist_mfilt = 1,1 '+ '\n'
+        ofs.write(sLine)
+     
         sLine = 'frivinp_rtm = ' + "'" + sFilename_mosart_parameter_out + "'" + '\n'
         ofs.write(sLine)
-        #sLine = 'rtmhist_fincl1= "area"' + '\n'
+        #sLine = 'hist_fincl1= "area"' + '\n'
         #ofs.write(sLine)
-        sLine = 'dlevelh2r = 10'+ '\n'
-        ofs.write(sLine)
+        #sLine = 'dlevelh2r = 20'+ '\n'
+        #ofs.write(sLine)
         sLine = 'routingmethod = 1'+ '\n'
+        #sLine = 'routingmethod = 2'+ '\n'
         ofs.write(sLine)
+        
         sLine = 'inundflag = .false.'+ '\n'
         ofs.write(sLine)
         #opt_elevprof = 1
