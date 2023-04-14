@@ -174,3 +174,53 @@
 20230411 085026.844 INFO             PET0 Finalizing ESMF
 20230411 085026.878 INFO             PET0 Running with ESMF Version 7.1.0r
 20230411 085028.775 INFO             PET0 Finalizing ESMF
+20230411 164605.957 INFO             PET0 Running with ESMF Version 7.1.0r
+20230411 164606.682 INFO             PET0 Finalizing ESMF
+20230411 164606.712 INFO             PET0 Running with ESMF Version 7.1.0r
+20230411 164607.291 INFO             PET0 Finalizing ESMF
+20230411 164629.385 INFO             PET0 Running with ESMF Version 7.1.0r
+20230411 164629.851 INFO             PET0 Finalizing ESMF
+20230411 164629.883 INFO             PET0 Running with ESMF Version 7.1.0r
+20230411 164630.478 INFO             PET0 Finalizing ESMF
+20230411 164656.156 INFO             PET0 Running with ESMF Version 7.1.0r
+20230411 164656.650 INFO             PET0 Finalizing ESMF
+20230411 164656.687 INFO             PET0 Running with ESMF Version 7.1.0r
+20230411 164657.324 INFO             PET0 Finalizing ESMF
+20230412 091818.566 INFO             PET0 Running with ESMF Version 7.1.0r
+20230412 091819.117 INFO             PET0 Finalizing ESMF
+20230412 091819.156 INFO             PET0 Running with ESMF Version 7.1.0r
+20230412 091819.639 INFO             PET0 Finalizing ESMF
+20230412 102311.040 INFO             PET0 Running with ESMF Version 7.1.0r
+20230412 102311.726 INFO             PET0 Finalizing ESMF
+20230412 102311.756 INFO             PET0 Running with ESMF Version 7.1.0r
+20230412 102312.384 INFO             PET0 Finalizing ESMF
+20230412 102549.379 INFO             PET0 Running with ESMF Version 7.1.0r
+20230412 102549.919 INFO             PET0 Finalizing ESMF
+20230412 102549.944 INFO             PET0 Running with ESMF Version 7.1.0r
+20230412 102550.475 INFO             PET0 Finalizing ESMF
+20230413 091442.580 INFO             PET0 Running with ESMF Version 7.1.0r
+20230413 091442.587 ERROR            PET0 ESMF_IOFileTypeCheck.F90:112 ESMF_FileTypeCheck netCDF Status Return Error
+20230413 091442.588 INFO             PET0 Finalizing ESMF
+20230413 091442.613 INFO             PET0 Running with ESMF Version 7.1.0r
+20230413 091442.620 ERROR            PET0 ESMF_IOFileTypeCheck.F90:112 ESMF_FileTypeCheck netCDF Status Return Error
+20230413 091442.620 INFO             PET0 Finalizing ESMF
+20230413 091732.480 INFO             PET0 Running with ESMF Version 7.1.0r
+20230413 091733.089 INFO             PET0 Finalizing ESMF
+20230413 091733.179 INFO             PET0 Running with ESMF Version 7.1.0r
+20230413 091733.737 INFO             PET0 Finalizing ESMF
+20230413 094156.374 INFO             PET0 Running with ESMF Version 7.1.0r
+20230413 094156.852 INFO             PET0 Finalizing ESMF
+20230413 094156.892 INFO             PET0 Running with ESMF Version 7.1.0r
+20230413 094157.422 INFO             PET0 Finalizing ESMF
+20230413 141053.254 INFO             PET0 Running with ESMF Version 7.1.0r
+20230413 141053.881 INFO             PET0 Finalizing ESMF
+20230413 141054.003 INFO             PET0 Running with ESMF Version 7.1.0r
+20230413 141054.692 INFO             PET0 Finalizing ESMF
+20230413 230821.610 INFO             PET0 Running with ESMF Version 7.1.0r
+20230413 230821.797 INFO             PET0 Finalizing ESMF
+20230413 230821.822 INFO             PET0 Running with ESMF Version 7.1.0r
+20230413 230822.021 INFO             PET0 Finalizing ESMF
+20230414 001443.347 INFO             PET0 Running with ESMF Version 7.1.0r
+20230414 001450.893 INFO             PET0 Finalizing ESMF
+20230414 001450.934 INFO             PET0 Running with ESMF Version 7.1.0r
+20230414 001454.175 INFO             PET0 Finalizing ESMF
