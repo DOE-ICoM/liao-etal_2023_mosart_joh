@@ -37,13 +37,13 @@ iFlag_visualization_domain = 0
 iFlag_create_mapping_file = 1
 
 
-iCase_index_hexwatershed = 2
+iCase_index_hexwatershed = 7
 sDate_hexwatershed='20221115'
 
-iCase_index_e3sm = 2
+iCase_index_e3sm = 1
 sDate_e3sm='20230401'
 
-sRegion = 'columbia'
+sRegion = 'amazon'
 sMesh_type = 'mpas'
 
 dResolution_meter=5000
@@ -63,9 +63,9 @@ pProjection_map = ccrs.Orthographic(central_longitude=  dLongitude_outlet_degree
 
 sPath = str( Path().resolve() )
 
-sWorkspace_data = realpath( sPath +  '/data/columbia' )
+sWorkspace_data = realpath( sPath +  '/data/amazon' )
 sWorkspace_input =  str(Path(sWorkspace_data)  /  'input')
-sWorkspace_output=  '/compyfs/liao313/04model/pyhexwatershed/columbia'
+sWorkspace_output=  '/compyfs/liao313/04model/pyhexwatershed/amazon'
 sCIME_directory ='/qfs/people/liao313/workspace/fortran/e3sm/E3SM/cime/scripts'
 
 
@@ -77,7 +77,7 @@ if iFlag_create_hexwatershed_job ==1:
     sLine  = '#!/bin/bash' + '\n'
     ofs.write(sLine)
 
-sFilename_configuration_in = realpath( sPath +  '/examples/columbia/pyhexwatershed_columbia_mpas.json' )
+sFilename_configuration_in = realpath( sPath +  '/examples/amazon/pyhexwatershed_amazon_mpas.json' )
 
     
 if os.path.isfile(sFilename_configuration_in):
@@ -116,14 +116,14 @@ else:
 
     
 #post-process does not require job yet
-#sFilename_json_in='/compyfs/liao313/04model/pyhexwatershed/columbia/pyhexwatershed20220607001/hexwatershed/hexwatershed.json'
+#sFilename_json_in='/compyfs/liao313/04model/pyhexwatershed/amazon/pyhexwatershed20220607001/hexwatershed/hexwatershed.json'
 
 sFilename_mpas_in='/people/liao313/workspace/python/pyhexwatershed_icom/data/sag/input/lnd_cull_mesh.nc'
 sFilename_mosart_parameter_in = '/compyfs/inputdata/rof/mosart/MOSART_Global_half_20210616.nc'
 
 #this one should be replace 
-sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/columbia/e3sm.xml'
-sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/columbia/case.xml'
+sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/amazon/e3sm.xml'
+sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/amazon/case.xml'
 sModel  = 'e3sm'
 sWorkspace_scratch = '/compyfs/liao313'
 
@@ -150,15 +150,15 @@ if not os.path.exists(sWorkspace_output):
     Path(sWorkspace_output).mkdir(parents=True, exist_ok=True)
  
     
-sFilename_mosart_parameter_out = sWorkspace_output + '/mosart_columbia_parameter_mpas.nc'
-sFilename_mosart_unstructured_domain= sWorkspace_output + '/mosart_columbia_domain_mpas.nc'
-sFilename_mosart_unstructured_script = sWorkspace_output + '/mosart_columbia_scriptgrid_mpas.nc'
+sFilename_mosart_parameter_out = sWorkspace_output + '/mosart_amazon_parameter_mpas.nc'
+sFilename_mosart_unstructured_domain= sWorkspace_output + '/mosart_amazon_domain_mpas.nc'
+sFilename_mosart_unstructured_script = sWorkspace_output + '/mosart_amazon_scriptgrid_mpas.nc'
 
-sFilename_elm_structured_domain_file_out_1d = sWorkspace_output + '/elm_columbia_domain_latlon.nc'
-sFilename_elm_structured_script_1d = sWorkspace_output + '/elm_columbia_scripgrid_latlon.nc'
+sFilename_elm_structured_domain_file_out_1d = sWorkspace_output + '/elm_amazon_domain_latlon.nc'
+sFilename_elm_structured_script_1d = sWorkspace_output + '/elm_amazon_scripgrid_latlon.nc'
 
-sFilename_map_elm_to_mosart = sWorkspace_output + '/l2r_columbia_mapping.nc'
-sFilename_map_mosart_to_elm = sWorkspace_output + '/r2l_columbia_mapping.nc'
+sFilename_map_elm_to_mosart = sWorkspace_output + '/l2r_amazon_mapping.nc'
+sFilename_map_mosart_to_elm = sWorkspace_output + '/r2l_amazon_mapping.nc'
 
 
 sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd.gpcc'
