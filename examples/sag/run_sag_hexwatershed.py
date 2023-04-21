@@ -21,13 +21,16 @@ from pye3sm.mesh.unstructured.e3sm_convert_unstructured_domain_file_to_scripgrid
 from pye3sm.mesh.e3sm_create_structured_envelope_domain_file_1d import e3sm_create_structured_envelope_domain_file_1d
 from pye3sm.mesh.e3sm_create_mapping_file import e3sm_create_mapping_file
 
-nTask = 1
+nTask = 3
+iFlag_resubmit = 1
+nSubmit = 1
 
 iFlag_debug =0
 iFlag_debug_case=0
+iFlag_large_cache = 0
 
 iFlag_run_hexwatershed  = 0
-iFlag_run_hexwatershed_utility = 0
+iFlag_run_hexwatershed_utility = 1
 iFlag_create_e3sm_case = 1
 
 iFlag_mosart =1 
@@ -40,7 +43,7 @@ iFlag_create_mapping_file = 1
 iCase_index_hexwatershed = 3
 sDate_hexwatershed='20230120'
 
-iCase_index_e3sm = 1
+iCase_index_e3sm = 2
 sDate_e3sm='20230401'
 
 sRegion = 'sag'
@@ -88,7 +91,7 @@ iFlag_stream_burning_topology = 1
 iFlag_use_mesh_dem = 1
 iFlag_elevation_profile = 1
 oPyhexwatershed = pyhexwatershed_read_model_configuration_file(sFilename_configuration_in,\
-                iCase_index_in=iCase_index_e3sm,iFlag_stream_burning_topology_in=iFlag_stream_burning_topology,\
+                iCase_index_in=iCase_index_hexwatershed,iFlag_stream_burning_topology_in=iFlag_stream_burning_topology,\
                 iFlag_use_mesh_dem_in=iFlag_use_mesh_dem,\
                 iFlag_elevation_profile_in=iFlag_elevation_profile,\
                 dResolution_meter_in = dResolution_meter, sDate_in= sDate_hexwatershed, sMesh_type_in= sMesh_type)   
@@ -196,11 +199,13 @@ if iFlag_create_e3sm_case == 1:
     #create the script file      
     aParameter_e3sm = pye3sm_read_e3sm_configuration_file(sFilename_e3sm_configuration ,
                                                           iFlag_debug_in = iFlag_debug, 
+                                                          iFlag_large_cache_in = iFlag_large_cache,\
                                                           iFlag_branch_in = 0,
                                                           iFlag_continue_in = 0,
-                                                          iFlag_resubmit_in = 0,
+                                                          iFlag_resubmit_in = iFlag_resubmit,
                                                           iFlag_short_in = 0 ,
                                                           nTask_in=nTask,
+                                                          nSubmit_in = nSubmit,
                                                           RES_in =res,
                                                           Project_in = project,
                                                           COMPSET_in = compset ,

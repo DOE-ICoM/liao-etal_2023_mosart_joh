@@ -25,7 +25,9 @@ from pye3sm.mesh.unstructured.e3sm_convert_unstructured_domain_file_to_scripgrid
 from pye3sm.mesh.e3sm_create_structured_envelope_domain_file_1d import e3sm_create_structured_envelope_domain_file_1d
 from pye3sm.mesh.e3sm_create_mapping_file import e3sm_create_mapping_file
 
-nTask = 9
+nTask = 7
+iFlag_resubmit =1
+nSubmit = 1
 
 iFlag_debug =0
 iFlag_debug_case=0
@@ -46,8 +48,8 @@ sMesh_type = 'mpas'
 iCase_index_hexwatershed = 1
 sDate_hexwatershed='20230120'
 
-iCase_index_e3sm = 20
-sDate_e3sm='20230120'
+iCase_index_e3sm = 1
+sDate_e3sm='20230401'
 dResolution_meter=5000
 
 res='MOS_USRDAT'      
@@ -95,7 +97,7 @@ oPyhexwatershed = pyhexwatershed_read_model_configuration_file(sFilename_configu
                 iCase_index_in=iCase_index_hexwatershed, iFlag_stream_burning_topology_in=iFlag_stream_burning_topology,
                 iFlag_use_mesh_dem_in=iFlag_use_mesh_dem,
                 iFlag_elevation_profile_in=iFlag_elevation_profile,
-                dResolution_meter_in = dResolution_meter, sDate_in= sDate_e3sm, sMesh_type_in= sMesh_type)   
+                dResolution_meter_in = dResolution_meter, sDate_in= sDate_hexwatershed, sMesh_type_in= sMesh_type)   
 
 if iFlag_create_hexwatershed_job ==1:
 
@@ -201,8 +203,9 @@ if iFlag_create_e3sm_case == 1:
                                                           iFlag_debug_in = iFlag_debug, 
                                                           iFlag_branch_in = 0,
                                                           iFlag_continue_in = 0,
-                                                          iFlag_resubmit_in = 0,
+                                                          iFlag_resubmit_in = iFlag_resubmit,
                                                           iFlag_short_in = 0 ,
+                                                          nSubmit_in= nSubmit,
                                                           nTask_in= nTask,
                                                           RES_in =res,
                                                           Project_in = project,
@@ -216,7 +219,10 @@ if iFlag_create_e3sm_case == 1:
         sLine = 'frivinp_rtm = ' + "'" + sFilename_mosart_parameter_out + "'" + '\n'
         ofs.write(sLine)
 
-        sLine = "rtmhist_fincl2 = 'RIVER_DISCHARGE_OVER_LAND_LIQ', 'RIVER_DISCHARGE_TO_OCEAN_LIQ', 'Main_Channel_STORAGE_LIQ', 'Main_Channel_Water_Depth_LIQ' " + '\n'
+        sLine = "rtmhist_fincl1 = 'RIVER_DISCHARGE_OVER_LAND_LIQ', 'RIVER_DISCHARGE_TO_OCEAN_LIQ', 'Main_Channel_STORAGE_LIQ', 'Main_Channel_Water_Depth_LIQ','QSUR_LIQ','QSUR_ICE','QSUB_LIQ', 'QSUB_ICE'" + '\n'
+        ofs.write(sLine)
+
+        sLine = "rtmhist_fincl2 = 'RIVER_DISCHARGE_OVER_LAND_LIQ', 'Main_Channel_STORAGE_LIQ', 'Main_Channel_Water_Depth_LIQ' " + '\n'
         ofs.write(sLine)
 
         sLine = 'rtmhist_nhtfrq = 0,-24 '+ '\n'

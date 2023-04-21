@@ -21,13 +21,15 @@ from pye3sm.mesh.unstructured.e3sm_convert_unstructured_domain_file_to_scripgrid
 from pye3sm.mesh.e3sm_create_structured_envelope_domain_file_1d import e3sm_create_structured_envelope_domain_file_1d
 from pye3sm.mesh.e3sm_create_mapping_file import e3sm_create_mapping_file
 
-nTask = -1
+nTask = -5
+iFlag_resubmit = 1
+nSubmit = 1
 
 iFlag_debug =0
 iFlag_debug_case=0
 
 iFlag_run_hexwatershed  = 0
-iFlag_run_hexwatershed_utility = 1
+iFlag_run_hexwatershed_utility = 0
 iFlag_create_e3sm_case = 1
 
 iFlag_mosart =1 
@@ -198,16 +200,18 @@ if iFlag_visualization_domain ==1:
 
 if iFlag_create_e3sm_case == 1:
     #create the script file      
-    aParameter_e3sm = pye3sm_read_e3sm_configuration_file(sFilename_e3sm_configuration ,\
-                                                          iFlag_debug_in = iFlag_debug, \
-                                                          iFlag_branch_in = 0,\
-                                                          iFlag_continue_in = 0,\
-                                                          iFlag_resubmit_in = 0,\
-                                                          iFlag_short_in = 0 ,\
-                                                          RES_in =res,\
-                                                          nTask_in= nTask,\
-                                                          Project_in = project,\
-                                                          COMPSET_in = compset ,\
+    aParameter_e3sm = pye3sm_read_e3sm_configuration_file(sFilename_e3sm_configuration ,
+                                                          iFlag_debug_in = iFlag_debug, 
+                                                          iFlag_branch_in = 0,
+                                                          iFlag_continue_in = 0,
+                                                          iFlag_resubmit_in = iFlag_resubmit,
+                                                          iFlag_short_in = 0 ,
+                                                          iFlag_large_cache_in= 1,
+                                                          RES_in =res,
+                                                          nTask_in= nTask,
+                                                          nSubmit_in= nSubmit,
+                                                          Project_in = project,
+                                                          COMPSET_in = compset ,
                                                           sCIME_directory_in = sCIME_directory)
     oE3SM = pye3sm(aParameter_e3sm)
     if iFlag_mosart ==1:                

@@ -20,13 +20,13 @@ iFlag_run_hexwatershed  = 0
 iFlag_run_hexwatershed_utility = 1
 iFlag_create_e3sm_case = 1
 
-iFlag_mosart = 1 
-iFlag_elm = 0 
+iFlag_mosart =1 
+iFlag_elm =0 
 iFlag_create_hexwatershed_job = 0
 iFlag_visualization_domain = 0
 iFlag_create_mapping_file = 1
 
-sRegion = 'columbia'
+sRegion = 'amazon'
 sMesh_type = 'mpas'
 
 res='MOS_USRDAT'      
@@ -35,13 +35,13 @@ compset = 'RMOSGPCC'
 project = 'esmd'
 
 iCase_index_hexwatershed = 1
-iCase_index_e3sm = 2
+iCase_index_e3sm = 1
 
 dResolution_meter=5000
 sDate='20230401'
 #this one should be replace 
-sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/columbia/e3sm.xml'
-sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/columbia/case.xml'
+sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/amazon/e3sm.xml'
+sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/amazon/case.xml'
 sModel  = 'e3sm'
 sWorkspace_scratch = '/compyfs/liao313'
 
@@ -63,8 +63,8 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
                                                           iFlag_lnd_in= 0,
                                                           iFlag_dlnd_in= 1,
                                                           iFlag_rof_in= 1,
-                                                          iYear_start_in = 1984, 
-                                                          iYear_end_in = 1984,                                                
+                                                          iYear_start_in = 1983, 
+                                                          iYear_end_in = 1983,                                                
                                                           iCase_index_in = iCase_index_e3sm, 
                                                           sDate_in = sDate, 
                                                           sModel_in = sModel,
@@ -76,7 +76,6 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 
 oCase = pycase(aParameter_case)
 sUnit = r"${\mathrm{m}}^3/s$"
-#sUnit = r"$\frac{\mathrm{1}}{{\mathrm{Distance}}^2 \ (\mathrm{m}^2)}$"
 
 sTitle = 'River discharge over land (liquid)'
 mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
