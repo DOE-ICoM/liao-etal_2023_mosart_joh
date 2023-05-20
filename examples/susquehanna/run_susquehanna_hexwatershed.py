@@ -250,6 +250,7 @@ if iFlag_create_e3sm_case == 1:
         sLine = 'dtlimit=2.0e0' + '\n'
         ofs.write(sLine)
         ofs.close()    
+        
     aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configuration,     
                                                           iFlag_debug_case_in= iFlag_debug_case,                                                   
                                                           iFlag_atm_in = 0,
@@ -260,7 +261,7 @@ if iFlag_create_e3sm_case == 1:
                                                           iFlag_rof_in= 1,
                                                           iFlag_replace_drof_forcing_in = 1,
                                                           iYear_start_in = 1980, 
-                                                          iYear_end_in = 2019,                                                          
+                                                          iYear_end_in = 1999,                                                          
                                                           iYear_data_datm_start_in = 1980, 
                                                           iYear_data_datm_end_in = 2009, 
                                                           iYear_data_dlnd_start_in = 1980, 

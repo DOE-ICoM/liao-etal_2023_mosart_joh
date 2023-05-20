@@ -29,7 +29,7 @@ iFlag_debug =0
 iFlag_debug_case=0
 
 iFlag_run_hexwatershed  = 0
-iFlag_run_hexwatershed_utility = 1
+iFlag_run_hexwatershed_utility = 0
 iFlag_create_e3sm_case = 1
 
 iFlag_mosart =1 
@@ -259,7 +259,7 @@ if iFlag_create_e3sm_case == 1:
                                                           iFlag_rof_in= 1,
                                                           iFlag_replace_drof_forcing_in = 1,
                                                           iYear_start_in = 1980, 
-                                                          iYear_end_in = 2019,                                                          
+                                                          iYear_end_in = 1999,                                                          
                                                           iYear_data_datm_start_in = 1980, 
                                                           iYear_data_datm_end_in = 2009, 
                                                           iYear_data_dlnd_start_in = 1980, 
