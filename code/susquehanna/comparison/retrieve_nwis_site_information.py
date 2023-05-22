@@ -19,6 +19,8 @@ squaremile2squarekm = 2.58999
 # USGS gage number for the stream of interest
 aGage_num = ['01578310' ] #01578310
 
+
+
 #loop through all the gages
 driver = ogr.GetDriverByName('GeoJSON')
 output_file = current_file_directory + '/' 'site_location.geojson'
@@ -27,8 +29,13 @@ if os.path.exists(output_file):
     os.remove(output_file)
 
 data_source = driver.CreateDataSource(output_file)
-layer = data_source.CreateLayer('points', geom_type=ogr.wkbPoint)
-feature = ogr.Feature(layer.GetLayerDefn())
+pLayer = data_source.CreateLayer('points', geom_type=ogr.wkbPoint)
+
+pLayer.CreateField(ogr.FieldDefn('id', ogr.OFTInteger64))
+pLayer.CreateField(ogr.FieldDefn('lon', ogr.OFTReal))
+pLayer.CreateField(ogr.FieldDefn('lat', ogr.OFTReal))
+pLayer.CreateField(ogr.FieldDefn('drainage', ogr.OFTReal))
+pFeature = ogr.Feature(pLayer.GetLayerDefn())
 
 for gage_num in aGage_num:
     dLon, dLat, dDrainage = retrieve_usgs_site_information_nwis(gage_num)
@@ -37,8 +44,13 @@ for gage_num in aGage_num:
   
     point = ogr.Geometry(ogr.wkbPoint)
     point.AddPoint(dLon, dLat)
-    feature.SetGeometry(point)
-    layer.CreateFeature(feature)
+    pFeature.SetField('id', int(gage_num) ) 
+    pFeature.SetField('lon', dLon ) 
+    pFeature.SetField('lat', dLat ) 
+    pFeature.SetField('drainage', dDrainage ) 
+
+    pFeature.SetGeometry(point)
+    pLayer.CreateFeature(pFeature)
     
 data_source.Destroy()
 
