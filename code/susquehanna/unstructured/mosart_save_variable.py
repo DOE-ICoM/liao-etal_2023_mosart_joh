@@ -4,7 +4,6 @@ import os
 from pathlib import Path
 from os.path import realpath
 
-import cartopy.crs as ccrs
 
 from pyearth.system.define_global_variables import *
 
@@ -41,10 +40,10 @@ compset = 'RMOSGPCC'
 project = 'esmd'
 
 iCase_index_hexwatershed = 1
-iCase_index_e3sm = 18
+iCase_index_e3sm = 1
 
 dResolution_meter=5000
-sDate='20230120'
+sDate='20230401'
 #this one should be replace 
 sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/susquehanna/e3sm.xml'
 sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/susquehanna/case.xml'
@@ -70,9 +69,9 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
                                                           iFlag_dlnd_in= 1,
                                                           iFlag_rof_in= 1,
                                                           iYear_start_in = 1980, 
-                                                          iYear_end_in = 1997,
-                                                          iYear_data_end_in = 1979, 
-                                                          iYear_data_start_in = 2008  , 
+                                                          iYear_end_in = 2019,
+                                                          iYear_data_datm_end_in = 2009, 
+                                                          iYear_data_datm_start_in = 1980  , 
                                                           iCase_index_in = iCase_index_e3sm, 
                                                           sDate_in = sDate, 
                                                           sModel_in = sModel,
