@@ -10,7 +10,9 @@ Matt Cooper<sup>1</sup>,
 Tian Zhou<sup>1\*</sup>,
 Gautam Bisht<sup>1</sup>,
 Hong-Yi Li<sup>3</sup>,
-Ning Sun<sup>1</sup>,
+Lingcheng Li<sup>1\*</sup>,
+Dongyu Feng<sup>1\*</sup>,
+Ning Sun<sup>4</sup>,
 and L. Ruby Leung<sup>1</sup>
 
 <sup>1 </sup> Atmospheric Sciences and Global Change, Pacific Northwest National Laboratory, Richland, WA, USA
@@ -18,6 +20,8 @@ and L. Ruby Leung<sup>1</sup>
 <sup>2 </sup> T-3 Fluid Dynamics and Solid Mechanics Group, Los Alamos National Laboratory, Los Alamos, NM, USA
 
 <sup>3 </sup> University of Houston, Houston, TX, USA
+
+<sup>4 </sup> Hydrology Group, Pacific Northwest National Laboratory, Richland, WA, USA
 
 \* corresponding author:  chang.liao@pnnl.gov; tian.zhou@pnnl.gov
 
