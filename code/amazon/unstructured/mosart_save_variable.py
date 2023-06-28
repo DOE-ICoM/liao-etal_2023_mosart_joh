@@ -69,7 +69,7 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
                                                           iFlag_lnd_in= 0,
                                                           iFlag_dlnd_in= 1,
                                                           iFlag_rof_in= 1,
-                                                          iYear_start_in = 1980, 
+                                                          iYear_start_in = 2019, 
                                                           iYear_end_in = 2019,                                                         
                                                           iCase_index_in = iCase_index_e3sm, 
                                                           sDate_in = sDate, 
@@ -82,13 +82,13 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 
 oCase = pycase(aParameter_case)
 
-#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
 
 sVariable= 'Main_Channel_Water_Depth_LIQ'
 #mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
 
 sVariable= 'Main_Channel_STORAGE_LIQ'
-mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
 
 sVariable= 'QSUR_LIQ'
 #mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)

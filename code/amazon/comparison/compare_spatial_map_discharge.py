@@ -89,33 +89,33 @@ sWorkspace_simulation_case_run = oCase_structured.sWorkspace_simulation_case_run
 sCase = oCase_structured.sCase
 iMonth_start = 1
 iMonth_end = 12
-for iYear in range(iYear_start, iYear_end + 1):
-        sYear = "{:04d}".format(iYear) #str(iYear).zfill(4)    
-        for iMonth in range(iMonth_start, iMonth_end + 1):
-            sMonth = str(iMonth).zfill(2)             
-            sDate = sYear + sMonth    
-            sDummy = '.mosart.h0.' + sYear + '-' + sMonth + sExtension_netcdf
-            sFilename = sWorkspace_simulation_case_run + slash + sCase + sDummy     
-            pDatasets = nc.Dataset(sFilename)    
-            #get the variable              
-            for sKey, aValue in pDatasets.variables.items():
-                if sKey.lower() == sVariable.lower() :                                   
-                    aData_variable = (aValue[:]).data  
-                    #get fillvalue 
-                    dFillvalue = float(aValue._FillValue )
-                    aData_variable = aData_variable[np.where(aData_variable != dFillvalue)]
-                    break
-                    #save output                         
-                else:
-                    pass
-            
-            dData_max = np.max( [dData_max, np.max(aData_variable)] )
-            print( np.max(aData_variable))
+#for iYear in range(iYear_start, iYear_end + 1):
+#        sYear = "{:04d}".format(iYear) #str(iYear).zfill(4)    
+#        for iMonth in range(iMonth_start, iMonth_end + 1):
+#            sMonth = str(iMonth).zfill(2)             
+#            sDate = sYear + sMonth    
+#            sDummy = '.mosart.h0.' + sYear + '-' + sMonth + sExtension_netcdf
+#            sFilename = sWorkspace_simulation_case_run + slash + sCase + sDummy     
+#            pDatasets = nc.Dataset(sFilename)    
+#            #get the variable              
+#            for sKey, aValue in pDatasets.variables.items():
+#                if sKey.lower() == sVariable.lower() :                                   
+#                    aData_variable = (aValue[:]).data  
+#                    #get fillvalue 
+#                    dFillvalue = float(aValue._FillValue )
+#                    aData_variable = aData_variable[np.where(aData_variable != dFillvalue)]
+#                    break
+#                    #save output                         
+#                else:
+#                    pass
+#            
+#            dData_max = np.max( [dData_max, np.max(aData_variable)] )
+#            print( np.max(aData_variable))
             
 
 
 sDate_unstructured = '20230401'
-iCase_index_e3sm_unstructurd = 1
+iCase_index_e3sm_unstructurd = 2
 aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configuration,                                                        
                                                           iFlag_atm_in = 0,
                                                           iFlag_datm_in = 1,
@@ -137,39 +137,39 @@ oCase_unstructured = pycase(aParameter_case)
 sWorkspace_analysis_case = sWorkspace_analysis_case = oCase_unstructured.sWorkspace_analysis_case
 sWorkspace_simulation_case_run = oCase_unstructured.sWorkspace_simulation_case_run
 sCase = oCase_unstructured.sCase
-for iYear in range(iYear_start, iYear_end + 1):
-        sYear = "{:04d}".format(iYear) #str(iYear).zfill(4)    
-        for iMonth in range(iMonth_start, iMonth_end + 1):
-            sMonth = str(iMonth).zfill(2)             
-            sDate = sYear + sMonth    
-            sDummy = '.mosart.h0.' + sYear + '-' + sMonth + sExtension_netcdf
-            sFilename = sWorkspace_simulation_case_run + slash + sCase + sDummy
-            pDatasets = nc.Dataset(sFilename)                           
-            for sKey, aValue in pDatasets.variables.items():
-                if sKey.lower() == sVariable.lower() :                                   
-                    aData_variable = (aValue[:]).data                      
-                    dFillvalue = float(aValue._FillValue )    
-                    aData_variable = aData_variable[np.where(aData_variable != dFillvalue)]
-                    break                                  
-                else:
-                    pass
-
-            print( np.max(aData_variable))
-            dData_max = np.max( [dData_max, np.max(aData_variable)] )
-            
-print(dData_max)
+#for iYear in range(iYear_start, iYear_end + 1):
+#        sYear = "{:04d}".format(iYear) #str(iYear).zfill(4)    
+#        for iMonth in range(iMonth_start, iMonth_end + 1):
+#            sMonth = str(iMonth).zfill(2)             
+#            sDate = sYear + sMonth    
+#            sDummy = '.mosart.h0.' + sYear + '-' + sMonth + sExtension_netcdf
+#            sFilename = sWorkspace_simulation_case_run + slash + sCase + sDummy
+#            pDatasets = nc.Dataset(sFilename)                           
+#            for sKey, aValue in pDatasets.variables.items():
+#                if sKey.lower() == sVariable.lower() :                                   
+#                    aData_variable = (aValue[:]).data                      
+#                    dFillvalue = float(aValue._FillValue )    
+#                    aData_variable = aData_variable[np.where(aData_variable != dFillvalue)]
+#                    break                                  
+#                else:
+#                    pass
+#
+#            print( np.max(aData_variable))
+#            dData_max = np.max( [dData_max, np.max(aData_variable)] )
+#            
+#print(dData_max)
 dData_max = 300000.0
 
 #plot them separately
 sUnit = r"${\mathrm{m}}^3/s$"
 sTitle = 'River discharge over land (liquid)'
-mosart_map_variable_unstructured(oCase_structured,
-                                 iFlag_scientific_notation_colorbar_in=1,  iFlag_resolution=1, dResolution_in=1/8.0,
-                                 dData_min_in=dData_min,
-                                 dData_max_in=dData_max,
-                                 sVariable_in = sVariable,
-                                 sUnit_in= sUnit, 
-                                 sTitle_in=sTitle)
+#mosart_map_variable_unstructured(oCase_structured,
+#                                 iFlag_scientific_notation_colorbar_in=1,  iFlag_resolution=1, dResolution_in=1/8.0,
+#                                 dData_min_in=dData_min,
+#                                 dData_max_in=dData_max,
+#                                 sVariable_in = sVariable,
+#                                 sUnit_in= sUnit, 
+#                                 sTitle_in=sTitle)
 
 mosart_map_variable_unstructured(oCase_unstructured,
                                  iFlag_scientific_notation_colorbar_in=1, iFlag_resolution=1, dResolution_in=1/8.0,
