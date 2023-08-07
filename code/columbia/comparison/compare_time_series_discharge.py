@@ -54,7 +54,7 @@ sVariable = 'RIVER_DISCHARGE_OVER_LAND_LIQ'
 
 
 aDate= list()
-iYear_start = 2000
+iYear_start = 2018
 iYear_end = 2019
 #now read the usgs
 iFlag_nrni = 1

@@ -58,7 +58,7 @@ sWorkspace_scratch = '/compyfs/liao313'
 sVariable = 'RIVER_DISCHARGE_OVER_LAND_LIQ'
 
 aDate= list()
-iYear_start = 2010
+iYear_start = 2019
 iYear_end = 2019
 
 

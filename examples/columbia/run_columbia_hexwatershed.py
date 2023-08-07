@@ -20,6 +20,7 @@ from hexwatershed_utility.mosart.convert_hexwatershed_output_to_mosart import co
 from pye3sm.mesh.unstructured.e3sm_convert_unstructured_domain_file_to_scripgrid_file import e3sm_convert_unstructured_domain_file_to_scripgrid_file
 from pye3sm.mesh.e3sm_create_structured_envelope_domain_file_1d import e3sm_create_structured_envelope_domain_file_1d
 from pye3sm.mesh.e3sm_create_mapping_file import e3sm_create_mapping_file
+from pye3sm.mesh.e3sm_map_domain_files import e3sm_map_domain_files
 
 nTask = -3
 iFlag_resubmit = 1
@@ -30,19 +31,19 @@ iFlag_debug_case=0
 
 iFlag_run_hexwatershed  = 0
 iFlag_run_hexwatershed_utility = 0
-iFlag_create_e3sm_case = 1
+iFlag_create_e3sm_case = 0
 
 iFlag_mosart =1 
 iFlag_elm =0 
 iFlag_create_hexwatershed_job = 0
-iFlag_visualization_domain = 0
-iFlag_create_mapping_file = 1
+iFlag_visualization_domain = 1
+iFlag_create_mapping_file = 0
 
 
 iCase_index_hexwatershed = 2
 sDate_hexwatershed='20221115'
 
-iCase_index_e3sm = 2
+iCase_index_e3sm = 3
 sDate_e3sm='20230401'
 
 sRegion = 'columbia'
@@ -163,7 +164,9 @@ sFilename_map_elm_to_mosart = sWorkspace_output + '/l2r_columbia_mapping.nc'
 sFilename_map_mosart_to_elm = sWorkspace_output + '/r2l_columbia_mapping.nc'
 
 
-sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd.gpcc'
+sFilename_user_dlnd_runoff_revised_05 = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd.gpcc'
+sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd_005.gpcc' #the original 0.05 degree data
+#we also need 1/8 and 1/16 degree data 
 sFilename_user_dlnd_runoff = sWorkspace_output + '/dlnd.streams.txt.lnd.gpcc'
 if not os.path.exists(sFilename_user_dlnd_runoff):
     shutil.copyfile(sFilename_user_dlnd_runoff_origin, sFilename_user_dlnd_runoff)
@@ -178,10 +181,11 @@ if iFlag_run_hexwatershed_utility == 1:
             sFilename_mosart_parameter_out,\
             sFilename_mosart_unstructured_domain)
 #create the mapping file
+dResolution_runoff = 0.05
 if iFlag_create_mapping_file==1:
     #create a domain using mpas domain file        
     e3sm_create_structured_envelope_domain_file_1d(sFilename_mosart_unstructured_domain, sFilename_elm_structured_domain_file_out_1d,
-                                                                         0.5, 0.5 )
+                                                                         dResolution_runoff, dResolution_runoff )
     #convert elm to script file         
     e3sm_convert_unstructured_domain_file_to_scripgrid_file(sFilename_elm_structured_domain_file_out_1d, sFilename_elm_structured_script_1d )   
     
@@ -192,10 +196,19 @@ if iFlag_create_mapping_file==1:
 
     e3sm_create_mapping_file(  sFilename_mosart_unstructured_script , sFilename_elm_structured_script_1d, sFilename_map_mosart_to_elm )
 
+    
+
 if iFlag_visualization_domain ==1:
     #visualize mosart input parameter generated
     #exclude flow direction maybe
-    
+    #plot a domain file for validation
+    sFilename_domain_a = sFilename_mosart_unstructured_domain
+    sFilename_domain_b = sFilename_elm_structured_domain_file_out_1d
+    aFilename_domain = [sFilename_domain_a, sFilename_domain_b]
+
+    sFilename_out = sWorkspace_output + '/domain_comparison.png'
+  
+    e3sm_map_domain_files(aFilename_domain,sFilename_out)
     pass
 
 if iFlag_create_e3sm_case == 1:
