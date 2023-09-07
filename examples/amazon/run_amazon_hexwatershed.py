@@ -30,7 +30,7 @@ iFlag_debug =0
 iFlag_debug_case=0
 iFlag_extract_forcing = 1
 iFlag_run_hexwatershed  = 0
-iFlag_run_hexwatershed_utility = 1
+iFlag_run_hexwatershed_utility = 0
 iFlag_create_e3sm_case = 1
 
 iFlag_mosart =1 
@@ -43,7 +43,7 @@ iFlag_create_mapping_file = 1
 iCase_index_hexwatershed = 1
 sDate_hexwatershed='20230501'
 
-iCase_index_e3sm = 2
+iCase_index_e3sm = 3
 sDate_e3sm='20230401'
 
 sRegion = 'amazon'
@@ -165,6 +165,7 @@ sFilename_map_mosart_to_elm = sWorkspace_output + '/r2l_amazon_mapping.nc'
 
 
 sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd.gpcc'
+sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd_005.gpcc' 
 sFilename_user_dlnd_runoff = sWorkspace_output + '/dlnd.streams.txt.lnd.gpcc'
 if not os.path.exists(sFilename_user_dlnd_runoff):
     shutil.copyfile(sFilename_user_dlnd_runoff_origin, sFilename_user_dlnd_runoff)
@@ -192,6 +193,7 @@ if iFlag_create_mapping_file==1:
         sWorkspace_output_region = '/compyfs/liao313/00raw/mingpan_runoff/' + sRegion
         if not os.path.exists(sWorkspace_output_region):
             Path(sWorkspace_output_region).mkdir(parents=True, exist_ok=True)
+            
         sFilename_user_dlnd_runoff_regional = elm_extract_data_mode_from_domain_file(sFilename_user_dlnd_runoff_origin, 
                                                                                      sFilename_regional_domain, 
                                                                                      sWorkspace_output_region,

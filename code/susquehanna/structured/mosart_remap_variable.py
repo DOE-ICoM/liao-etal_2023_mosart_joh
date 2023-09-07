@@ -13,11 +13,11 @@ from pye3sm.shared.case import pycase
 from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_case_configuration_file
 from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_e3sm_configuration_file
 
-from pye3sm.mosart.general.unstructured.save.mosart_save_variable_unstructured import mosart_save_variable_unstructured
-
-
-
-
+from pye3sm.mesh.unstructured.e3sm_convert_unstructured_domain_file_to_scripgrid_file import e3sm_convert_unstructured_domain_file_to_scripgrid_file
+from pye3sm.mesh.e3sm_create_structured_envelope_domain_file_1d import e3sm_create_structured_envelope_domain_file_1d
+from pye3sm.mesh.e3sm_create_mapping_file import e3sm_create_mapping_file
+from pye3sm.mesh.e3sm_map_domain_files import e3sm_map_domain_files
+from pye3sm.mosart.general.structured.remap.mosart_remap_variable_structured import mosart_remap_variable_structured
 
 iCase_index_e3sm = 1
 sRegion = 'susquehanna'
@@ -62,14 +62,24 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 
 oCase = pycase(aParameter_case)
 
+#we need to create a mapping file between two cases
 
-#mosart_save_variable_unstructured( oCase, sVariable_in = sVariable)
+#convert elm to script file         
 
-sVariable= 'Main_Channel_STORAGE_LIQ'
-#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+sWorkspace_output = oCase.sWorkspace_case_aux
 
-sVariable= 'Main_Channel_Water_Depth_LIQ'
-#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+sFilename_mosart_unstructured_script = '/compyfs/liao313/04model/e3sm/susquehanna/cases_aux/e3sm20230401006/mosart_susquehanna_scriptgrid_mpas.nc'
 
-sVariable= 'QSUR_LIQ'
-mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+sFilename_elm_structured_domain_file_out_1d = '/compyfs/liao313/04model/e3sm/susquehanna/cases_aux/e3sm20230329001/mosart_susquehanna_domain.nc'
+sFilename_elm_structured_script_1d = sWorkspace_output + '/elm_susquehanna_scripgrid_latlon.nc'
+
+sFilename_map_elm_to_mosart = sWorkspace_output + slash + 'susquehanna_mapping.nc'
+e3sm_convert_unstructured_domain_file_to_scripgrid_file(sFilename_elm_structured_domain_file_out_1d, sFilename_elm_structured_script_1d )   
+    
+#convert mosart to script file  
+
+e3sm_create_mapping_file( sFilename_elm_structured_script_1d, sFilename_mosart_unstructured_script , sFilename_map_elm_to_mosart )
+
+
+mosart_remap_variable_structured( oE3SM, oCase, sFilename_map_elm_to_mosart)
+
