@@ -1,22 +1,22 @@
-
+import os
 from pyearth.system.define_global_variables import *
 from pye3sm.shared.e3sm import pye3sm
 from pye3sm.shared.case import pycase
 from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_case_configuration_file
 from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_e3sm_configuration_file
-from pye3sm.mosart.general.unstructured.map.mosart_map_variable_unstructured import mosart_map_variable_unstructured
 
+from pye3sm.tools.namelist.convert_namelist_to_dict import convert_namelist_to_dict
 
-iFlag_run_hexwatershed  = 0
-iFlag_run_hexwatershed_utility = 1
-iFlag_create_e3sm_case = 1
-
-iFlag_mosart =1 
-iFlag_elm =0 
-iFlag_create_hexwatershed_job = 0
-iFlag_visualization_domain = 0
-iFlag_create_mapping_file = 1
-
+from pye3sm.mosart.mesh.structured.mosart_create_domain_1d import mosart_create_domain_1d
+dResolution_meter=5000
+sDate='20230329'
+iCase_index_e3sm = 1
+dResolution = 1/16.0
+#this one should be replace 
+sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/susquehanna/e3sm.xml'
+sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/susquehanna/case.xml'
+sModel  = 'e3sm'
+sWorkspace_scratch = '/compyfs/liao313'
 sRegion = 'susquehanna'
 sMesh_type = 'mpas'
 
@@ -24,18 +24,6 @@ res='MOS_USRDAT'
 res = 'MOS_USRDAT_MPAS'
 compset = 'RMOSGPCC'
 project = 'esmd'
-
-iCase_index_hexwatershed = 1
-iCase_index_e3sm = 1
-
-dResolution_meter=5000
-sDate='20230329'
-#this one should be replace 
-sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/susquehanna/e3sm.xml'
-sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/susquehanna/case.xml'
-sModel  = 'e3sm'
-sWorkspace_scratch = '/compyfs/liao313'
-
 aParameter_e3sm = pye3sm_read_e3sm_configuration_file(sFilename_e3sm_configuration ,\
                                                           iFlag_debug_in = 0, \
                                                           iFlag_branch_in = 0,\
@@ -68,17 +56,18 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 
 
 oCase = pycase(aParameter_case)
-
-sUnit = r"$m^3/s$"
-sTitle = 'River discharge over land (liquid)'
-mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
-
-sVariable= 'Main_Channel_STORAGE_LIQ'
-sUnit = r"$m^3$"
-sTitle = 'Main channel storage (liquid)'
-mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
-
-sVariable= 'Main_Channel_Water_Depth_LIQ'
-sUnit = r"m"
-sTitle = 'Main channel water depth (liquid)'
-mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=0)
+sWorkspace_case_aux = oCase.sWorkspace_case_aux
+sWorkspace_simulation_case_run = oCase.sWorkspace_simulation_case_run
+sFilename_domain = sWorkspace_case_aux + slash + '/mosart_'+ oCase.sRegion + '_domain_mpas.nc'
+if not os.path.exists(sFilename_domain):
+    print(sFilename_domain + ' does not exist.')        
+    sFilename_domain = sWorkspace_case_aux + slash + '/mosart_'+ oCase.sRegion + '_domain.nc' 
+    if not os.path.exists(sFilename_domain):
+        sFilename_mosart_in = sWorkspace_simulation_case_run + slash + 'mosart_in'
+        aParameter_mosart = convert_namelist_to_dict(sFilename_mosart_in)
+        sFilename_mosart_parameter = aParameter_mosart['frivinp_rtm']
+        mosart_create_domain_1d(sFilename_mosart_parameter, sFilename_domain, dResolution, dResolution)
+    else:
+        #maybe check? this should be done in save the result
+        
+        pass

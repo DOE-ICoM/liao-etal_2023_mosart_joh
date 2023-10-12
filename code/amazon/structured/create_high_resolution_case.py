@@ -1,3 +1,12 @@
+
+#create domain file
+
+#create parameter file
+
+#the flow direction will be the same as the coarse resolution case
+
+
+
 #in practice, it is recommended to run hexwatershed using the following method, then call the post-processing
 
 import os
@@ -26,13 +35,13 @@ from pye3sm.mesh.e3sm_create_structured_envelope_domain_file_1d import e3sm_crea
 from pye3sm.mesh.e3sm_create_mapping_file import e3sm_create_mapping_file
 from pye3sm.mesh.e3sm_map_domain_files import e3sm_map_domain_files
 
-nTask = -5
-iFlag_resubmit = 0
-nSubmit = 0
+nTask = -8
+iFlag_resubmit = 1
+nSubmit = 1
 
 iFlag_debug =0
 iFlag_debug_case=0
-iFlag_extract_forcing = 1
+iFlag_extract_forcing = 0
 
 iFlag_run_hexwatershed  = 0
 iFlag_run_hexwatershed_utility = 0
@@ -42,16 +51,16 @@ iFlag_mosart = 1
 iFlag_elm = 0 
 iFlag_create_hexwatershed_job = 0
 iFlag_visualization_domain = 0
-iFlag_create_mapping_file = 1
+iFlag_create_mapping_file = 0
 
-sRegion = 'susquehanna'
-sMesh_type = 'mpas'
+sRegion = 'amazon'
+sMesh_type = 'latlon'
 
 iCase_index_hexwatershed = 1
 sDate_hexwatershed='20230120'
 
-iCase_index_e3sm = 6
-sDate_e3sm='20230401'
+iCase_index_e3sm = 2
+sDate_e3sm='20230501'
 dResolution_meter=5000
 
 res='MOS_USRDAT'      
@@ -69,9 +78,9 @@ sPath = str( Path().resolve() )
 
 sPath = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/'
 iFlag_option = 1
-sWorkspace_data = realpath( sPath +  '/data/susquehanna' )
+sWorkspace_data = realpath( sPath +  '/data/amazon' )
 sWorkspace_input =  str(Path(sWorkspace_data)  /  'input')
-sWorkspace_output=  '/compyfs/liao313/04model/pyhexwatershed/susquehanna'
+sWorkspace_output=  '/compyfs/liao313/04model/pyhexwatershed/amazon'
 sCIME_directory ='/qfs/people/liao313/workspace/fortran/e3sm/E3SM/cime/scripts'
 
 
@@ -82,50 +91,13 @@ if iFlag_create_hexwatershed_job ==1:
     sLine  = '#!/bin/bash' + '\n'
     ofs.write(sLine)
 
-sFilename_configuration_in = realpath( sPath +  '/examples/susquehanna/pyhexwatershed_susquehanna_mpas_dam.json' )
-
-    
-if os.path.isfile(sFilename_configuration_in):
-    print(sFilename_configuration_in)
-else:
-    print('This configuration file does not exist: ', sFilename_configuration_in )
-    exit()
-    
-#mpas mesh only has one resolution
-iFlag_stream_burning_topology = 1 
-iFlag_use_mesh_dem = 1
-iFlag_elevation_profile = 1
-oPyhexwatershed = pyhexwatershed_read_model_configuration_file(sFilename_configuration_in,
-                iCase_index_in=iCase_index_hexwatershed, iFlag_stream_burning_topology_in=iFlag_stream_burning_topology,
-                iFlag_use_mesh_dem_in=iFlag_use_mesh_dem,
-                iFlag_elevation_profile_in=iFlag_elevation_profile,
-                dResolution_meter_in = dResolution_meter, sDate_in= sDate_hexwatershed, sMesh_type_in= sMesh_type)   
-
-if iFlag_create_hexwatershed_job ==1:
-
-    if iFlag_run_hexwatershed == 1:
-        oPyhexwatershed._create_hpc_job()   
-        sLine  = 'cd ' + oPyhexwatershed.sWorkspace_output + '\n'
-        ofs.write(sLine)
-        sLine  = 'sbatch submit.job' + '\n'
-        ofs.write(sLine)
-        ofs.close()
-
-        pass
-else:
-    pass
-
-
-    
 #post-process does not require job yet
-#sFilename_json_in='/compyfs/liao313/04model/pyhexwatershed/susquehanna/pyhexwatershed20220607001/hexwatershed/hexwatershed.json'
 
-sFilename_mpas_in='/people/liao313/workspace/python/pyhexwatershed_icom/data/susquehanna/input/lnd_cull_mesh.nc'
 sFilename_mosart_parameter_in = '/compyfs/inputdata/rof/mosart/MOSART_Global_half_20210616.nc'
 
 #this one should be replace 
-sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/susquehanna/e3sm.xml'
-sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/susquehanna/case.xml'
+sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/amazon/e3sm.xml'
+sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/amazon/case.xml'
 sModel  = 'e3sm'
 sWorkspace_scratch = '/compyfs/liao313'
 
@@ -150,75 +122,70 @@ sWorkspace_output = oCase.sWorkspace_case_aux
 
 if not os.path.exists(sWorkspace_output):
     Path(sWorkspace_output).mkdir(parents=True, exist_ok=True)
- 
-    
-sFilename_mosart_parameter_out = sWorkspace_output + '/mosart_susquehanna_parameter.nc'
-sFilename_mosart_unstructured_domain= sWorkspace_output + '/mosart_susquehanna_domain.nc'
-sFilename_mosart_unstructured_script = sWorkspace_output + '/mosart_susquehanna_scriptgrid.nc'
 
-sFilename_elm_structured_domain_file_out_1d = sWorkspace_output + '/elm_susquehanna_domain_latlon.nc'
-sFilename_elm_structured_script_1d = sWorkspace_output + '/elm_susquehanna_scripgrid_latlon.nc'
+#use the old domain as the domain reference file
+sFilename_domain_ref = '/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20230501001/mosart_amazon_domain.nc'
+sFilename_parameter_ref = '/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20230501001/mosart_amazon_parameter.nc'
 
-sFilename_map_elm_to_mosart = sWorkspace_output + '/l2r_susquehanna_mapping.nc'
-sFilename_map_mosart_to_elm = sWorkspace_output + '/r2l_susquehanna_mapping.nc'
+#mosart    
+sFilename_mosart_parameter_out = sWorkspace_output + '/mosart_amazon_parameter.nc'
+sFilename_mosart_structured_domain_out_1d= sWorkspace_output + '/mosart_amazon_domain.nc'
+sFilename_mosart_structured_script_out = sWorkspace_output + '/mosart_amazon_scriptgrid.nc'
+
+#elm
+sFilename_elm_structured_domain_file_out_1d = sWorkspace_output + '/elm_amazon_domain.nc'
+sFilename_elm_structured_script_out = sWorkspace_output + '/elm_amazon_scriptgrid.nc'
 
 
-sFilename_user_dlnd_runoff_revised_05 = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd.gpcc'
+
+sFilename_map_elm_to_mosart = sWorkspace_output + '/l2r_amazon_mapping.nc'
+sFilename_map_mosart_to_elm = sWorkspace_output + '/r2l_amazon_mapping.nc'
+
+#copy reference file to the output folder
+if not os.path.exists(sFilename_mosart_parameter_out):
+    shutil.copyfile(sFilename_parameter_ref, sFilename_mosart_parameter_out)
+
+if not os.path.exists(sFilename_mosart_structured_domain_out_1d):
+    shutil.copyfile(sFilename_domain_ref, sFilename_mosart_structured_domain_out_1d)
+
+
+#sFilename_user_dlnd_runoff_revised_05 = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd.gpcc'
 sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd_005.gpcc' #the original 0.05 degree data
 #we also need 1/8 and 1/16 degree data 
-sFilename_user_dlnd_runoff = sWorkspace_output + '/dlnd.streams.txt.lnd.gpcc'
-#if not os.path.exists(sFilename_user_dlnd_runoff):
-#    shutil.copyfile(sFilename_user_dlnd_runoff_origin, sFilename_user_dlnd_runoff)
+#sFilename_user_dlnd_runoff = sWorkspace_output + '/dlnd.streams.txt.lnd.gpcc'
 
-if iFlag_run_hexwatershed_utility == 1:
-    #the json should replaced
+sFilename_user_dlnd_runoff = '/compyfs/liao313/00raw/mingpan_runoff/amazon/dlnd.streams.txt.lnd_005.gpcc'
 
-    sFilename_json_in = oPyhexwatershed.sFilename_hexwatershed_json
-
-    convert_hexwatershed_json_to_mosart_netcdf(sFilename_json_in, 
-            sFilename_mpas_in, 
-            sFilename_mosart_parameter_in,
-            sFilename_mosart_parameter_out,
-            sFilename_mosart_unstructured_domain)
+sFilename_domain_forcing = '/compyfs/liao313/00raw/mingpan_runoff/amazon/ming_daily_1980.nc'
 
 #create the mapping file
 dResolution_runoff = 0.05
 if iFlag_create_mapping_file==1:
+    #create two domain files
+    
+    #convert 2d structured domain file to 1d unstructured domain file
+          
     #create a domain using mpas domain file        
-    e3sm_create_structured_envelope_domain_file_1d(sFilename_mosart_unstructured_domain, 
+    e3sm_create_structured_envelope_domain_file_1d(sFilename_mosart_structured_domain_out_1d, 
                                                    sFilename_elm_structured_domain_file_out_1d,
                                                                          dResolution_runoff, dResolution_runoff )
-    if iFlag_extract_forcing == 1:
-        #extract the global runoff using the domain file
-        sFilename_global_domain = ''
-        sFilename_regional_domain = sFilename_elm_structured_domain_file_out_1d
-        sWorkspace_output_region = '/compyfs/liao313/00raw/mingpan_runoff/' + sRegion
-        if not os.path.exists(sWorkspace_output_region):
-            Path(sWorkspace_output_region).mkdir(parents=True, exist_ok=True)
-        sFilename_user_dlnd_runoff_regional = elm_extract_data_mode_from_domain_file(sFilename_user_dlnd_runoff_origin, 
-                                                                                     sFilename_regional_domain, 
-                                                                                     sWorkspace_output_region,
-                                                                                     iYear_start_in=2020,
-                                                                                     iYear_end_in=2021)
-        if not os.path.exists(sFilename_user_dlnd_runoff):
-            shutil.copyfile(sFilename_user_dlnd_runoff_regional, sFilename_user_dlnd_runoff)
-        pass
-    else:
-        sFilename_user_dlnd_runoff = '/compyfs/liao313/00raw/mingpan_runoff/susquehanna/dlnd.streams.txt.lnd_005.gpcc'
+    # the second domain is for the model domain     
+    
+    
     #convert elm to script file         
-    e3sm_convert_unstructured_domain_file_to_scripgrid_file(sFilename_elm_structured_domain_file_out_1d, sFilename_elm_structured_script_1d )   
+    e3sm_convert_unstructured_domain_file_to_scripgrid_file(sFilename_elm_structured_domain_file_out_1d, sFilename_elm_structured_script_out )   
     
     #convert mosart to script file  
-    e3sm_convert_unstructured_domain_file_to_scripgrid_file(sFilename_mosart_unstructured_domain, sFilename_mosart_unstructured_script)
+    e3sm_convert_unstructured_domain_file_to_scripgrid_file(sFilename_mosart_structured_domain_out_1d, sFilename_mosart_structured_script_out)
 
-    e3sm_create_mapping_file( sFilename_elm_structured_script_1d, sFilename_mosart_unstructured_script , sFilename_map_elm_to_mosart )
+    e3sm_create_mapping_file( sFilename_elm_structured_script_out, sFilename_mosart_structured_script_out , sFilename_map_elm_to_mosart )
 
-    e3sm_create_mapping_file( sFilename_mosart_unstructured_script , sFilename_elm_structured_script_1d, sFilename_map_mosart_to_elm )
+    e3sm_create_mapping_file( sFilename_mosart_structured_script_out , sFilename_elm_structured_script_out, sFilename_map_mosart_to_elm )
 
 if iFlag_visualization_domain == 1:
     #visualize mosart input parameter generated∏
     #exclude flow direction maybe
-    sFilename_domain_a = sFilename_mosart_unstructured_domain
+    sFilename_domain_a = sFilename_mosart_structured_domain_out_1d
     sFilename_domain_b = sFilename_elm_structured_domain_file_out_1d
     aFilename_domain = [sFilename_domain_a, sFilename_domain_b]
 
@@ -318,3 +285,6 @@ if iFlag_create_e3sm_case == 1:
 
     
     pass
+
+
+

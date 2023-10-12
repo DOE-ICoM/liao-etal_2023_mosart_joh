@@ -22,13 +22,13 @@ from pye3sm.mesh.unstructured.e3sm_convert_unstructured_domain_file_to_scripgrid
 from pye3sm.mesh.e3sm_create_structured_envelope_domain_file_1d import e3sm_create_structured_envelope_domain_file_1d
 from pye3sm.mesh.e3sm_create_mapping_file import e3sm_create_mapping_file
 
-nTask = -5
+nTask = -8
 iFlag_resubmit = 1
 nSubmit = 1
 
 iFlag_debug =0
 iFlag_debug_case=0
-iFlag_extract_forcing = 1
+iFlag_extract_forcing = 0
 iFlag_run_hexwatershed  = 0
 iFlag_run_hexwatershed_utility = 0
 iFlag_create_e3sm_case = 1
@@ -180,11 +180,12 @@ if iFlag_run_hexwatershed_utility == 1:
             sFilename_mosart_parameter_out,
             sFilename_mosart_unstructured_domain)
 #create the mapping file
+dResolution_runoff = 0.05
 if iFlag_create_mapping_file==1:
     
     #create a domain using mpas domain file        
     e3sm_create_structured_envelope_domain_file_1d(sFilename_mosart_unstructured_domain, sFilename_elm_structured_domain_file_out_1d,
-                                                                         0.5, 0.5 )
+                                                                         dResolution_runoff, dResolution_runoff )
     
     if iFlag_extract_forcing == 1:
         #extract the global runoff using the domain file

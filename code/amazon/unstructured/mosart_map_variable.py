@@ -35,7 +35,7 @@ compset = 'RMOSGPCC'
 project = 'esmd'
 
 iCase_index_hexwatershed = 1
-iCase_index_e3sm = 2
+iCase_index_e3sm = 3
 
 dResolution_meter=5000
 sDate='20230401'
@@ -93,7 +93,7 @@ mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUni
 sVariable= 'QSUR_LIQ'
 sUnit = r"${\mathrm{m}}^3$"
 sTitle = 'Surface runoff (liquid)'
-#mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
+mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
 
 sVariable= 'QSUB_LIQ'
 sUnit = r"${\mathrm{m}}^3$"

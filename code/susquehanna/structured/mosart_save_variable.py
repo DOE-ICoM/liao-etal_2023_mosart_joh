@@ -19,7 +19,7 @@ from pye3sm.mosart.general.unstructured.save.mosart_save_variable_unstructured i
 
 
 
-iCase_index_e3sm = 1
+iCase_index_e3sm = 2
 sRegion = 'susquehanna'
 sMesh_type = 'mpas'
 res='MOS_USRDAT'      
@@ -63,13 +63,13 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 oCase = pycase(aParameter_case)
 
 
-#mosart_save_variable_unstructured( oCase, sVariable_in = sVariable)
+mosart_save_variable_unstructured( oCase, sVariable_in = sVariable)
 
 sVariable= 'Main_Channel_STORAGE_LIQ'
-#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
 
 sVariable= 'Main_Channel_Water_Depth_LIQ'
-#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
 
 sVariable= 'QSUR_LIQ'
 mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)

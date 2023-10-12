@@ -23,7 +23,7 @@ from pye3sm.mosart.general.unstructured.save.mosart_save_variable_unstructured i
 
 
 
-iCase_index_e3sm = 1
+iCase_index_e3sm = 2
 sRegion = 'amazon'
 sMesh_type = 'mpas'
 res='MOS_USRDAT'      
@@ -74,3 +74,6 @@ mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_resolut
 
 sVariable= 'Main_Channel_Water_Depth_LIQ'
 mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_resolution=1, dResolution_in=1/8.0)
+
+sVariable= 'QSUR_LIQ'
+mosart_save_variable_unstructured(oCase, sVariable_in = sVariable,iFlag_resolution=1, dResolution_in=1/8.0)

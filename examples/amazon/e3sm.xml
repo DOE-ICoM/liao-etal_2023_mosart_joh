@@ -43,6 +43,12 @@
         The scratch workspace
       </desc>
     </entry>
+    <entry id="iFlag_large_cache" value="1">
+      <type>int</type>
+      <desc>
+        The scratch workspace
+      </desc>
+    </entry>
     <entry id="iFlag_resubmit" value="0">
       <type>int</type>
       <desc>

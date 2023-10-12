@@ -9,7 +9,11 @@ sFilename_parameter_in='/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20230
 sFilename_geojson_out='/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20230501001/mosart_amazon_parameter.geojson'
 aVariable_parameter= ['nh','nt','rdep','rlen' ,'rslp', 'rwid','twid','tslp','twid','gxr','hslp']
 aVariable_short= ['nh','nt','rdep','rlen' ,'rslp', 'rwid','twid','tslp','twid','gxr','hslp']
-mosart_map_unstructured_parameters(sFilename_domain_in, sFilename_parameter_in, sFilename_geojson_out, aVariable_parameter, aVariable_short)
+aFlag_scientific_notation_colorbar = [0,0,0,1,0,0,0,0,0,1,0]
+mosart_map_unstructured_parameters(sFilename_domain_in, sFilename_parameter_in, sFilename_geojson_out, aVariable_parameter, aVariable_short,
+                                   aFlag_scientific_notation_colorbar_in= aFlag_scientific_notation_colorbar,
+                                      iSize_x_in=8, iSize_y_in=8)
 sFilename_geojson_out='/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20230501001/mosart_amazon_flow_direction.geojson'
-mosart_map_unstructured_flow_direction(sFilename_domain_in, sFilename_parameter_in, sFilename_geojson_out)
+mosart_map_unstructured_flow_direction(sFilename_domain_in, sFilename_parameter_in, sFilename_geojson_out,
+                                       iSize_x_in=8, iSize_y_in=8)
 
