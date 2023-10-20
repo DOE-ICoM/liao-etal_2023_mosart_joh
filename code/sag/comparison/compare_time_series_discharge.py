@@ -60,7 +60,7 @@ sVariable = 'RIVER_DISCHARGE_OVER_LAND_LIQ'
 
 
 aDate= list()
-iYear_start = 2016
+iYear_start = 2015
 iYear_end = 2019
 for iYear in range(iYear_start,iYear_end+1):
     for iMonth in range(1,13):
@@ -245,6 +245,8 @@ sFilename_out = current_file_directory + slash + 'streamflow_comparison.png'
 plot_time_series_data( [aDate, aDate, aDate], [aDischarge_obs, aData_structured, aData_unstructured], 
                       sFilename_out = sFilename_out,
                       iFlag_scientific_notation_in = 1,
+                      sTitle_in = 'River discharge comparison',
+                      sLabel_y_in = r"${\mathrm{m}}^3/s$",
                       aLabel_legend_in=['Observation','1/16 DRT-based','MPAS-based'],
                         aColor_in=['black','red','blue'],
                           aLinestyle_in=['solid','solid','solid'],

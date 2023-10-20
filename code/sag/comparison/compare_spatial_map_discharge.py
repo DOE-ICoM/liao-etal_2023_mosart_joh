@@ -47,8 +47,8 @@ sWorkspace_scratch = '/compyfs/liao313'
 
 #determine the max and min from modeled results
 sVariable = 'RIVER_DISCHARGE_OVER_LAND_LIQ'
-iYear_start = 2019
-iYear_end = 2019
+iYear_start = 2000
+iYear_end = 2000
 aParameter_e3sm = pye3sm_read_e3sm_configuration_file(sFilename_e3sm_configuration ,\
                                                           iFlag_debug_in = 0, \
                                                           iFlag_branch_in = 0,\

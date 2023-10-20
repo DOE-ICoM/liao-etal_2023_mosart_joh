@@ -20,6 +20,8 @@ from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_case_config
 from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_e3sm_configuration_file
 
 from pye3sm.mosart.general.unstructured.save.mosart_save_variable_unstructured import mosart_save_variable_unstructured
+from pye3sm.mosart.general.unstructured.save.mosart_merge_variable_unstructured import mosart_merge_variable_unstructured
+
 
 
 iFlag_run_hexwatershed  = 0
@@ -69,7 +71,7 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
                                                           iFlag_lnd_in= 0,
                                                           iFlag_dlnd_in= 1,
                                                           iFlag_rof_in= 1,
-                                                          iYear_start_in = 1980, 
+                                                          iYear_start_in = 2019, 
                                                           iYear_end_in = 2019,                                                         
                                                           iCase_index_in = iCase_index_e3sm, 
                                                           sDate_in = sDate, 
@@ -82,17 +84,22 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 
 oCase = pycase(aParameter_case)
 
-mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
 
 sVariable= 'Main_Channel_Water_Depth_LIQ'
-mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
 
 sVariable= 'Main_Channel_STORAGE_LIQ'
-mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
 
 sVariable= 'QSUR_LIQ'
 mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
 
 sVariable= 'QSUB_LIQ'
 mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+
+aVariable_in = ['QSUR_LIQ', 'QSUB_LIQ']
+sVariable_out = 'Q_LIQ'
+
+mosart_merge_variable_unstructured(oCase, aVariable_in, sVariable_out)
 
