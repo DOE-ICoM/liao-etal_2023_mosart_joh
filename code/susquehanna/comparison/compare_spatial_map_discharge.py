@@ -89,28 +89,28 @@ sWorkspace_simulation_case_run = oCase_structured.sWorkspace_simulation_case_run
 sCase = oCase_structured.sCase
 iMonth_start = 1
 iMonth_end = 12
-for iYear in range(iYear_start, iYear_end + 1):
-        sYear = "{:04d}".format(iYear) #str(iYear).zfill(4)    
-        for iMonth in range(iMonth_start, iMonth_end + 1):
-            sMonth = str(iMonth).zfill(2)             
-            sDate = sYear + sMonth    
-            sDummy = '.mosart.h0.' + sYear + '-' + sMonth + sExtension_netcdf
-            sFilename = sWorkspace_simulation_case_run + slash + sCase + sDummy     
-            pDatasets = nc.Dataset(sFilename)    
-            #get the variable              
-            for sKey, aValue in pDatasets.variables.items():
-                if sKey.lower() == sVariable.lower() :                                   
-                    aData_variable = (aValue[:]).data  
-                    #get fillvalue 
-                    dFillvalue = float(aValue._FillValue )
-                    aData_variable = aData_variable[np.where(aData_variable != dFillvalue)]
-                    break
-                    #save output                         
-                else:
-                    pass
-            
-            dData_max = np.max( [dData_max, np.max(aData_variable)] )
-            print( np.max(aData_variable))
+#for iYear in range(iYear_start, iYear_end + 1):
+#        sYear = "{:04d}".format(iYear) #str(iYear).zfill(4)    
+#        for iMonth in range(iMonth_start, iMonth_end + 1):
+#            sMonth = str(iMonth).zfill(2)             
+#            sDate = sYear + sMonth    
+#            sDummy = '.mosart.h0.' + sYear + '-' + sMonth + sExtension_netcdf
+#            sFilename = sWorkspace_simulation_case_run + slash + sCase + sDummy     
+#            pDatasets = nc.Dataset(sFilename)    
+#            #get the variable              
+#            for sKey, aValue in pDatasets.variables.items():
+#                if sKey.lower() == sVariable.lower() :                                   
+#                    aData_variable = (aValue[:]).data  
+#                    #get fillvalue 
+#                    dFillvalue = float(aValue._FillValue )
+#                    aData_variable = aData_variable[np.where(aData_variable != dFillvalue)]
+#                    break
+#                    #save output                         
+#                else:
+#                    pass
+#            
+#            dData_max = np.max( [dData_max, np.max(aData_variable)] )
+#            print( np.max(aData_variable))
             
 
 
@@ -137,25 +137,25 @@ oCase_unstructured = pycase(aParameter_case)
 sWorkspace_analysis_case = sWorkspace_analysis_case = oCase_unstructured.sWorkspace_analysis_case
 sWorkspace_simulation_case_run = oCase_unstructured.sWorkspace_simulation_case_run
 sCase = oCase_unstructured.sCase
-for iYear in range(iYear_start, iYear_end + 1):
-        sYear = "{:04d}".format(iYear) #str(iYear).zfill(4)    
-        for iMonth in range(iMonth_start, iMonth_end + 1):
-            sMonth = str(iMonth).zfill(2)             
-            sDate = sYear + sMonth    
-            sDummy = '.mosart.h0.' + sYear + '-' + sMonth + sExtension_netcdf
-            sFilename = sWorkspace_simulation_case_run + slash + sCase + sDummy
-            pDatasets = nc.Dataset(sFilename)                           
-            for sKey, aValue in pDatasets.variables.items():
-                if sKey.lower() == sVariable.lower() :                                   
-                    aData_variable = (aValue[:]).data                      
-                    dFillvalue = float(aValue._FillValue )    
-                    aData_variable = aData_variable[np.where(aData_variable != dFillvalue)]
-                    break                                  
-                else:
-                    pass
-
-            print( np.max(aData_variable))
-            dData_max = np.max( [dData_max, np.max(aData_variable)] )
+#for iYear in range(iYear_start, iYear_end + 1):
+#        sYear = "{:04d}".format(iYear) #str(iYear).zfill(4)    
+#        for iMonth in range(iMonth_start, iMonth_end + 1):
+#            sMonth = str(iMonth).zfill(2)             
+#            sDate = sYear + sMonth    
+#            sDummy = '.mosart.h0.' + sYear + '-' + sMonth + sExtension_netcdf
+#            sFilename = sWorkspace_simulation_case_run + slash + sCase + sDummy
+#            pDatasets = nc.Dataset(sFilename)                           
+#            for sKey, aValue in pDatasets.variables.items():
+#                if sKey.lower() == sVariable.lower() :                                   
+#                    aData_variable = (aValue[:]).data                      
+#                    dFillvalue = float(aValue._FillValue )    
+#                    aData_variable = aData_variable[np.where(aData_variable != dFillvalue)]
+#                    break                                  
+#                else:
+#                    pass
+#
+#            print( np.max(aData_variable))
+#            dData_max = np.max( [dData_max, np.max(aData_variable)] )
             
 print(dData_max)
 dData_max = 2200.0

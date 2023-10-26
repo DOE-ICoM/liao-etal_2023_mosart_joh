@@ -1,10 +1,5 @@
 
-import os
 
-from pathlib import Path
-from os.path import realpath
-
-import cartopy.crs as ccrs
 
 from pyearth.system.define_global_variables import *
 
@@ -35,10 +30,10 @@ compset = 'RMOSGPCC'
 project = 'esmd'
 
 iCase_index_hexwatershed = 1
-iCase_index_e3sm = 18
+iCase_index_e3sm = 6
 
 dResolution_meter=5000
-sDate='20230120'
+sDate='20230401'
 #this one should be replace 
 sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/susquehanna/e3sm.xml'
 sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/susquehanna/case.xml'
@@ -63,10 +58,10 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
                                                           iFlag_lnd_in= 0,
                                                           iFlag_dlnd_in= 1,
                                                           iFlag_rof_in= 1,
-                                                          iYear_start_in = 1997, 
-                                                          iYear_end_in = 1997,
-                                                          iYear_data_end_in = 1979, 
-                                                          iYear_data_start_in = 2009  , 
+                                                          iYear_start_in = 2005, 
+                                                          iYear_end_in = 2005,
+                                                          iYear_data_dlnd_end_in = 1979, 
+                                                          iYear_data_dlnd_start_in = 2009  , 
                                                           iCase_index_in = iCase_index_e3sm, 
                                                           sDate_in = sDate, 
                                                           sModel_in = sModel,
@@ -78,7 +73,6 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 
 oCase = pycase(aParameter_case)
 sUnit = r"${\mathrm{m}}^3/s$"
-#sUnit = r"$\frac{\mathrm{1}}{{\mathrm{Distance}}^2 \ (\mathrm{m}^2)}$"
 
 sTitle = 'River discharge over land (liquid)'
 mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
@@ -100,5 +94,5 @@ mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUni
 
 sVariable= 'QSUB_LIQ'
 sUnit = r"${\mathrm{m}}^3$"
-sTitle = 'Subsurface rnuoff (liquid)'
-mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
+sTitle = 'Subsurface runoff (liquid)'
+#mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)

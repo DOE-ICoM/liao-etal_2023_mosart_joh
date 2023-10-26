@@ -35,7 +35,7 @@ compset = 'RMOSGPCC'
 project = 'esmd'
 
 iCase_index_hexwatershed = 1
-iCase_index_e3sm = 1
+iCase_index_e3sm = 3
 
 dResolution_meter=5000
 sDate='20230401'
@@ -63,8 +63,8 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
                                                           iFlag_lnd_in= 0,
                                                           iFlag_dlnd_in= 1,
                                                           iFlag_rof_in= 1,
-                                                          iYear_start_in = 1983, 
-                                                          iYear_end_in = 1983,                                                
+                                                          iYear_start_in = 2019, 
+                                                          iYear_end_in = 2019,                                                
                                                           iCase_index_in = iCase_index_e3sm, 
                                                           sDate_in = sDate, 
                                                           sModel_in = sModel,
@@ -98,4 +98,4 @@ mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUni
 sVariable= 'QSUB_LIQ'
 sUnit = r"${\mathrm{m}}^3$"
 sTitle = 'Subsurface rnuoff (liquid)'
-mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
+#mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)

@@ -1,15 +1,11 @@
 
 import os
 
-from pathlib import Path
-from os.path import realpath
-
-import cartopy.crs as ccrs
 
 from pyearth.system.define_global_variables import *
 
 from pyhexwatershed.pyhexwatershed_read_model_configuration_file import pyhexwatershed_read_model_configuration_file
-from pyhexwatershed.classes.pycase import hexwatershedcase
+
 
 
 from pye3sm.shared.e3sm import pye3sm
@@ -23,7 +19,7 @@ from pye3sm.mosart.general.unstructured.save.mosart_save_variable_unstructured i
 
 
 
-iCase_index_e3sm = 1
+iCase_index_e3sm = 2
 sRegion = 'susquehanna'
 sMesh_type = 'mpas'
 res='MOS_USRDAT'      
@@ -73,4 +69,7 @@ sVariable= 'Main_Channel_STORAGE_LIQ'
 mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
 
 sVariable= 'Main_Channel_Water_Depth_LIQ'
+mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+
+sVariable= 'QSUR_LIQ'
 mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)

@@ -16,20 +16,21 @@ from pye3sm.shared.e3sm import pye3sm
 from pye3sm.shared.case import pycase
 from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_e3sm_configuration_file
 from hexwatershed_utility.mosart.convert_hexwatershed_output_to_mosart import convert_hexwatershed_json_to_mosart_netcdf
+from pye3sm.elm.general.structured.extract.elm_extract_data_mode_from_domain_file import elm_extract_data_mode_from_domain_file
 
 from pye3sm.mesh.unstructured.e3sm_convert_unstructured_domain_file_to_scripgrid_file import e3sm_convert_unstructured_domain_file_to_scripgrid_file
 from pye3sm.mesh.e3sm_create_structured_envelope_domain_file_1d import e3sm_create_structured_envelope_domain_file_1d
 from pye3sm.mesh.e3sm_create_mapping_file import e3sm_create_mapping_file
 
-nTask = -5
+nTask = -8
 iFlag_resubmit = 1
 nSubmit = 1
 
 iFlag_debug =0
 iFlag_debug_case=0
-
+iFlag_extract_forcing = 0
 iFlag_run_hexwatershed  = 0
-iFlag_run_hexwatershed_utility = 1
+iFlag_run_hexwatershed_utility = 0
 iFlag_create_e3sm_case = 1
 
 iFlag_mosart =1 
@@ -42,7 +43,7 @@ iFlag_create_mapping_file = 1
 iCase_index_hexwatershed = 1
 sDate_hexwatershed='20230501'
 
-iCase_index_e3sm = 2
+iCase_index_e3sm = 3
 sDate_e3sm='20230401'
 
 sRegion = 'amazon'
@@ -164,6 +165,7 @@ sFilename_map_mosart_to_elm = sWorkspace_output + '/r2l_amazon_mapping.nc'
 
 
 sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd.gpcc'
+sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd_005.gpcc' 
 sFilename_user_dlnd_runoff = sWorkspace_output + '/dlnd.streams.txt.lnd.gpcc'
 if not os.path.exists(sFilename_user_dlnd_runoff):
     shutil.copyfile(sFilename_user_dlnd_runoff_origin, sFilename_user_dlnd_runoff)
@@ -178,11 +180,33 @@ if iFlag_run_hexwatershed_utility == 1:
             sFilename_mosart_parameter_out,
             sFilename_mosart_unstructured_domain)
 #create the mapping file
+dResolution_runoff = 0.05
 if iFlag_create_mapping_file==1:
+    
     #create a domain using mpas domain file        
     e3sm_create_structured_envelope_domain_file_1d(sFilename_mosart_unstructured_domain, sFilename_elm_structured_domain_file_out_1d,
-                                                                         0.5, 0.5 )
-    #convert elm to script file         
+                                                                         dResolution_runoff, dResolution_runoff )
+    
+    if iFlag_extract_forcing == 1:
+        #extract the global runoff using the domain file
+        sFilename_global_domain = ''
+        sFilename_regional_domain = sFilename_elm_structured_domain_file_out_1d
+        sWorkspace_output_region = '/compyfs/liao313/00raw/mingpan_runoff/' + sRegion
+        if not os.path.exists(sWorkspace_output_region):
+            Path(sWorkspace_output_region).mkdir(parents=True, exist_ok=True)
+            
+        sFilename_user_dlnd_runoff_regional = elm_extract_data_mode_from_domain_file(sFilename_user_dlnd_runoff_origin, 
+                                                                                     sFilename_regional_domain, 
+                                                                                     sWorkspace_output_region,
+                                                                                     iYear_start_in=1980,
+                                                                                     iYear_end_in=2019)
+        if not os.path.exists(sFilename_user_dlnd_runoff):
+            shutil.copyfile(sFilename_user_dlnd_runoff_regional, sFilename_user_dlnd_runoff)
+        pass
+    else:
+        sFilename_user_dlnd_runoff = '/compyfs/liao313/00raw/mingpan_runoff/amazon/dlnd.streams.txt.lnd_005.gpcc'
+  
+  #convert elm to script file         
     e3sm_convert_unstructured_domain_file_to_scripgrid_file(sFilename_elm_structured_domain_file_out_1d, sFilename_elm_structured_script_1d )   
     
     #convert mosart to script file  

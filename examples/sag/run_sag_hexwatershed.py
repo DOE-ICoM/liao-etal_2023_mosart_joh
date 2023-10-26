@@ -29,9 +29,9 @@ iFlag_debug =0
 iFlag_debug_case=0
 iFlag_large_cache = 0
 
-iFlag_run_hexwatershed  = 0
-iFlag_run_hexwatershed_utility = 0
-iFlag_create_e3sm_case = 1
+iFlag_run_hexwatershed  = 1
+iFlag_run_hexwatershed_utility = 1
+iFlag_create_e3sm_case = 0
 
 iFlag_mosart =1 
 iFlag_elm =0 
@@ -40,7 +40,7 @@ iFlag_visualization_domain = 0
 iFlag_create_mapping_file = 1
 
 
-iCase_index_hexwatershed = 3
+iCase_index_hexwatershed = 4
 sDate_hexwatershed='20230120'
 
 iCase_index_e3sm = 1
@@ -66,6 +66,7 @@ sPath = str( Path().resolve() )
 
 sWorkspace_data = realpath( sPath +  '/data/sag' )
 sWorkspace_input =  str(Path(sWorkspace_data)  /  'input')
+
 sWorkspace_output=  '/compyfs/liao313/04model/pyhexwatershed/sag'
 sCIME_directory ='/qfs/people/liao313/workspace/fortran/e3sm/E3SM/cime/scripts'
 
@@ -78,7 +79,7 @@ if iFlag_create_hexwatershed_job ==1:
     sLine  = '#!/bin/bash' + '\n'
     ofs.write(sLine)
 
-sFilename_configuration_in = realpath( sPath +  '/examples/sag/pyhexwatershed_sag_mpas.json' )
+sFilename_configuration_in = realpath( sWorkspace_input +  '/pyhexwatershed_sag_mpas.json' )
 
 if os.path.isfile(sFilename_configuration_in):
     print(sFilename_configuration_in)

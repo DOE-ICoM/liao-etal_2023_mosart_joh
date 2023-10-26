@@ -10,7 +10,6 @@ import cartopy.crs as ccrs
 from pyearth.system.define_global_variables import *
 
 from pyhexwatershed.pyhexwatershed_read_model_configuration_file import pyhexwatershed_read_model_configuration_file
-from pyhexwatershed.classes.pycase import hexwatershedcase
 
 from hexwatershed_utility.mosart.convert_hexwatershed_output_to_mosart import convert_hexwatershed_json_to_mosart_netcdf
 
@@ -21,16 +20,19 @@ from pye3sm.case.e3sm_create_case import e3sm_create_case
 from pye3sm.shared.e3sm import pye3sm
 from pye3sm.shared.case import pycase
 from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_e3sm_configuration_file
+from pye3sm.elm.general.structured.extract.elm_extract_data_mode_from_domain_file import elm_extract_data_mode_from_domain_file
 from pye3sm.mesh.unstructured.e3sm_convert_unstructured_domain_file_to_scripgrid_file import e3sm_convert_unstructured_domain_file_to_scripgrid_file
 from pye3sm.mesh.e3sm_create_structured_envelope_domain_file_1d import e3sm_create_structured_envelope_domain_file_1d
 from pye3sm.mesh.e3sm_create_mapping_file import e3sm_create_mapping_file
+from pye3sm.mesh.e3sm_map_domain_files import e3sm_map_domain_files
 
-nTask = 7
-iFlag_resubmit =1
-nSubmit = 1
+nTask = -5
+iFlag_resubmit = 0
+nSubmit = 0
 
 iFlag_debug =0
 iFlag_debug_case=0
+iFlag_extract_forcing = 1
 
 iFlag_run_hexwatershed  = 0
 iFlag_run_hexwatershed_utility = 0
@@ -48,7 +50,7 @@ sMesh_type = 'mpas'
 iCase_index_hexwatershed = 1
 sDate_hexwatershed='20230120'
 
-iCase_index_e3sm = 1
+iCase_index_e3sm = 6
 sDate_e3sm='20230401'
 dResolution_meter=5000
 
@@ -150,9 +152,9 @@ if not os.path.exists(sWorkspace_output):
     Path(sWorkspace_output).mkdir(parents=True, exist_ok=True)
  
     
-sFilename_mosart_parameter_out = sWorkspace_output + '/mosart_susquehanna_parameter_mpas.nc'
-sFilename_mosart_unstructured_domain= sWorkspace_output + '/mosart_susquehanna_domain_mpas.nc'
-sFilename_mosart_unstructured_script = sWorkspace_output + '/mosart_susquehanna_scriptgrid_mpas.nc'
+sFilename_mosart_parameter_out = sWorkspace_output + '/mosart_susquehanna_parameter.nc'
+sFilename_mosart_unstructured_domain= sWorkspace_output + '/mosart_susquehanna_domain.nc'
+sFilename_mosart_unstructured_script = sWorkspace_output + '/mosart_susquehanna_scriptgrid.nc'
 
 sFilename_elm_structured_domain_file_out_1d = sWorkspace_output + '/elm_susquehanna_domain_latlon.nc'
 sFilename_elm_structured_script_1d = sWorkspace_output + '/elm_susquehanna_scripgrid_latlon.nc'
@@ -161,27 +163,48 @@ sFilename_map_elm_to_mosart = sWorkspace_output + '/l2r_susquehanna_mapping.nc'
 sFilename_map_mosart_to_elm = sWorkspace_output + '/r2l_susquehanna_mapping.nc'
 
 
-sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd.gpcc'
+sFilename_user_dlnd_runoff_revised_05 = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd.gpcc'
+sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd_005.gpcc' #the original 0.05 degree data
+#we also need 1/8 and 1/16 degree data 
 sFilename_user_dlnd_runoff = sWorkspace_output + '/dlnd.streams.txt.lnd.gpcc'
-if not os.path.exists(sFilename_user_dlnd_runoff):
-    shutil.copyfile(sFilename_user_dlnd_runoff_origin, sFilename_user_dlnd_runoff)
+#if not os.path.exists(sFilename_user_dlnd_runoff):
+#    shutil.copyfile(sFilename_user_dlnd_runoff_origin, sFilename_user_dlnd_runoff)
 
 if iFlag_run_hexwatershed_utility == 1:
     #the json should replaced
 
     sFilename_json_in = oPyhexwatershed.sFilename_hexwatershed_json
 
-    convert_hexwatershed_json_to_mosart_netcdf(sFilename_json_in, \
-            sFilename_mpas_in, \
+    convert_hexwatershed_json_to_mosart_netcdf(sFilename_json_in, 
+            sFilename_mpas_in, 
             sFilename_mosart_parameter_in,
-            sFilename_mosart_parameter_out,\
+            sFilename_mosart_parameter_out,
             sFilename_mosart_unstructured_domain)
 
 #create the mapping file
+dResolution_runoff = 0.05
 if iFlag_create_mapping_file==1:
     #create a domain using mpas domain file        
-    e3sm_create_structured_envelope_domain_file_1d(sFilename_mosart_unstructured_domain, sFilename_elm_structured_domain_file_out_1d,
-                                                                         0.5, 0.5 )
+    e3sm_create_structured_envelope_domain_file_1d(sFilename_mosart_unstructured_domain, 
+                                                   sFilename_elm_structured_domain_file_out_1d,
+                                                                         dResolution_runoff, dResolution_runoff )
+    if iFlag_extract_forcing == 1:
+        #extract the global runoff using the domain file
+        sFilename_global_domain = ''
+        sFilename_regional_domain = sFilename_elm_structured_domain_file_out_1d
+        sWorkspace_output_region = '/compyfs/liao313/00raw/mingpan_runoff/' + sRegion
+        if not os.path.exists(sWorkspace_output_region):
+            Path(sWorkspace_output_region).mkdir(parents=True, exist_ok=True)
+        sFilename_user_dlnd_runoff_regional = elm_extract_data_mode_from_domain_file(sFilename_user_dlnd_runoff_origin, 
+                                                                                     sFilename_regional_domain, 
+                                                                                     sWorkspace_output_region,
+                                                                                     iYear_start_in=2020,
+                                                                                     iYear_end_in=2021)
+        if not os.path.exists(sFilename_user_dlnd_runoff):
+            shutil.copyfile(sFilename_user_dlnd_runoff_regional, sFilename_user_dlnd_runoff)
+        pass
+    else:
+        sFilename_user_dlnd_runoff = '/compyfs/liao313/00raw/mingpan_runoff/susquehanna/dlnd.streams.txt.lnd_005.gpcc'
     #convert elm to script file         
     e3sm_convert_unstructured_domain_file_to_scripgrid_file(sFilename_elm_structured_domain_file_out_1d, sFilename_elm_structured_script_1d )   
     
@@ -190,11 +213,18 @@ if iFlag_create_mapping_file==1:
 
     e3sm_create_mapping_file( sFilename_elm_structured_script_1d, sFilename_mosart_unstructured_script , sFilename_map_elm_to_mosart )
 
-    e3sm_create_mapping_file(  sFilename_mosart_unstructured_script , sFilename_elm_structured_script_1d, sFilename_map_mosart_to_elm )
+    e3sm_create_mapping_file( sFilename_mosart_unstructured_script , sFilename_elm_structured_script_1d, sFilename_map_mosart_to_elm )
 
 if iFlag_visualization_domain == 1:
     #visualize mosart input parameter generated∏
     #exclude flow direction maybe
+    sFilename_domain_a = sFilename_mosart_unstructured_domain
+    sFilename_domain_b = sFilename_elm_structured_domain_file_out_1d
+    aFilename_domain = [sFilename_domain_a, sFilename_domain_b]
+
+    sFilename_out = sWorkspace_output + '/domain_comparison.png'
+  
+    e3sm_map_domain_files(aFilename_domain,sFilename_out)
     pass
 
 if iFlag_create_e3sm_case == 1:
@@ -261,7 +291,7 @@ if iFlag_create_e3sm_case == 1:
                                                           iFlag_rof_in= 1,
                                                           iFlag_replace_drof_forcing_in = 1,
                                                           iYear_start_in = 1980, 
-                                                          iYear_end_in = 1999,                                                          
+                                                          iYear_end_in = 2019,                                                          
                                                           iYear_data_datm_start_in = 1980, 
                                                           iYear_data_datm_end_in = 2009, 
                                                           iYear_data_dlnd_start_in = 1980, 

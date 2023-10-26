@@ -61,7 +61,7 @@ sVariable = 'RIVER_DISCHARGE_OVER_LAND_LIQ'
 
 aDate= list()
 iYear_start = 2018
-iYear_end = 2019
+iYear_end = 2018
 for iYear in range(iYear_start,iYear_end+1):
     for iMonth in range(1,13):
         #get day count in this month

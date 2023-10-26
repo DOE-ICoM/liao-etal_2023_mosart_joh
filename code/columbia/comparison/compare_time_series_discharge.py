@@ -4,14 +4,9 @@ import netCDF4 as nc #read netcdf
 from datetime import datetime
 import glob
 from pyearth.system.define_global_variables import *
+from pyearth.toolbox.reader.text_reader_string import text_reader_string
 from pyearth.visual.timeseries.plot_time_series_data import plot_time_series_data
 from pyearth.toolbox.data.nwis.retrieve_nwis_discharge import retrieve_nwis_discharge
-
-from pyhexwatershed.pyhexwatershed_read_model_configuration_file import pyhexwatershed_read_model_configuration_file
-
-
-from hexwatershed_utility.mosart.convert_hexwatershed_output_to_mosart import convert_hexwatershed_json_to_mosart_netcdf
-
 
 from pye3sm.shared.e3sm import pye3sm
 from pye3sm.shared.case import pycase
@@ -56,12 +51,26 @@ sWorkspace_scratch = '/compyfs/liao313'
 #determine the max and min from modeled results
 sVariable = 'RIVER_DISCHARGE_OVER_LAND_LIQ'
 
-    
 
 
 aDate= list()
-iYear_start = 2016
+iYear_start = 2018
 iYear_end = 2019
+#now read the usgs
+iFlag_nrni = 1
+if iFlag_nrni ==1:
+    #use nrni dataset
+    sFilename = '/qfs/people/liao313/data/e3sm/columbia/mosart/BPA_NRNI_flow/BON.txt'
+    aData_obs= text_reader_string(sFilename, cDelimiter_in=',')
+    aData_obs= aData_obs[:,0].astype(np.float)  
+    aDischarge_obs = np.array(aData_obs)  
+    pass
+else:
+    sSite= '15908000'    
+    dummy = retrieve_nwis_discharge(sSite, iYear_start,1,1, iYear_end, 12, 31)
+    cfs2cms = 0.028316847
+    aDischarge_obs= dummy[0] * cfs2cms
+
 for iYear in range(iYear_start,iYear_end+1):
     for iMonth in range(1,13):
         #get day count in this month
@@ -111,7 +120,7 @@ sWorkspace_simulation_case_run = oCase_structured.sWorkspace_simulation_case_run
 sCase = oCase_structured.sCase
 iMonth_start = 1
 iMonth_end = 12
-id_structure  = 456
+id_structure  = 415
 aData_structured = np.full(nDay, np.nan, dtype= float)
 #find out cell index 
 sWorkspace_case_aux = oCase_structured.sWorkspace_case_aux
@@ -187,7 +196,7 @@ sWorkspace_simulation_case_run = oCase_unstructured.sWorkspace_simulation_case_r
 sCase = oCase_unstructured.sCase
 
 #important, this is the cellid instead of the cell id
-id_unstructured  = 1514426 
+id_unstructured  = 1514421 
 
 sWorkspace_case_aux = oCase_unstructured.sWorkspace_case_aux
 sFilename_parameter = sWorkspace_case_aux + slash + '/mosart_'+ oCase_unstructured.sRegion + '_parameter_mpas.nc'
@@ -234,12 +243,7 @@ for iYear in range(iYear_start, iYear_end + 1):
 
 #use a plotter to visualize the data
 
-#now read the usgs
-sSite= '15908000'
 
-dummy = retrieve_nwis_discharge(sSite, iYear_start,1,1, iYear_end, 12, 31)
-cfs2cms = 0.028316847
-aDischarge_obs= dummy[0] * cfs2cms
 
 sFilename_out = current_file_directory + slash + 'streamflow_comparison.png'
 plot_time_series_data( [aDate, aDate, aDate], [aDischarge_obs, aData_structured, aData_unstructured], 
