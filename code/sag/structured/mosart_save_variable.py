@@ -32,8 +32,8 @@ compset = 'RMOSGPCC'
 project = 'esmd'
 sDate='20230501'
 sModel  = 'e3sm'
-sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/sag/e3sm.xml'
-sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/sag/case.xml'
+sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/sag/input/e3sm.xml'
+sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/sag/input/case.xml'
 
 sWorkspace_scratch = '/compyfs/liao313'
 aParameter_e3sm = pye3sm_read_e3sm_configuration_file(sFilename_e3sm_configuration ,\
@@ -77,10 +77,10 @@ sVariable= 'Main_Channel_Water_Depth_LIQ'
 #mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
 
 sVariable= 'QSUR_LIQ'
-mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_intensity_in= 1)
 
 sVariable= 'QSUB_LIQ'
-mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_intensity_in= 1)
 
 aVariable_in = ['QSUR_LIQ', 'QSUB_LIQ']
 sVariable_out = 'Q_LIQ'
