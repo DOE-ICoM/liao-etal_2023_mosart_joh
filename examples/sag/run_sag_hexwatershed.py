@@ -11,6 +11,7 @@ from pyhexwatershed.pyhexwatershed_read_model_configuration_file import pyhexwat
 from pye3sm.shared.case import pycase
 from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_case_configuration_file
 from hexwatershed_utility.mosart.convert_hexwatershed_output_to_mosart import convert_hexwatershed_json_to_mosart_netcdf
+from pye3sm.elm.general.structured.extract.elm_extract_data_mode_from_domain_file import elm_extract_data_mode_from_domain_file
 from pye3sm.case.e3sm_create_case import e3sm_create_case
 from pye3sm.shared.e3sm import pye3sm
 from pye3sm.shared.case import pycase
@@ -28,23 +29,24 @@ nSubmit = 1
 iFlag_debug =0
 iFlag_debug_case=0
 iFlag_large_cache = 0
+iFlag_extract_forcing = 0
 
-iFlag_run_hexwatershed  = 1
+iFlag_run_hexwatershed  = 0
 iFlag_run_hexwatershed_utility = 1
 iFlag_create_e3sm_case = 0
 
 iFlag_mosart =1 
 iFlag_elm =0 
-iFlag_create_hexwatershed_job = 0
-iFlag_visualization_domain = 0
+iFlag_create_hexwatershed_job = 1
+iFlag_visualization_domain = 1
 iFlag_create_mapping_file = 1
 
 
 iCase_index_hexwatershed = 4
-sDate_hexwatershed='20230120'
+sDate_hexwatershed='20230501'
 
 iCase_index_e3sm = 1
-sDate_e3sm='20230401'
+sDate_e3sm='20230501'
 
 sRegion = 'sag'
 sMesh_type = 'mpas'
@@ -69,8 +71,6 @@ sWorkspace_input =  str(Path(sWorkspace_data)  /  'input')
 
 sWorkspace_output=  '/compyfs/liao313/04model/pyhexwatershed/sag'
 sCIME_directory ='/qfs/people/liao313/workspace/fortran/e3sm/E3SM/cime/scripts'
-
-
 
 #generate a bash job script
 if iFlag_create_hexwatershed_job ==1:
@@ -123,8 +123,8 @@ sFilename_mpas_in='/people/liao313/workspace/python/pyhexwatershed_icom/data/sag
 sFilename_mosart_parameter_in = '/compyfs/inputdata/rof/mosart/MOSART_Global_half_20210616.nc'
 
 #this one should be replace 
-sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/sag/e3sm.xml'
-sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/sag/case.xml'
+sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/sag/input/e3sm.xml'
+sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/sag/input/case.xml'
 sModel  = 'e3sm'
 sWorkspace_scratch = '/compyfs/liao313'
 
@@ -151,8 +151,8 @@ if not os.path.exists(sWorkspace_output):
     Path(sWorkspace_output).mkdir(parents=True, exist_ok=True)
  
     
-sFilename_mosart_parameter_out = sWorkspace_output + '/mosart_sag_parameter_mpas.nc'
-sFilename_mosart_unstructured_domain= sWorkspace_output + '/mosart_sag_domain_mpas.nc'
+sFilename_mosart_parameter_out = sWorkspace_output + '/mosart_sag_parameter.nc'
+sFilename_mosart_unstructured_domain= sWorkspace_output + '/mosart_sag_domain.nc'
 sFilename_mosart_unstructured_script = sWorkspace_output + '/mosart_sag_scriptgrid_mpas.nc'
 
 sFilename_elm_structured_domain_file_out_1d = sWorkspace_output + '/elm_sag_domain_latlon.nc'
@@ -161,26 +161,48 @@ sFilename_elm_structured_script_1d = sWorkspace_output + '/elm_sag_scripgrid_lat
 sFilename_map_elm_to_mosart = sWorkspace_output + '/l2r_sag_mapping.nc'
 sFilename_map_mosart_to_elm = sWorkspace_output + '/r2l_sag_mapping.nc'
 
-
-sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd.gpcc'
+sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd.gpcc' #0.5 degree data
+#sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd_005.gpcc' #the original 0.05 degree data
+#sFilename_user_dlnd_runoff_origin = '/compyfs/liao313/00raw/mingpan_runoff/sag/dlnd.streams.txt.lnd_005.gpcc'
 sFilename_user_dlnd_runoff = sWorkspace_output + '/dlnd.streams.txt.lnd.gpcc'
-if not os.path.exists(sFilename_user_dlnd_runoff):
-    shutil.copyfile(sFilename_user_dlnd_runoff_origin, sFilename_user_dlnd_runoff)
+
+shutil.copyfile(sFilename_user_dlnd_runoff_origin, sFilename_user_dlnd_runoff)
 
 if iFlag_run_hexwatershed_utility == 1:
     #the json should replaced
-   
-    sFilename_json_in = oPyhexwatershed.sFilename_hexwatershed_json
-    convert_hexwatershed_json_to_mosart_netcdf(sFilename_json_in, \
-            sFilename_mpas_in, \
+    if oPyhexwatershed.nOutlet == 1:
+        sFilename_json_in = oPyhexwatershed.aBasin[0].sFilename_watershed_json
+    else:
+        sFilename_json_in = oPyhexwatershed.sFilename_hexwatershed_json
+    convert_hexwatershed_json_to_mosart_netcdf(sFilename_json_in,             
             sFilename_mosart_parameter_in,
-            sFilename_mosart_parameter_out,\
+            sFilename_mosart_parameter_out,
             sFilename_mosart_unstructured_domain)
 #create the mapping file
+dResolution_runoff = 0.5
 if iFlag_create_mapping_file==1:
     #create a domain using mpas domain file        
     e3sm_create_structured_envelope_domain_file_1d(sFilename_mosart_unstructured_domain, sFilename_elm_structured_domain_file_out_1d,
-                                                                         0.5, 0.5 )
+                                                                         dResolution_runoff, dResolution_runoff )
+    if iFlag_extract_forcing == 1:
+        #extract the global runoff using the domain file
+        sFilename_global_domain = ''
+        sFilename_regional_domain = sFilename_elm_structured_domain_file_out_1d
+        sWorkspace_output_region = '/compyfs/liao313/00raw/mingpan_runoff/' + sRegion
+        if not os.path.exists(sWorkspace_output_region):
+            Path(sWorkspace_output_region).mkdir(parents=True, exist_ok=True)
+        sFilename_user_dlnd_runoff_regional = elm_extract_data_mode_from_domain_file(sFilename_user_dlnd_runoff_origin, 
+                                                                                     sFilename_regional_domain, 
+                                                                                     sWorkspace_output_region,
+                                                                                     iYear_start_in=1980,
+                                                                                     iYear_end_in=2019)
+        #if not os.path.exists(sFilename_user_dlnd_runoff):
+        shutil.copyfile(sFilename_user_dlnd_runoff_regional, sFilename_user_dlnd_runoff)
+        #pass
+    else:
+        #sFilename_user_dlnd_runoff = '/compyfs/liao313/00raw/mingpan_runoff/sag/dlnd.streams.txt.lnd_005.gpcc'
+        pass
+
     #convert elm to script file         
     e3sm_convert_unstructured_domain_file_to_scripgrid_file(sFilename_elm_structured_domain_file_out_1d, sFilename_elm_structured_script_1d )   
     

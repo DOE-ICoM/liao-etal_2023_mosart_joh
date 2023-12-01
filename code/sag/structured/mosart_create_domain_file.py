@@ -1,37 +1,28 @@
-
 import os
-
-
+import shutil
 from pyearth.system.define_global_variables import *
-
-from pyhexwatershed.pyhexwatershed_read_model_configuration_file import pyhexwatershed_read_model_configuration_file
-from pyhexwatershed.classes.pycase import hexwatershedcase
-
-
 from pye3sm.shared.e3sm import pye3sm
 from pye3sm.shared.case import pycase
 from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_case_configuration_file
 from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_e3sm_configuration_file
-
-from pye3sm.mosart.general.unstructured.save.mosart_save_variable_unstructured import mosart_save_variable_unstructured
-from pye3sm.mosart.general.unstructured.save.mosart_merge_variable_unstructured import mosart_merge_variable_unstructured
-
-
-
-
-
-iCase_index_e3sm = 1
-sRegion = 'sag'
-sMesh_type = 'mpas'
-res='MOS_USRDAT'      
-compset = 'RMOSGPCC'
-project = 'esmd'
+from pye3sm.tools.namelist.convert_namelist_to_dict import convert_namelist_to_dict
+from pye3sm.mosart.mesh.structured.mosart_create_domain_1d import mosart_create_domain_1d
+dResolution_meter=5000
 sDate='20230101'
-sModel  = 'e3sm'
+iCase_index_e3sm = 1
+dResolution = 1/16.0
+#this one should be replace 
 sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/sag/input/e3sm.xml'
 sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/sag/input/case.xml'
-
+sModel  = 'e3sm'
 sWorkspace_scratch = '/compyfs/liao313'
+sRegion = 'sag'
+sMesh_type = 'mpas'
+
+res='MOS_USRDAT'      
+res = 'MOS_USRDAT_MPAS'
+compset = 'RMOSGPCC'
+project = 'esmd'
 aParameter_e3sm = pye3sm_read_e3sm_configuration_file(sFilename_e3sm_configuration ,
                                                           iFlag_debug_in = 0, 
                                                           iFlag_branch_in = 0,
@@ -50,8 +41,10 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
                                                           iFlag_lnd_in= 0,
                                                           iFlag_dlnd_in= 1,
                                                           iFlag_rof_in= 1,
-                                                          iYear_start_in = 2000, 
-                                                          iYear_end_in = 2018,
+                                                          iYear_start_in = 2005, 
+                                                          iYear_end_in = 2005,
+                                                          iYear_data_datm_end_in = 1979, 
+                                                          iYear_data_datm_start_in = 1979  , 
                                                           iCase_index_in = iCase_index_e3sm, 
                                                           sDate_in = sDate, 
                                                           sModel_in = sModel,
@@ -62,23 +55,20 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 
 
 oCase = pycase(aParameter_case)
-
-
-mosart_save_variable_unstructured( oCase, sVariable_in = sVariable)
-
-sVariable= 'Main_Channel_STORAGE_LIQ'
-#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
-
-sVariable= 'Main_Channel_Water_Depth_LIQ'
-mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
-
-sVariable= 'QSUR_LIQ'
-mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_intensity_in= 1)
-
-sVariable= 'QSUB_LIQ'
-mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_intensity_in= 1)
-
-aVariable_in = ['QSUR_LIQ', 'QSUB_LIQ']
-sVariable_out = 'Q_LIQ'
-
-mosart_merge_variable_unstructured(oCase, aVariable_in, sVariable_out)
+sWorkspace_case_aux = oCase.sWorkspace_case_aux
+sWorkspace_simulation_case_run = oCase.sWorkspace_simulation_case_run
+     
+sFilename_domain = sWorkspace_case_aux + slash + '/mosart_'+ oCase.sRegion + '_domain.nc' 
+sFilename_parameter = sWorkspace_case_aux + slash + '/mosart_'+ oCase.sRegion + '_parameter.nc'
+if not os.path.exists(sFilename_domain) or not os.path.exists(sFilename_parameter):
+    sFilename_mosart_in = sWorkspace_simulation_case_run + slash + 'mosart_in'
+    aParameter_mosart = convert_namelist_to_dict(sFilename_mosart_in)
+    sFilename_mosart_parameter = aParameter_mosart['frivinp_rtm']
+    #copy parameter file to case directory
+    
+    shutil.copyfile(sFilename_mosart_parameter, sFilename_parameter)
+    mosart_create_domain_1d(sFilename_mosart_parameter, sFilename_domain, dResolution, dResolution)
+else:
+    #maybe check? this should be done in save the result
+    
+    pass

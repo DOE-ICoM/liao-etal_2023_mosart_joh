@@ -30,7 +30,7 @@ iFlag_debug =0
 iFlag_debug_case=0
 iFlag_extract_forcing = 0
 iFlag_run_hexwatershed  = 0
-iFlag_run_hexwatershed_utility = 0
+iFlag_run_hexwatershed_utility = 1
 iFlag_create_e3sm_case = 1
 
 iFlag_mosart =1 
@@ -40,11 +40,11 @@ iFlag_visualization_domain = 0
 iFlag_create_mapping_file = 1
 
 
-iCase_index_hexwatershed = 1
+iCase_index_hexwatershed = 3
 sDate_hexwatershed='20230501'
 
-iCase_index_e3sm = 3
-sDate_e3sm='20230401'
+iCase_index_e3sm = 1
+sDate_e3sm='20230601'
 
 sRegion = 'amazon'
 sMesh_type = 'mpas'
@@ -80,7 +80,8 @@ if iFlag_create_hexwatershed_job ==1:
     sLine  = '#!/bin/bash' + '\n'
     ofs.write(sLine)
 
-sFilename_configuration_in = realpath( sPath +  '/examples/amazon/pyhexwatershed_amazon_mpas.json' )
+
+sFilename_configuration_in = realpath( sWorkspace_input +  '/pyhexwatershed_amazon_mpas.json' )
 
     
 if os.path.isfile(sFilename_configuration_in):
@@ -125,8 +126,8 @@ sFilename_mpas_in='/people/liao313/workspace/python/pyhexwatershed_icom/data/sag
 sFilename_mosart_parameter_in = '/compyfs/inputdata/rof/mosart/MOSART_Global_half_20210616.nc'
 
 #this one should be replace 
-sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/amazon/e3sm.xml'
-sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/amazon/case.xml'
+sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/amazon/input/e3sm.xml'
+sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/amazon/input/case.xml'
 sModel  = 'e3sm'
 sWorkspace_scratch = '/compyfs/liao313'
 
@@ -153,8 +154,8 @@ if not os.path.exists(sWorkspace_output):
     Path(sWorkspace_output).mkdir(parents=True, exist_ok=True)
  
     
-sFilename_mosart_parameter_out = sWorkspace_output + '/mosart_amazon_parameter_mpas.nc'
-sFilename_mosart_unstructured_domain= sWorkspace_output + '/mosart_amazon_domain_mpas.nc'
+sFilename_mosart_parameter_out = sWorkspace_output + '/mosart_amazon_parameter.nc'
+sFilename_mosart_unstructured_domain= sWorkspace_output + '/mosart_amazon_domain.nc'
 sFilename_mosart_unstructured_script = sWorkspace_output + '/mosart_amazon_scriptgrid_mpas.nc'
 
 sFilename_elm_structured_domain_file_out_1d = sWorkspace_output + '/elm_amazon_domain_latlon.nc'
@@ -166,16 +167,20 @@ sFilename_map_mosart_to_elm = sWorkspace_output + '/r2l_amazon_mapping.nc'
 
 sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd.gpcc'
 sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd_005.gpcc' 
+sFilename_user_dlnd_runoff_origin = '/compyfs/liao313/00raw/mingpan_runoff/amazon/dlnd.streams.txt.lnd_005.gpcc'
 sFilename_user_dlnd_runoff = sWorkspace_output + '/dlnd.streams.txt.lnd.gpcc'
 if not os.path.exists(sFilename_user_dlnd_runoff):
     shutil.copyfile(sFilename_user_dlnd_runoff_origin, sFilename_user_dlnd_runoff)
+    pass
 
 if iFlag_run_hexwatershed_utility == 1:
     #the json should replaced
    
-    sFilename_json_in = oPyhexwatershed.sFilename_hexwatershed_json
-    convert_hexwatershed_json_to_mosart_netcdf(sFilename_json_in, 
-            sFilename_mpas_in, 
+    if oPyhexwatershed.nOutlet == 1:
+        sFilename_json_in = oPyhexwatershed.aBasin[0].sFilename_watershed_json
+    else:
+        sFilename_json_in = oPyhexwatershed.sFilename_hexwatershed_json
+    convert_hexwatershed_json_to_mosart_netcdf(sFilename_json_in,             
             sFilename_mosart_parameter_in,
             sFilename_mosart_parameter_out,
             sFilename_mosart_unstructured_domain)
@@ -204,7 +209,8 @@ if iFlag_create_mapping_file==1:
             shutil.copyfile(sFilename_user_dlnd_runoff_regional, sFilename_user_dlnd_runoff)
         pass
     else:
-        sFilename_user_dlnd_runoff = '/compyfs/liao313/00raw/mingpan_runoff/amazon/dlnd.streams.txt.lnd_005.gpcc'
+        #sFilename_user_dlnd_runoff = '/compyfs/liao313/00raw/mingpan_runoff/amazon/dlnd.streams.txt.lnd_005.gpcc'
+        pass
   
   #convert elm to script file         
     e3sm_convert_unstructured_domain_file_to_scripgrid_file(sFilename_elm_structured_domain_file_out_1d, sFilename_elm_structured_script_1d )   

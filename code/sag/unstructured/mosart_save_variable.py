@@ -4,7 +4,6 @@ import os
 from pathlib import Path
 from os.path import realpath
 
-import cartopy.crs as ccrs
 
 from pyearth.system.define_global_variables import *
 
@@ -43,13 +42,13 @@ compset = 'RMOSGPCC'
 project = 'esmd'
 
 iCase_index_hexwatershed = 1
-iCase_index_e3sm = 2
+iCase_index_e3sm = 1
 
 dResolution_meter=5000
-sDate='20230401'
+sDate='20230501'
 #this one should be replace 
-sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/sag/e3sm.xml'
-sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/sag/case.xml'
+sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/sag/input/e3sm.xml'
+sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/sag/input/case.xml'
 sModel  = 'e3sm'
 sWorkspace_scratch = '/compyfs/liao313'
 
@@ -71,8 +70,8 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
                                                           iFlag_lnd_in= 0,
                                                           iFlag_dlnd_in= 1,
                                                           iFlag_rof_in= 1,
-                                                          iYear_start_in = 2019, 
-                                                          iYear_end_in = 2019,                                                         
+                                                          iYear_start_in = 2000, 
+                                                          iYear_end_in = 2018,                                                         
                                                           iCase_index_in = iCase_index_e3sm, 
                                                           sDate_in = sDate, 
                                                           sModel_in = sModel,
@@ -84,22 +83,22 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 
 oCase = pycase(aParameter_case)
 
-#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
 
 sVariable= 'Main_Channel_Water_Depth_LIQ'
-#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
 
 sVariable= 'Main_Channel_STORAGE_LIQ'
 #mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
 
 sVariable= 'QSUR_LIQ'
-mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_intensity_in= 1)
 
 sVariable= 'QSUB_LIQ'
-mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_intensity_in= 1)
 
 aVariable_in = ['QSUR_LIQ', 'QSUB_LIQ']
 sVariable_out = 'Q_LIQ'
 
-mosart_merge_variable_unstructured(oCase, aVariable_in, sVariable_out)
+#mosart_merge_variable_unstructured(oCase, aVariable_in, sVariable_out)
 

@@ -35,7 +35,7 @@ iFlag_debug_case=0
 iFlag_extract_forcing = 1
 
 iFlag_run_hexwatershed  = 0
-iFlag_run_hexwatershed_utility = 0
+iFlag_run_hexwatershed_utility = 1
 iFlag_create_e3sm_case = 1
 
 iFlag_mosart = 1 

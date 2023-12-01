@@ -38,7 +38,7 @@ iCase_index_hexwatershed = 1
 iCase_index_e3sm = 1
 
 dResolution_meter = 5000
-sDate = '20230501'
+sDate = '20230101'
 # this one should be replace
 sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/sag/input/e3sm.xml'
 sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/sag/input/case.xml'
@@ -63,8 +63,8 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
                                                       iFlag_lnd_in=0,
                                                       iFlag_dlnd_in=1,
                                                       iFlag_rof_in=1,
-                                                      iYear_start_in=2019,
-                                                      iYear_end_in=2019,
+                                                      iYear_start_in=2000,
+                                                      iYear_end_in=2018,
                                                       iCase_index_in=iCase_index_e3sm,
                                                       sDate_in=sDate,
                                                       sModel_in=sModel,
@@ -119,7 +119,7 @@ sTitle = 'Total runoff (liquid)'
 mosart_map_variable_unstructured(oCase,
                                  sVariable_in=sVariable,
                                  dData_min_in=0,
-                                 dData_max_in=0.001,
+                                 dData_max_in=None,
                                  sUnit_in=sUnit,
                                  sTitle_in=sTitle,
                                  iFlag_scientific_notation_colorbar_in=1)

@@ -35,24 +35,24 @@ compset = 'RMOSGPCC'
 project = 'esmd'
 
 iCase_index_hexwatershed = 1
-iCase_index_e3sm = 2
+iCase_index_e3sm = 1
 
 dResolution_meter=5000
-sDate='20230401'
+sDate='20230501'
 #this one should be replace 
-sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/sag/e3sm.xml'
-sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/sag/case.xml'
+sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/sag/input/e3sm.xml'
+sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/sag/input/case.xml'
 sModel  = 'e3sm'
 sWorkspace_scratch = '/compyfs/liao313'
 
-aParameter_e3sm = pye3sm_read_e3sm_configuration_file(sFilename_e3sm_configuration ,\
-                                                          iFlag_debug_in = 0, \
-                                                          iFlag_branch_in = 0,\
-                                                          iFlag_continue_in = 0,\
-                                                          iFlag_resubmit_in = 0,\
-                                                          iFlag_short_in = 0 ,\
-                                                          RES_in =res,\
-                                                         Project_in = project,\
+aParameter_e3sm = pye3sm_read_e3sm_configuration_file(sFilename_e3sm_configuration ,
+                                                          iFlag_debug_in = 0, 
+                                                          iFlag_branch_in = 0,
+                                                          iFlag_continue_in = 0,
+                                                          iFlag_resubmit_in = 0,
+                                                          iFlag_short_in = 0 ,
+                                                          RES_in =res,
+                                                         Project_in = project,
                                                           COMPSET_in = compset)
 oE3SM = pye3sm(aParameter_e3sm)
 
@@ -92,17 +92,23 @@ sTitle = 'Main channel water depth (liquid)'
 #mosart_map_variable_unstructured(oCase, sVariable_in = sVariable,dData_min_in=0.0,dData_max_in=2.0, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=0)
 
 sVariable= 'QSUR_LIQ'
-sUnit = r"${\mathrm{m}}^3/s$"
+sUnit = r"${\mathrm{mm}}/s$"
 sTitle = 'Surface runoff (liquid)'
 #mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
 
 sVariable= 'QSUB_LIQ'
-sUnit = r"${\mathrm{m}}^3/s$"
+sUnit = r"${\mathrm{mm}}/s$"
 sTitle = 'Subsurface runoff (liquid)'
 #mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
 
 
 sVariable= 'Q_LIQ'
-sUnit = r"${\mathrm{m}}^3/s$"
+sUnit = r"${\mathrm{mm}}/s$"
 sTitle = 'Total runoff (liquid)'
-mosart_map_variable_unstructured(oCase, sVariable_in = sVariable,dData_min_in=0.0,dData_max_in = 1.0,  sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
+mosart_map_variable_unstructured(oCase, 
+                                 sVariable_in = sVariable,
+                                 dData_min_in=0.0,
+                                 dData_max_in = None, 
+                                  sUnit_in= sUnit, 
+                                  sTitle_in=sTitle,
+                                  iFlag_scientific_notation_colorbar_in=1)

@@ -46,10 +46,10 @@ iCase_index_hexwatershed = 1
 iCase_index_e3sm = 1
 
 dResolution_meter=5000
-sDate='20230329'
+sDate='20230501'
 #this one should be replace 
-sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/sag/e3sm.xml'
-sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/sag/case.xml'
+sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/sag/input/e3sm.xml'
+sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/sag/input/case.xml'
 sModel  = 'e3sm'
 sWorkspace_scratch = '/compyfs/liao313'
 
@@ -83,7 +83,7 @@ aParameter_e3sm = pye3sm_read_e3sm_configuration_file(sFilename_e3sm_configurati
 oE3SM = pye3sm(aParameter_e3sm)
 
 #read structure mosart result
-sDate_structured = '20230501'
+sDate_structured = '20230101'
 iCase_index_e3sm_structurd = 1
 
 dData_min = 0
@@ -162,8 +162,8 @@ for iYear in range(iYear_start, iYear_end + 1):
             
 
 
-sDate_unstructured = '20230401'
-iCase_index_e3sm_unstructurd = 2
+sDate_unstructured = '20230501'
+iCase_index_e3sm_unstructurd = 1
 aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configuration,                                                        
                                                           iFlag_atm_in = 0,
                                                           iFlag_datm_in = 1,
@@ -190,7 +190,7 @@ sCase = oCase_unstructured.sCase
 id_unstructured  = 1783136 
 
 sWorkspace_case_aux = oCase_unstructured.sWorkspace_case_aux
-sFilename_parameter = sWorkspace_case_aux + slash + '/mosart_'+ oCase_unstructured.sRegion + '_parameter_mpas.nc'
+sFilename_parameter = sWorkspace_case_aux + slash + '/mosart_'+ oCase_unstructured.sRegion + '_parameter.nc'
 pDatasets_parameter = nc.Dataset(sFilename_parameter, 'r')
 pDimension = pDatasets_parameter.dimensions.keys()
 for sKey, aValue in pDatasets_parameter.variables.items():            
