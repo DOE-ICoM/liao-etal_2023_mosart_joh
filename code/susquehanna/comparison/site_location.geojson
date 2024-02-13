@@ -1,7 +1,0 @@
-{
-"type": "FeatureCollection",
-"name": "points",
-"features": [
-{ "type": "Feature", "properties": { "id": 1578310, "lon": -76.1744444, "lat": 39.65788889, "drainage": 70188.729 }, "geometry": { "type": "Point", "coordinates": [ -76.1744444, 39.65788889, 0.0 ] } }
-]
-}

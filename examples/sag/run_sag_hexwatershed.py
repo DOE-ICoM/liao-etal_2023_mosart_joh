@@ -32,21 +32,21 @@ iFlag_large_cache = 0
 iFlag_extract_forcing = 0
 
 iFlag_run_hexwatershed  = 0
-iFlag_run_hexwatershed_utility = 1
-iFlag_create_e3sm_case = 0
+iFlag_run_hexwatershed_utility = 0
+iFlag_create_e3sm_case = 1
 
 iFlag_mosart =1 
 iFlag_elm =0 
 iFlag_create_hexwatershed_job = 1
 iFlag_visualization_domain = 1
-iFlag_create_mapping_file = 1
+iFlag_create_mapping_file = 0
 
 
 iCase_index_hexwatershed = 4
 sDate_hexwatershed='20230501'
 
 iCase_index_e3sm = 1
-sDate_e3sm='20230501'
+sDate_e3sm='20240102'
 
 sRegion = 'sag'
 sMesh_type = 'mpas'
@@ -163,7 +163,7 @@ sFilename_map_mosart_to_elm = sWorkspace_output + '/r2l_sag_mapping.nc'
 
 sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd.gpcc' #0.5 degree data
 #sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd_005.gpcc' #the original 0.05 degree data
-#sFilename_user_dlnd_runoff_origin = '/compyfs/liao313/00raw/mingpan_runoff/sag/dlnd.streams.txt.lnd_005.gpcc'
+sFilename_user_dlnd_runoff_origin = '/compyfs/liao313/00raw/mingpan_runoff/sag/dlnd.streams.txt.lnd_005.gpcc'
 sFilename_user_dlnd_runoff = sWorkspace_output + '/dlnd.streams.txt.lnd.gpcc'
 
 shutil.copyfile(sFilename_user_dlnd_runoff_origin, sFilename_user_dlnd_runoff)
@@ -179,7 +179,7 @@ if iFlag_run_hexwatershed_utility == 1:
             sFilename_mosart_parameter_out,
             sFilename_mosart_unstructured_domain)
 #create the mapping file
-dResolution_runoff = 0.5
+dResolution_runoff = 0.05
 if iFlag_create_mapping_file==1:
     #create a domain using mpas domain file        
     e3sm_create_structured_envelope_domain_file_1d(sFilename_mosart_unstructured_domain, sFilename_elm_structured_domain_file_out_1d,
@@ -241,7 +241,7 @@ if iFlag_create_e3sm_case == 1:
         sLine = 'frivinp_rtm = ' + "'" + sFilename_mosart_parameter_out + "'" + '\n'
         ofs.write(sLine)
 
-        sLine = "rtmhist_fincl2 = 'RIVER_DISCHARGE_OVER_LAND_LIQ', 'RIVER_DISCHARGE_TO_OCEAN_LIQ', 'Main_Channel_STORAGE_LIQ', 'Main_Channel_Water_Depth_LIQ' " + '\n'
+        sLine = "rtmhist_fincl2 = 'RIVER_DISCHARGE_OVER_LAND_LIQ', 'RIVER_DISCHARGE_TO_OCEAN_LIQ', 'Main_Channel_STORAGE_LIQ', 'Main_Channel_Water_Depth_LIQ', 'QSUR_LIQ','QSUB_LIQ' " + '\n'
         ofs.write(sLine)
 
         sLine = 'rtmhist_nhtfrq = 0,-24 '+ '\n'
