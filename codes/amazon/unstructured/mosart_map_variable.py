@@ -35,13 +35,13 @@ compset = 'RMOSGPCC'
 project = 'esmd'
 
 iCase_index_hexwatershed = 1
-iCase_index_e3sm = 3
+iCase_index_e3sm = 2
 
 dResolution_meter=5000
-sDate='20230401'
+sDate='20240102'
 #this one should be replace 
-sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/amazon/e3sm.xml'
-sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/amazon/case.xml'
+sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/amazon/input/e3sm.xml'
+sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/amazon/input/case.xml'
 sModel  = 'e3sm'
 sWorkspace_scratch = '/compyfs/liao313'
 
@@ -63,8 +63,8 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
                                                           iFlag_lnd_in= 0,
                                                           iFlag_dlnd_in= 1,
                                                           iFlag_rof_in= 1,
-                                                          iYear_start_in = 2019, 
-                                                          iYear_end_in = 2019,                                                
+                                                          iYear_start_in = 2000, 
+                                                          iYear_end_in = 2000,                                                
                                                           iCase_index_in = iCase_index_e3sm, 
                                                           sDate_in = sDate, 
                                                           sModel_in = sModel,
@@ -75,27 +75,33 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 
 
 oCase = pycase(aParameter_case)
-sUnit = r"${\mathrm{m}}^3/s$"
+sUnit = r"${m}^3/s$"
 
 sTitle = 'River discharge over land (liquid)'
-mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
+#mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
 
 sVariable= 'Main_Channel_STORAGE_LIQ'
-sUnit = r"${\mathrm{m}}^3$"
+sUnit = r"${m}^3$"
 sTitle = 'Main channel storage (liquid)'
-mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
+#mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1,dData_min_in=0, iFlag_monthly_in=1)
 
 sVariable= 'Main_Channel_Water_Depth_LIQ'
-sUnit = r"{\mathrm{m}}"
+sUnit = r"m"
 sTitle = 'Main channel water depth (liquid)'
-mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=0)
+mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=0,dData_min_in=0,dData_max_in=40, iFlag_monthly_in=1)
 
 sVariable= 'QSUR_LIQ'
-sUnit = r"${\mathrm{m}}^3$"
+sUnit = r"${m}^3$"
 sTitle = 'Surface runoff (liquid)'
-mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
+#mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
 
 sVariable= 'QSUB_LIQ'
-sUnit = r"${\mathrm{m}}^3$"
+sUnit = r"${m}^3$"
 sTitle = 'Subsurface rnuoff (liquid)'
 #mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,iFlag_scientific_notation_colorbar_in=1)
+
+
+sVariable= 'FLOODED_FRACTION'
+sUnit = r"fraction"
+sTitle = 'Flooded fraction'
+#mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, sUnit_in= sUnit, sTitle_in=sTitle,  iFlag_scientific_notation_colorbar_in=0, dData_min_in=0,dData_max_in=1, iFlag_monthly_in=1)

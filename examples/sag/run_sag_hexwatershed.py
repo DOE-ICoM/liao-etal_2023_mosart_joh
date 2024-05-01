@@ -21,6 +21,7 @@ from hexwatershed_utility.mosart.convert_hexwatershed_output_to_mosart import co
 from pye3sm.mesh.unstructured.e3sm_convert_unstructured_domain_file_to_scripgrid_file import e3sm_convert_unstructured_domain_file_to_scripgrid_file
 from pye3sm.mesh.e3sm_create_structured_envelope_domain_file_1d import e3sm_create_structured_envelope_domain_file_1d
 from pye3sm.mesh.e3sm_create_mapping_file import e3sm_create_mapping_file
+from pye3sm.mesh.e3sm_map_domain_files import e3sm_map_domain_files
 
 nTask = 3
 iFlag_resubmit = 1
@@ -33,20 +34,20 @@ iFlag_extract_forcing = 0
 
 iFlag_run_hexwatershed  = 0
 iFlag_run_hexwatershed_utility = 0
-iFlag_create_e3sm_case = 1
+iFlag_create_e3sm_case = 0
 
 iFlag_mosart =1 
 iFlag_elm =0 
-iFlag_create_hexwatershed_job = 1
+iFlag_create_hexwatershed_job = 0
 iFlag_visualization_domain = 1
-iFlag_create_mapping_file = 0
+iFlag_create_mapping_file = 1
 
 
 iCase_index_hexwatershed = 4
 sDate_hexwatershed='20230501'
 
 iCase_index_e3sm = 1
-sDate_e3sm='20240102'
+sDate_e3sm='20240103'
 
 sRegion = 'sag'
 sMesh_type = 'mpas'
@@ -119,7 +120,7 @@ else:
 #post-process does not require job yet
 #sFilename_json_in='/compyfs/liao313/04model/pyhexwatershed/sag/pyhexwatershed20220607001/hexwatershed/hexwatershed.json'
 
-sFilename_mpas_in='/people/liao313/workspace/python/pyhexwatershed_icom/data/sag/input/lnd_cull_mesh.nc'
+sFilename_mpas_in='/people/liao313/workspace/python/pyhexwatershed_icom/data/sag/input/lnd_mesh.nc'
 sFilename_mosart_parameter_in = '/compyfs/inputdata/rof/mosart/MOSART_Global_half_20210616.nc'
 
 #this one should be replace 
@@ -153,7 +154,7 @@ if not os.path.exists(sWorkspace_output):
     
 sFilename_mosart_parameter_out = sWorkspace_output + '/mosart_sag_parameter.nc'
 sFilename_mosart_unstructured_domain= sWorkspace_output + '/mosart_sag_domain.nc'
-sFilename_mosart_unstructured_script = sWorkspace_output + '/mosart_sag_scriptgrid_mpas.nc'
+sFilename_mosart_unstructured_script = sWorkspace_output + '/mosart_sag_scriptgrid.nc'
 
 sFilename_elm_structured_domain_file_out_1d = sWorkspace_output + '/elm_sag_domain_latlon.nc'
 sFilename_elm_structured_script_1d = sWorkspace_output + '/elm_sag_scripgrid_latlon.nc'
@@ -163,7 +164,7 @@ sFilename_map_mosart_to_elm = sWorkspace_output + '/r2l_sag_mapping.nc'
 
 sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd.gpcc' #0.5 degree data
 #sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd_005.gpcc' #the original 0.05 degree data
-sFilename_user_dlnd_runoff_origin = '/compyfs/liao313/00raw/mingpan_runoff/sag/dlnd.streams.txt.lnd_005.gpcc'
+#sFilename_user_dlnd_runoff_origin = '/compyfs/liao313/00raw/mingpan_runoff/sag/dlnd.streams.txt.lnd_005.gpcc'
 sFilename_user_dlnd_runoff = sWorkspace_output + '/dlnd.streams.txt.lnd.gpcc'
 
 shutil.copyfile(sFilename_user_dlnd_runoff_origin, sFilename_user_dlnd_runoff)
@@ -179,11 +180,12 @@ if iFlag_run_hexwatershed_utility == 1:
             sFilename_mosart_parameter_out,
             sFilename_mosart_unstructured_domain)
 #create the mapping file
-dResolution_runoff = 0.05
+dResolution_runoff = 0.5
+dResolution_target = 1.0/16.0
 if iFlag_create_mapping_file==1:
     #create a domain using mpas domain file        
     e3sm_create_structured_envelope_domain_file_1d(sFilename_mosart_unstructured_domain, sFilename_elm_structured_domain_file_out_1d,
-                                                                         dResolution_runoff, dResolution_runoff )
+                                                                         dResolution_target, dResolution_target )
     if iFlag_extract_forcing == 1:
         #extract the global runoff using the domain file
         sFilename_global_domain = ''
@@ -213,9 +215,16 @@ if iFlag_create_mapping_file==1:
 
     e3sm_create_mapping_file(  sFilename_mosart_unstructured_script , sFilename_elm_structured_script_1d, sFilename_map_mosart_to_elm )
 
-if iFlag_visualization_domain ==1:
-        #visualize mosart input parameter generated
-        #exclude flow direction maybe
+if iFlag_visualization_domain == 1:
+    #visualize mosart input parameter generated∏
+    #exclude flow direction maybe
+    sFilename_domain_a = sFilename_mosart_unstructured_domain
+    sFilename_domain_b = sFilename_elm_structured_domain_file_out_1d
+    aFilename_domain = [sFilename_domain_a, sFilename_domain_b]
+
+    sFilename_out = sWorkspace_output + '/domain_comparison.png'
+  
+    e3sm_map_domain_files(aFilename_domain,sFilename_out)
     pass
 
 if iFlag_create_e3sm_case == 1:
@@ -257,6 +266,7 @@ if iFlag_create_e3sm_case == 1:
         ofs.write(sLine)
         
         sLine = 'inundflag = .false.'+ '\n'
+        sLine = 'inundflag = .true.'+ '\n'
         ofs.write(sLine)
         #opt_elevprof = 1
         ofs.close()
@@ -269,6 +279,7 @@ if iFlag_create_e3sm_case == 1:
         sLine = 'dtlimit=2.0e0' + '\n'
         ofs.write(sLine)
         ofs.close()    
+        
     aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configuration,     
                                                           iFlag_debug_case_in= iFlag_debug_case,                                                   
                                                           iFlag_atm_in = 0,
@@ -279,7 +290,7 @@ if iFlag_create_e3sm_case == 1:
                                                           iFlag_rof_in= 1,
                                                           iFlag_replace_drof_forcing_in = 1,
                                                           iYear_start_in = 1980, 
-                                                          iYear_end_in = 1999,                                                          
+                                                          iYear_end_in = 2019,                                                          
                                                           iYear_data_datm_start_in = 1980, 
                                                           iYear_data_datm_end_in = 2009, 
                                                           iYear_data_dlnd_start_in = 1980, 

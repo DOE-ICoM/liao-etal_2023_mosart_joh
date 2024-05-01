@@ -32,17 +32,17 @@ nSubmit = 0
 
 iFlag_debug =0
 iFlag_debug_case=0
-iFlag_extract_forcing = 1
+iFlag_extract_forcing = 0
 
 iFlag_run_hexwatershed  = 0
-iFlag_run_hexwatershed_utility = 1
+iFlag_run_hexwatershed_utility = 0
 iFlag_create_e3sm_case = 1
 
 iFlag_mosart = 1 
 iFlag_elm = 0 
 iFlag_create_hexwatershed_job = 0
-iFlag_visualization_domain = 0
-iFlag_create_mapping_file = 1
+iFlag_visualization_domain = 1
+iFlag_create_mapping_file = 0
 
 sRegion = 'susquehanna'
 sMesh_type = 'mpas'
@@ -50,8 +50,8 @@ sMesh_type = 'mpas'
 iCase_index_hexwatershed = 1
 sDate_hexwatershed='20230120'
 
-iCase_index_e3sm = 6
-sDate_e3sm='20230401'
+iCase_index_e3sm = 3
+sDate_e3sm='20240102'
 dResolution_meter=5000
 
 res='MOS_USRDAT'      
@@ -62,7 +62,7 @@ project = 'esmd'
 aExtent_full = [-150.1,-146.3, 67.8,70.7]
 dLongitude_outlet_degree=-148.36105
 dLatitude_outlet_degree=69.29553
-pProjection_map = ccrs.Orthographic(central_longitude=  dLongitude_outlet_degree, \
+pProjection_map = ccrs.Orthographic(central_longitude=  dLongitude_outlet_degree, 
         central_latitude= dLatitude_outlet_degree, globe=None)
 
 sPath = str( Path().resolve() )
@@ -82,7 +82,7 @@ if iFlag_create_hexwatershed_job ==1:
     sLine  = '#!/bin/bash' + '\n'
     ofs.write(sLine)
 
-sFilename_configuration_in = realpath( sPath +  '/examples/susquehanna/pyhexwatershed_susquehanna_mpas_dam.json' )
+sFilename_configuration_in = realpath( sPath +  '/data/susquehanna/input/pyhexwatershed_susquehanna_mpas_dam.json' )
 
     
 if os.path.isfile(sFilename_configuration_in):
@@ -124,8 +124,8 @@ sFilename_mpas_in='/people/liao313/workspace/python/pyhexwatershed_icom/data/sus
 sFilename_mosart_parameter_in = '/compyfs/inputdata/rof/mosart/MOSART_Global_half_20210616.nc'
 
 #this one should be replace 
-sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/susquehanna/e3sm.xml'
-sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/susquehanna/case.xml'
+sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/susquehanna/input/e3sm.xml'
+sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/susquehanna/input/case.xml'
 sModel  = 'e3sm'
 sWorkspace_scratch = '/compyfs/liao313'
 
@@ -163,12 +163,13 @@ sFilename_map_elm_to_mosart = sWorkspace_output + '/l2r_susquehanna_mapping.nc'
 sFilename_map_mosart_to_elm = sWorkspace_output + '/r2l_susquehanna_mapping.nc'
 
 
-sFilename_user_dlnd_runoff_revised_05 = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd.gpcc'
-sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd_005.gpcc' #the original 0.05 degree data
+sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd.gpcc'
+#sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd_005.gpcc' #the original 0.05 degree data
 #we also need 1/8 and 1/16 degree data 
 sFilename_user_dlnd_runoff = sWorkspace_output + '/dlnd.streams.txt.lnd.gpcc'
-#if not os.path.exists(sFilename_user_dlnd_runoff):
-#    shutil.copyfile(sFilename_user_dlnd_runoff_origin, sFilename_user_dlnd_runoff)
+
+shutil.copyfile(sFilename_user_dlnd_runoff_origin, sFilename_user_dlnd_runoff)
+
 
 if iFlag_run_hexwatershed_utility == 1:
     #the json should replaced
@@ -176,18 +177,18 @@ if iFlag_run_hexwatershed_utility == 1:
     sFilename_json_in = oPyhexwatershed.sFilename_hexwatershed_json
 
     convert_hexwatershed_json_to_mosart_netcdf(sFilename_json_in, 
-            sFilename_mpas_in, 
             sFilename_mosart_parameter_in,
             sFilename_mosart_parameter_out,
             sFilename_mosart_unstructured_domain)
 
 #create the mapping file
-dResolution_runoff = 0.05
+dResolution_runoff = 0.5
+dResolution_target = 1.0/16.0
 if iFlag_create_mapping_file==1:
     #create a domain using mpas domain file        
     e3sm_create_structured_envelope_domain_file_1d(sFilename_mosart_unstructured_domain, 
                                                    sFilename_elm_structured_domain_file_out_1d,
-                                                                         dResolution_runoff, dResolution_runoff )
+                                                                         dResolution_target, dResolution_target )
     if iFlag_extract_forcing == 1:
         #extract the global runoff using the domain file
         sFilename_global_domain = ''
@@ -200,11 +201,12 @@ if iFlag_create_mapping_file==1:
                                                                                      sWorkspace_output_region,
                                                                                      iYear_start_in=2020,
                                                                                      iYear_end_in=2021)
-        if not os.path.exists(sFilename_user_dlnd_runoff):
-            shutil.copyfile(sFilename_user_dlnd_runoff_regional, sFilename_user_dlnd_runoff)
+        
+        shutil.copyfile(sFilename_user_dlnd_runoff_regional, sFilename_user_dlnd_runoff)
         pass
     else:
-        sFilename_user_dlnd_runoff = '/compyfs/liao313/00raw/mingpan_runoff/susquehanna/dlnd.streams.txt.lnd_005.gpcc'
+        #sFilename_user_dlnd_runoff = '/compyfs/liao313/00raw/mingpan_runoff/susquehanna/dlnd.streams.txt.lnd_005.gpcc'
+        pass
     #convert elm to script file         
     e3sm_convert_unstructured_domain_file_to_scripgrid_file(sFilename_elm_structured_domain_file_out_1d, sFilename_elm_structured_script_1d )   
     
@@ -249,8 +251,8 @@ if iFlag_create_e3sm_case == 1:
         sLine = 'frivinp_rtm = ' + "'" + sFilename_mosart_parameter_out + "'" + '\n'
         ofs.write(sLine)
 
-        sLine = "rtmhist_fincl1 = 'RIVER_DISCHARGE_OVER_LAND_LIQ', 'RIVER_DISCHARGE_TO_OCEAN_LIQ', 'Main_Channel_STORAGE_LIQ', 'Main_Channel_Water_Depth_LIQ','QSUR_LIQ','QSUR_ICE','QSUB_LIQ', 'QSUB_ICE'" + '\n'
-        ofs.write(sLine)
+        #sLine = "rtmhist_fincl1 = 'RIVER_DISCHARGE_OVER_LAND_LIQ', 'RIVER_DISCHARGE_TO_OCEAN_LIQ', 'Main_Channel_STORAGE_LIQ', 'Main_Channel_Water_Depth_LIQ','QSUR_LIQ','QSUR_ICE','QSUB_LIQ', 'QSUB_ICE'" + '\n'
+        #ofs.write(sLine)
 
         sLine = "rtmhist_fincl2 = 'RIVER_DISCHARGE_OVER_LAND_LIQ', 'Main_Channel_STORAGE_LIQ', 'Main_Channel_Water_Depth_LIQ' " + '\n'
         ofs.write(sLine)
@@ -268,6 +270,7 @@ if iFlag_create_e3sm_case == 1:
         ofs.write(sLine)
         
         sLine = 'inundflag = .false.'+ '\n'
+        sLine = 'inundflag = .true.'+ '\n'
         ofs.write(sLine)
         #opt_elevprof = 1
         ofs.close()

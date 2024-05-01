@@ -64,21 +64,21 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 oCase = pycase(aParameter_case)
 
 
-#mosart_save_variable_unstructured( oCase, sVariable_in = sVariable)
-
-sVariable= 'Main_Channel_STORAGE_LIQ'
-#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_intensity_in= 0, iFlag_monthly_in= 1)
 
 sVariable= 'Main_Channel_Water_Depth_LIQ'
-#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_intensity_in= 0, iFlag_monthly_in= 1)
+
+sVariable= 'Main_Channel_STORAGE_LIQ'
+#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_intensity_in= 0, iFlag_monthly_in= 1)
 
 sVariable= 'QSUR_LIQ'
-mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_intensity_in= 1, iFlag_daily_in= 1)
+#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_intensity_in= 1, iFlag_daily_in= 1)
 
 sVariable= 'QSUB_LIQ'
-mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_intensity_in= 1, iFlag_daily_in= 1)
+#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_intensity_in= 1, iFlag_daily_in= 1)
 
 aVariable_in = ['QSUR_LIQ', 'QSUB_LIQ']
 sVariable_out = 'Q_LIQ'
 
-mosart_merge_variable_unstructured(oCase, aVariable_in, sVariable_out, iFlag_daily_in= 1)
+#mosart_merge_variable_unstructured(oCase, aVariable_in, sVariable_out, iFlag_daily_in= 1)

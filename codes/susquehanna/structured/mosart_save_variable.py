@@ -19,16 +19,16 @@ from pye3sm.mosart.general.unstructured.save.mosart_save_variable_unstructured i
 
 
 
-iCase_index_e3sm = 2
+iCase_index_e3sm = 1
 sRegion = 'susquehanna'
 sMesh_type = 'mpas'
 res='MOS_USRDAT'      
 compset = 'RMOSGPCC'
 project = 'esmd'
-sDate='20230329'
+sDate='20240101'
 sModel  = 'e3sm'
-sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/susquehanna/e3sm.xml'
-sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/susquehanna/case.xml'
+sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/susquehanna/input/e3sm.xml'
+sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/susquehanna/input/case.xml'
 
 sWorkspace_scratch = '/compyfs/liao313'
 aParameter_e3sm = pye3sm_read_e3sm_configuration_file(sFilename_e3sm_configuration ,\
@@ -49,7 +49,7 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
                                                           iFlag_lnd_in= 0,
                                                           iFlag_dlnd_in= 1,
                                                           iFlag_rof_in= 1,
-                                                          iYear_start_in = 1980, 
+                                                          iYear_start_in = 2019, 
                                                           iYear_end_in = 2019,                                                         
                                                           iCase_index_in = iCase_index_e3sm, 
                                                           sDate_in = sDate, 
@@ -63,13 +63,13 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 oCase = pycase(aParameter_case)
 
 
-mosart_save_variable_unstructured( oCase, sVariable_in = sVariable)
-
-sVariable= 'Main_Channel_STORAGE_LIQ'
-mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+mosart_save_variable_unstructured( oCase, sVariable_in = sVariable, iFlag_intensity_in= 0, iFlag_monthly_in= 1)
 
 sVariable= 'Main_Channel_Water_Depth_LIQ'
-mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_intensity_in= 0, iFlag_monthly_in= 1)
+
+sVariable= 'Main_Channel_STORAGE_LIQ'
+#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
 
 sVariable= 'QSUR_LIQ'
-mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)

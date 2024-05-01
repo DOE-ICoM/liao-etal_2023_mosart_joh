@@ -40,7 +40,7 @@
         The case start year
       </desc>
     </entry>
-    <entry id="iYear_end" value="2008">
+    <entry id="iYear_end" value="2009">
       <type>int</type>
       <desc>
          The case end year
@@ -52,7 +52,7 @@
          The forcing data start year
       </desc>
     </entry>
-    <entry id="iYear_data_datm_end" value="2008">
+    <entry id="iYear_data_datm_end" value="2009">
       <type>int</type>
       <desc>
         The forcing data start year
@@ -64,7 +64,7 @@
          The forcing data start year
       </desc>
     </entry>
-    <entry id="iYear_data_dlnd_end" value="2008">
+    <entry id="iYear_data_dlnd_end" value="2009">
       <type>int</type>
       <desc>
         The forcing data start year

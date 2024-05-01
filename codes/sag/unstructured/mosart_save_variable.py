@@ -45,7 +45,7 @@ iCase_index_hexwatershed = 1
 iCase_index_e3sm = 1
 
 dResolution_meter=5000
-sDate='20240102'
+sDate='20240103'
 #this one should be replace 
 sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/sag/input/e3sm.xml'
 sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/sag/input/case.xml'
@@ -83,10 +83,10 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 
 oCase = pycase(aParameter_case)
 
-#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_intensity_in= 0, iFlag_monthly_in=1)
 
 sVariable= 'Main_Channel_Water_Depth_LIQ'
-#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_intensity_in= 0, iFlag_monthly_in=1)
 
 sVariable= 'Main_Channel_STORAGE_LIQ'
 #mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
@@ -100,5 +100,5 @@ sVariable= 'QSUB_LIQ'
 aVariable_in = ['QSUR_LIQ', 'QSUB_LIQ']
 sVariable_out = 'Q_LIQ'
 
-mosart_merge_variable_unstructured(oCase, aVariable_in, sVariable_out)
+#mosart_merge_variable_unstructured(oCase, aVariable_in, sVariable_out)
 

@@ -38,10 +38,10 @@ iCase_index_hexwatershed = 1
 iCase_index_e3sm = 1
 
 dResolution_meter=5000
-sDate='20230329'
+sDate='20240101'
 #this one should be replace 
-sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/susquehanna/e3sm.xml'
-sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/examples/susquehanna/case.xml'
+sFilename_e3sm_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/susquehanna/input/e3sm.xml'
+sFilename_case_configuration = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/data/susquehanna/input/case.xml'
 sModel  = 'e3sm'
 sWorkspace_scratch = '/compyfs/liao313'
 
@@ -61,7 +61,7 @@ aParameter_e3sm = pye3sm_read_e3sm_configuration_file(sFilename_e3sm_configurati
 oE3SM = pye3sm(aParameter_e3sm)
 
 #read structure mosart result
-sDate_structured = '20230329'
+sDate_structured = '20240101'
 iCase_index_e3sm_structurd = 1
 
 dData_min = 0
@@ -114,7 +114,7 @@ iMonth_end = 12
             
 
 
-sDate_unstructured = '20230401'
+sDate_unstructured = '20240102'
 iCase_index_e3sm_unstructurd = 1
 aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configuration,                                                        
                                                           iFlag_atm_in = 0,
@@ -159,22 +159,25 @@ sCase = oCase_unstructured.sCase
             
 print(dData_max)
 dData_max = 2200.0
-
-#plot them separately
-sUnit = r"${\mathrm{m}}^3/s$"
-sTitle = 'River discharge over land (liquid)'
+aExtent = [-79.10236320495605, -74.35684242248536, 39.374137496948244, 42.9556583404541]
+sUnit = r"Units: ${m}^3/s$"
+sTitle = 'River discharge over land'
 mosart_map_variable_unstructured(oCase_structured,
-                                 iFlag_scientific_notation_colorbar_in=1, 
+                                  iFlag_monthly_in=1,
+                                 iFlag_scientific_notation_colorbar_in=1,                                  
                                  dData_min_in=dData_min,
                                  dData_max_in=dData_max,
                                  sVariable_in = sVariable,
                                  sUnit_in= sUnit, 
-                                 sTitle_in=sTitle)
+                                 sTitle_in=sTitle,
+                                 aExtent_in = aExtent)
 
 mosart_map_variable_unstructured(oCase_unstructured,
+                                  iFlag_monthly_in=1,
                                  iFlag_scientific_notation_colorbar_in=1, 
                                   dData_min_in=dData_min,
                                  dData_max_in=dData_max,
                                  sVariable_in = sVariable, 
                                  sUnit_in= sUnit, 
-                                 sTitle_in=sTitle)
+                                 sTitle_in=sTitle,
+                                 aExtent_in = aExtent)

@@ -24,13 +24,13 @@ from pye3sm.mesh.e3sm_create_mapping_file import e3sm_create_mapping_file
 
 nTask = -8
 iFlag_resubmit = 1
-nSubmit = 1
+nSubmit = 3
 
 iFlag_debug =0
 iFlag_debug_case=0
 iFlag_extract_forcing = 0
 iFlag_run_hexwatershed  = 0
-iFlag_run_hexwatershed_utility = 1
+iFlag_run_hexwatershed_utility = 0
 iFlag_create_e3sm_case = 1
 
 iFlag_mosart =1 
@@ -43,8 +43,8 @@ iFlag_create_mapping_file = 1
 iCase_index_hexwatershed = 3
 sDate_hexwatershed='20230501'
 
-iCase_index_e3sm = 1
-sDate_e3sm='20230601'
+iCase_index_e3sm = 6
+sDate_e3sm='20240102'
 
 sRegion = 'amazon'
 sMesh_type = 'mpas'
@@ -100,7 +100,6 @@ oPyhexwatershed = pyhexwatershed_read_model_configuration_file(sFilename_configu
                 iFlag_elevation_profile_in=iFlag_elevation_profile,\
                 dResolution_meter_in = dResolution_meter, sDate_in= sDate_hexwatershed, sMesh_type_in= sMesh_type)   
 if iFlag_create_hexwatershed_job ==1:
-
     if iFlag_run_hexwatershed == 1:
         oPyhexwatershed._create_hpc_job()
         print(iCase_index_hexwatershed)
@@ -108,19 +107,12 @@ if iFlag_create_hexwatershed_job ==1:
         ofs.write(sLine)
         sLine  = 'sbatch submit.job' + '\n'
         ofs.write(sLine)
-
-
-        pass
-else:
-    pass
-
-
-    
-#post-process does not require job yet
-
-    
+   
 #post-process does not require job yet
 #sFilename_json_in='/compyfs/liao313/04model/pyhexwatershed/amazon/pyhexwatershed20220607001/hexwatershed/hexwatershed.json'
+
+sFilename_mosart_domain_ready = '/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20240102005/mosart_amazon_domain.nc'
+sFilename_mosart_parameter_ready = '/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20240102005/mosart_amazon_parameter.nc'
 
 sFilename_mpas_in='/people/liao313/workspace/python/pyhexwatershed_icom/data/sag/input/lnd_cull_mesh.nc'
 sFilename_mosart_parameter_in = '/compyfs/inputdata/rof/mosart/MOSART_Global_half_20210616.nc'
@@ -158,6 +150,10 @@ sFilename_mosart_parameter_out = sWorkspace_output + '/mosart_amazon_parameter.n
 sFilename_mosart_unstructured_domain= sWorkspace_output + '/mosart_amazon_domain.nc'
 sFilename_mosart_unstructured_script = sWorkspace_output + '/mosart_amazon_scriptgrid_mpas.nc'
 
+#copy existing preprocessed domain and parameter files
+shutil.copyfile(sFilename_mosart_domain_ready, sFilename_mosart_unstructured_domain)
+shutil.copyfile(sFilename_mosart_parameter_ready, sFilename_mosart_parameter_out)
+
 sFilename_elm_structured_domain_file_out_1d = sWorkspace_output + '/elm_amazon_domain_latlon.nc'
 sFilename_elm_structured_script_1d = sWorkspace_output + '/elm_amazon_scripgrid_latlon.nc'
 
@@ -166,12 +162,11 @@ sFilename_map_mosart_to_elm = sWorkspace_output + '/r2l_amazon_mapping.nc'
 
 
 sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd.gpcc'
-sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd_005.gpcc' 
-sFilename_user_dlnd_runoff_origin = '/compyfs/liao313/00raw/mingpan_runoff/amazon/dlnd.streams.txt.lnd_005.gpcc'
+#sFilename_user_dlnd_runoff_origin = '/qfs/people/liao313/data/e3sm/dlnd.streams.txt.lnd_005.gpcc' 
+#sFilename_user_dlnd_runoff_origin = '/compyfs/liao313/00raw/mingpan_runoff/amazon/dlnd.streams.txt.lnd_005.gpcc'
 sFilename_user_dlnd_runoff = sWorkspace_output + '/dlnd.streams.txt.lnd.gpcc'
-if not os.path.exists(sFilename_user_dlnd_runoff):
-    shutil.copyfile(sFilename_user_dlnd_runoff_origin, sFilename_user_dlnd_runoff)
-    pass
+shutil.copyfile(sFilename_user_dlnd_runoff_origin, sFilename_user_dlnd_runoff)
+
 
 if iFlag_run_hexwatershed_utility == 1:
     #the json should replaced
@@ -185,12 +180,14 @@ if iFlag_run_hexwatershed_utility == 1:
             sFilename_mosart_parameter_out,
             sFilename_mosart_unstructured_domain)
 #create the mapping file
-dResolution_runoff = 0.05
+
+dResolution_runoff = 0.5
+dResolution_target = 1.0/8.0
 if iFlag_create_mapping_file==1:
     
     #create a domain using mpas domain file        
     e3sm_create_structured_envelope_domain_file_1d(sFilename_mosart_unstructured_domain, sFilename_elm_structured_domain_file_out_1d,
-                                                                         dResolution_runoff, dResolution_runoff )
+                                                                         dResolution_target, dResolution_target )
     
     if iFlag_extract_forcing == 1:
         #extract the global runoff using the domain file
@@ -205,8 +202,8 @@ if iFlag_create_mapping_file==1:
                                                                                      sWorkspace_output_region,
                                                                                      iYear_start_in=1980,
                                                                                      iYear_end_in=2019)
-        if not os.path.exists(sFilename_user_dlnd_runoff):
-            shutil.copyfile(sFilename_user_dlnd_runoff_regional, sFilename_user_dlnd_runoff)
+      
+        shutil.copyfile(sFilename_user_dlnd_runoff_regional, sFilename_user_dlnd_runoff)
         pass
     else:
         #sFilename_user_dlnd_runoff = '/compyfs/liao313/00raw/mingpan_runoff/amazon/dlnd.streams.txt.lnd_005.gpcc'
@@ -260,13 +257,16 @@ if iFlag_create_e3sm_case == 1:
         sLine = 'rtmhist_mfilt = 1,365 '+ '\n'
         ofs.write(sLine)
         
+        sLine = 'DLevelR = 20'+ '\n'
+        ofs.write(sLine)
         #sLine = 'dlevelh2r = 20'+ '\n'
         #ofs.write(sLine)
-        sLine = 'routingmethod = 1'+ '\n'
-        #sLine = 'routingmethod = 2'+ '\n'
+        sLine = 'routingmethod = 1'+ '\n' #kw
+        #sLine = 'routingmethod = 2'+ '\n' #dw
         ofs.write(sLine)
         
-        sLine = 'inundflag = .false.'+ '\n'
+        #sLine = 'inundflag = .false.'+ '\n'
+        sLine = 'inundflag = .true.'+ '\n'
         ofs.write(sLine)
         #opt_elevprof = 1
         ofs.close()
@@ -289,7 +289,7 @@ if iFlag_create_e3sm_case == 1:
                                                           iFlag_rof_in= 1,
                                                           iFlag_replace_drof_forcing_in = 1,
                                                           iYear_start_in = 1980, 
-                                                          iYear_end_in = 1999,                                                          
+                                                          iYear_end_in = 1989,                                                          
                                                           iYear_data_datm_start_in = 1980, 
                                                           iYear_data_datm_end_in = 2009, 
                                                           iYear_data_dlnd_start_in = 1980, 
