@@ -17,21 +17,41 @@ aTitle = ['Main channel width', 'Main channel depth', 'Main channel Length', 'Ma
 aFlag_scientific_notation_colorbar = [0,0,0,1,0,0,0,0,0,1,0]
 aDate_max = None
 
-aVariable_parameter= [ 'rdep']
-aVariable_short= ['rdep']
-aTitle = ['Main channel depth']
-aDate_max = [0]
-aDate_max = [2.50]
-aUnit = ['Unit: m']
-aFlag_scientific_notation_colorbar=[0]
 
-mosart_map_unstructured_parameters(sFilename_domain_in, sFilename_parameter_in, sFilename_geojson_out,
-                                       aVariable_parameter, aVariable_short, aTitle,
-                                       aFlag_scientific_notation_colorbar,
-                                   aData_max_in= aDate_max,
-                                    aUnit_in= aUnit,
-                                      iSize_x_in=6, iSize_y_in=8, aExtent_in=aExtent)
-sFilename_geojson_out='/compyfs/liao313/04model/e3sm/sag/cases_aux/e3sm20240103001/mosart_sag_flow_direction.geojson'
-#mosart_map_unstructured_flow_direction(sFilename_domain_in, sFilename_parameter_in, sFilename_geojson_out,
-#                                        iSize_x_in=6, iSize_y_in=8, aExtent_in=aExtent)
+
+aVariable_parameter= ['rwid', 'rdep']
+aVariable_short= ['rwid', 'rdep']
+aTitle = ['Main channel width', 'Main channel depth']
+aTitle = ['', '']
+aDate_max = [0, 0]
+aDate_max = [250, 2.50]
+aUnit = ['Unit: m', 'Unit: m']
+
+aFlag_scientific_notation_colorbar=[0 ,0]
+aFlag_colorbar = [0,0]
+
+iFlag_parameter =1
+iFlag_flow_direction = 1
+if iFlag_parameter == 1:
+      mosart_map_unstructured_parameters(sFilename_domain_in,
+                                         sFilename_parameter_in,
+                                         sFilename_geojson_out,
+                                             aVariable_parameter,
+                                             aVariable_short,
+                                               aTitle,
+                                              aFlag_colorbar_in = aFlag_colorbar,
+                                           aFlag_scientific_notation_colorbar_in = aFlag_scientific_notation_colorbar,
+                                         aData_max_in= aDate_max,
+                                          aUnit_in= aUnit,
+                                            iSize_x_in=6,
+                                            iSize_y_in=8,
+                                            aExtent_in=aExtent)
+if iFlag_flow_direction == 1:
+      sFilename_geojson_out='/compyfs/liao313/04model/e3sm/sag/cases_aux/e3sm20240103001/mosart_sag_flow_direction.geojson'
+      mosart_map_unstructured_flow_direction(sFilename_domain_in,
+                                             sFilename_parameter_in,
+                                              sFilename_geojson_out,
+                                        iSize_x_in=6,
+                                        iSize_y_in=8,
+                                        aExtent_in=aExtent)
 
