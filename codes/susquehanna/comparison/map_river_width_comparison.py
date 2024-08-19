@@ -63,7 +63,7 @@ fig.suptitle("Main channel width", fontsize=16,  y=0.98)
 
 dValue_min=0
 dValue_max= 800 # 6.0E12
-sColormap = 'rainbow'
+sColormap = 'YlGnBu'
 sExtend =  'max'
 sUnit= r'Unit: m'
 cmap = cm.get_cmap(sColormap)
@@ -72,7 +72,7 @@ if iFlag_colorbar ==1:
     ax_pos1 = axs[1].get_position()
     #use this ax to set the colorbar ax position
     #calculat the heigh
-    dHeight = ax_pos0.height 
+    dHeight = ax_pos0.height
     ax_cb = fig.add_axes([ax_pos1.x1+0.02, ax_pos1.y0 , 0.015, dHeight])
     if iFlag_scientific_notation_colorbar==1:
         formatter = OOMFormatter(fformat= "%1.1e")

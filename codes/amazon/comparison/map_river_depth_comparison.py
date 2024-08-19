@@ -29,10 +29,10 @@ ncolumn = 2
 iFlag_colorbar = 1
 iFlag_scientific_notation_colorbar = 0
 aImage = list()
-sFilename = '/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20230501001/mosart_amazon_parameter_rdep.png'
+sFilename = '/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20240501004/mosart_amazon_parameter_rdep.png'
 image_dummy = Image.open(sFilename)
 aImage.append(image_dummy)
-sFilename = '/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20240102002/mosart_amazon_parameter_rdep.png'
+sFilename = '/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20240102007/mosart_amazon_parameter_rdep.png'
 image_dummy = Image.open(sFilename)
 aImage.append(image_dummy)
 # Create a figure and subplots
@@ -56,8 +56,8 @@ fig.suptitle("Main channel depth", fontsize=16,  y=0.98)
 #add an additional colorbar
 
 dValue_min=0
-dValue_max= 15.0 # 6.0E12
-sColormap = 'rainbow'
+dValue_max= 40.0 # 6.0E12
+sColormap = 'Blues'
 sExtend =  'max'
 sUnit= r'Unit: m'
 cmap = cm.get_cmap(sColormap)

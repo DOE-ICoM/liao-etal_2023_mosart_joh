@@ -33,7 +33,7 @@ iFlag_scientific_notation_colorbar = 0
 
 aImage = list()
 
-sFilename = '/compyfs/liao313/04model/e3sm/sag/cases_aux/e3sm20230101001/mosart_sag_parameter_rwid.png'
+sFilename = '/compyfs/liao313/04model/e3sm/sag/cases_aux/e3sm20240101002/mosart_sag_parameter_rwid.png'
 image_dummy = Image.open(sFilename)
 aImage.append(image_dummy)
 
@@ -63,7 +63,7 @@ fig.suptitle("Main channel width", fontsize=16,  y=0.98)
 
 dValue_min=0
 dValue_max= 250 # 6.0E12
-sColormap = 'rainbow'
+sColormap = 'YlGnBu'
 sExtend =  'max'
 sUnit= r'Unit: m'
 cmap = cm.get_cmap(sColormap)

@@ -4,9 +4,9 @@ from pye3sm.mosart.map.unstructured.mosart_map_unstructured_flow_direction impor
 
 
 
-sFilename_domain_in= '/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20240102002/mosart_amazon_domain.nc'
-sFilename_parameter_in='/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20240102002/mosart_amazon_parameter.nc'
-sFilename_geojson_out='/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20240102002/mosart_amazon_parameter.geojson'
+sFilename_domain_in= '/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20240102007/mosart_amazon_domain.nc'
+sFilename_parameter_in='/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20240102007/mosart_amazon_parameter.nc'
+sFilename_geojson_out='/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20240102007/mosart_amazon_parameter.geojson'
 
 aVariable_parameter= [ 'rwid','rdep','rlen' ,'rslp','twid','tslp','hslp','gxr','nh','nt']
 aVariable_short= ['rwid','rdep','rlen' ,'rslp', 'twid','tslp','hslp','gxr','nh','nt']
@@ -20,14 +20,14 @@ aVariable_short= ['rwid', 'rdep']
 aTitle = ['Main channel width', 'Main channel depth']
 aTitle = ['', '']
 aDate_max = [0, 0]
-aDate_max = [6000, 15.0]
+aDate_max = [7000, 40]
 aUnit = ['Unit: m', 'Unit: m']
 
 aFlag_scientific_notation_colorbar=[0 ,0]
 aFlag_colorbar = [0,0]
-
+aColormap = ['YlGnBu', 'Blues']
 aExtent= [-80.96294746398925, -48.94024314880371, -21.183916664123537, 6.4270845413208]
-iFlag_parameter =1
+iFlag_parameter =0
 iFlag_flow_direction = 1
 
 if iFlag_parameter == 1:
@@ -40,12 +40,13 @@ if iFlag_parameter == 1:
                                               aFlag_colorbar_in = aFlag_colorbar,
                                          aFlag_scientific_notation_colorbar_in = aFlag_scientific_notation_colorbar,
                                          aUnit_in=aUnit,
+                                         aColormap_in=aColormap,
                                          aData_max_in=aDate_max,
                                             iSize_x_in=8,
                                             iSize_y_in=8,
                                               aExtent_in=aExtent)
 if iFlag_flow_direction == 1:
-      sFilename_geojson_out='/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20230401002/mosart_amazon_flow_direction.geojson'
+      sFilename_geojson_out='/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20240102007/mosart_amazon_flow_direction.geojson'
       mosart_map_unstructured_flow_direction(sFilename_domain_in,
                                              sFilename_parameter_in,
                                                sFilename_geojson_out,

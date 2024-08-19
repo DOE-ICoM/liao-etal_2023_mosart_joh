@@ -24,12 +24,12 @@ aUnit = ['Unit: m', 'Unit: m']
 
 aFlag_scientific_notation_colorbar=[0 ,0]
 aFlag_colorbar = [0,0]
-
+aColormap = ['YlGnBu', 'Blues']
 
 aExtent = [-79.10236320495605, -74.35684242248536, 39.374137496948244, 42.9556583404541]
 #aExtent = None
 iFlag_parameter =1
-iFlag_flow_direction = 1
+iFlag_flow_direction = 0
 if iFlag_parameter == 1:
     mosart_map_unstructured_parameters(sFilename_domain_in,
                                        sFilename_parameter_in,
@@ -40,6 +40,7 @@ if iFlag_parameter == 1:
                                                   aFlag_colorbar_in = aFlag_colorbar,
                                            aFlag_scientific_notation_colorbar_in= aFlag_scientific_notation_colorbar,
                                             aData_max_in= aDate_max,
+                                            aColormap_in=aColormap,
                                             aUnit_in= aUnit,
                                           iSize_x_in=7,
                                           iSize_y_in=8 ,

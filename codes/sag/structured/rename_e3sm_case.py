@@ -8,10 +8,12 @@ sWorkspace_original_in = '/compyfs/icom/liao-etal_2023_mosart_joh/code/matlab/ou
 
 sWorkspace_original_in = '/compyfs/icom/liao-etal_2023_mosart_joh/code/matlab/outputs/Sag_16th_Ming_Runoff.2023-11-30-140738'
 
+sWorkspace_original_in = '/compyfs/icom/liao-etal_2023_mosart_joh/code/matlab/outputs/Sag_16th_Ming_Runoff_Inund.2024-05-31-105615'
+
 e3sm_rename_case(sFilename_case_configuration,
                  sDate,
                  sWorkspace_original_in,
-                 iCase_index_in=1,
+                 iCase_index_in=2,
                  iYear_start_in=1980,
                  iYear_end_in=2019,
                  sModel_in=sModel,

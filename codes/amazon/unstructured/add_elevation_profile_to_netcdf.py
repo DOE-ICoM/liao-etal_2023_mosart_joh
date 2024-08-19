@@ -27,7 +27,7 @@ def add_variables_to_netcdf(sFilename_mosart, sFilename_mpas, variable_names):
             for attr in aValue.ncattrs():
                 if attr not in ['_FillValue', 'missing_value']:
                     f_mosart_temp[sKey].setncattr(attr, getattr(f_mosart[sKey], attr))
-    
+
     f_mosart.close()
     f_mosart_temp.close()
     f_mosart = None
@@ -36,25 +36,25 @@ def add_variables_to_netcdf(sFilename_mosart, sFilename_mpas, variable_names):
     shutil.move(sFilename_mosart_temp, sFilename_mosart)
     #reopen the new netcdf file
     f_mosart = nc.Dataset(sFilename_mosart, 'a')
-    
+
     #read the global id from the mosart netcdf file
     for sKey, aValue in f_mosart.variables.items():
         if sKey == 'CellID':
             mosart_global_id0 = aValue
-    
+
     aMosart_global_id = mosart_global_id0[:]
-    
+
 
     #get the elevation profile from mpas
-    for sKey, aValue in f_mpas.variables.items():    
+    for sKey, aValue in f_mpas.variables.items():
         if sKey == 'indexToCellID':
-            cellsOnCell0 = aValue 
-        
+            cellsOnCell0 = aValue
+
         if sKey == 'bed_elevation_profile':
-            bed_elevation_profile0 = aValue 
-          
+            bed_elevation_profile0 = aValue
+
     aIndexToCellID = cellsOnCell0[:]
-    aBed_elevation_profile = bed_elevation_profile0[:] 
+    aBed_elevation_profile = bed_elevation_profile0[:]
     #create a dictionary with global_id as key and variable as value
     mpas_dict = dict(zip(aIndexToCellID, aBed_elevation_profile))
     #loop over the variable names
@@ -62,34 +62,34 @@ def add_variables_to_netcdf(sFilename_mosart, sFilename_mpas, variable_names):
     aMosart_var = np.array([mpas_dict[id] for id in aIndexToCellID if id in aMosart_global_id])
     for i in range(nVariable):
         var_name = variable_names[i]
-        #read the variable from the mpas netcdf file     
-        mosart_var = aMosart_var[:,i]      
+        #read the variable from the mpas netcdf file
+        mosart_var = aMosart_var[:,i]
         if var_name in f_mosart.variables:
             # If the variable exists, update its data
             pvar = f_mosart.variables[var_name]
             pvar[:] = mosart_var
             #add attribute to the variable
-            pvar.setncattr("units", "meters")            
-            pvar.setncattr("long name", "") 
+            pvar.setncattr("units", "meters")
+            pvar.setncattr("long name", "")
         else:
             # If the variable doesn't exist, create it and set its data
             pvar = f_mosart.createVariable(var_name, 'f8', ('gridcell',), fill_value=-9999)
             pvar[:] = mosart_var
             #add attribute to the variable
-            pvar.setncattr("units", "meters")            
-            pvar.setncattr("long name", "")       
-       
-    
+            pvar.setncattr("units", "meters")
+            pvar.setncattr("long name", "")
+
+
     #close the netcdf files
     f_mpas.close()
     f_mosart.close()
-    
+
     return
 
 if __name__ == '__main__':
     variable_names = ['elev0', 'elev1','elev2','elev3','elev4','elev5','elev6','elev7','elev8','elev9','elev10']
-    sFilename_mosart = '/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20240102001/mosart_amazon_parameter.nc'
+    sFilename_mosart = '/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20240102007/mosart_amazon_parameter.nc'
     sFilename_mpas = '/people/liao313/workspace/python/pyhexwatershed_icom/data/sag/input/lnd_mesh.nc'
     add_variables_to_netcdf(sFilename_mosart, sFilename_mpas, variable_names)
-    
+
     print('Done')

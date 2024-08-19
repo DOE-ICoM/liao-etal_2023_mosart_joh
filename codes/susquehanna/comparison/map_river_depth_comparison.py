@@ -63,7 +63,7 @@ fig.suptitle("Main channel depth", fontsize=16,  y=0.98)
 
 dValue_min=0
 dValue_max= 5.0 # 6.0E12
-sColormap = 'rainbow'
+sColormap = 'Blues'
 sExtend =  'max'
 sUnit= r'Unit: m'
 cmap = cm.get_cmap(sColormap)

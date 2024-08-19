@@ -1,0 +1,20 @@
+{
+"type": "FeatureCollection",
+"name": "nse",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "name": "US_0000794", "lon": -75.31667, "lat": 42.32139, "nse0": -1.0, "nse1": 0.50354520604275632 }, "geometry": { "type": "Point", "coordinates": [ -75.31667, 42.32139, 0.0 ] } },
+{ "type": "Feature", "properties": { "name": "US_0000797", "lon": -75.80306, "lat": 42.03528, "nse0": -1.0, "nse1": 0.42764485988478518 }, "geometry": { "type": "Point", "coordinates": [ -75.80306, 42.03528, 0.0 ] } },
+{ "type": "Feature", "properties": { "name": "US_0000806", "lon": -76.26639, "lat": 42.09722, "nse0": -1.0, "nse1": -0.33832790329800666 }, "geometry": { "type": "Point", "coordinates": [ -76.26639, 42.09722, 0.0 ] } },
+{ "type": "Feature", "properties": { "name": "US_0000824", "lon": -77.12917, "lat": 42.12111, "nse0": 0.031380220658875246, "nse1": 0.76704827186439639 }, "geometry": { "type": "Point", "coordinates": [ -77.12917, 42.12111, 0.0 ] } },
+{ "type": "Feature", "properties": { "name": "US_0000830", "lon": -77.0575, "lat": 42.14639, "nse0": -1.0, "nse1": 0.80089995146898263 }, "geometry": { "type": "Point", "coordinates": [ -77.0575, 42.14639, 0.0 ] } },
+{ "type": "Feature", "properties": { "name": "US_0000832", "lon": -76.63472, "lat": 42.00222, "nse0": -0.97660220668906783, "nse1": 0.78648465290715586 }, "geometry": { "type": "Point", "coordinates": [ -76.63472, 42.00222, 0.0 ] } },
+{ "type": "Feature", "properties": { "name": "US_0000847", "lon": -78.67697, "lat": 40.89701, "nse0": -1.0, "nse1": 0.71894339283708997 }, "geometry": { "type": "Point", "coordinates": [ -78.67697, 40.89701, 0.0 ] } },
+{ "type": "Feature", "properties": { "name": "US_0000849", "lon": -78.45669, "lat": 41.0045, "nse0": -1.0, "nse1": 0.74439072074702617 }, "geometry": { "type": "Point", "coordinates": [ -78.45669, 41.0045, 0.0 ] } },
+{ "type": "Feature", "properties": { "name": "US_0000855", "lon": -78.10306, "lat": 41.31728, "nse0": -1.0, "nse1": 0.81225463820485055 }, "geometry": { "type": "Point", "coordinates": [ -78.10306, 41.31728, 0.0 ] } },
+{ "type": "Feature", "properties": { "name": "US_0000859", "lon": -77.74999, "lat": 41.32368, "nse0": 0.51831007698496245, "nse1": 0.85202302452666023 }, "geometry": { "type": "Point", "coordinates": [ -77.74999, 41.32368, 0.0 ] } },
+{ "type": "Feature", "properties": { "name": "US_0000865", "lon": -77.60444, "lat": 41.05173, "nse0": -1.0, "nse1": 0.61126605286411828 }, "geometry": { "type": "Point", "coordinates": [ -77.60444, 41.05173, 0.0 ] } },
+{ "type": "Feature", "properties": { "name": "US_0000872", "lon": -77.32414, "lat": 41.27368, "nse0": -1.0, "nse1": 0.78992869596938342 }, "geometry": { "type": "Point", "coordinates": [ -77.32414, 41.27368, 0.0 ] } },
+{ "type": "Feature", "properties": { "name": "US_0000891", "lon": -77.935, "lat": 40.3923, "nse0": 0.023472962509447859, "nse1": 0.8412250190169217 }, "geometry": { "type": "Point", "coordinates": [ -77.935, 40.3923, 0.0 ] } }
+]
+}

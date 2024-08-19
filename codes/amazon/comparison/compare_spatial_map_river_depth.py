@@ -2,8 +2,6 @@ import numpy as np
 import netCDF4 as nc #read netcdf
 from pyearth.system.define_global_variables import *
 
-from hexwatershed_utility.mosart.convert_hexwatershed_output_to_mosart import convert_hexwatershed_json_to_mosart_netcdf
-
 
 from pye3sm.shared.e3sm import pye3sm
 from pye3sm.shared.case import pycase
@@ -13,9 +11,6 @@ from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_e3sm_config
 from pye3sm.mosart.general.unstructured.map.mosart_map_variable_unstructured import mosart_map_variable_unstructured
 
 
-iFlag_run_hexwatershed  = 0
-iFlag_run_hexwatershed_utility = 1
-iFlag_create_e3sm_case = 1
 
 iFlag_mosart =1
 iFlag_elm =0
@@ -32,7 +27,7 @@ compset = 'RMOSGPCC'
 project = 'esmd'
 
 iCase_index_hexwatershed = 1
-iCase_index_e3sm = 2
+iCase_index_e3sm = 3
 
 dResolution_meter=5000
 sDate='20240501'
@@ -60,7 +55,7 @@ oE3SM = pye3sm(aParameter_e3sm)
 #read structure mosart result
 sDate_structured = '20230501'
 sDate_structured = '20240501'
-iCase_index_e3sm_structurd = 2
+iCase_index_e3sm_structurd = 4
 
 dData_min = 0
 dData_max = -9999
@@ -114,7 +109,7 @@ for iYear in range(iYear_start, iYear_end + 1):
 
 sDate_unstructured = '20230401'
 sDate_unstructured = '20240102'
-iCase_index_e3sm_unstructurd = 2
+iCase_index_e3sm_unstructurd = 7
 aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configuration,
                                                           iFlag_atm_in = 0,
                                                           iFlag_datm_in = 1,
@@ -157,28 +152,38 @@ for iYear in range(iYear_start, iYear_end + 1):
             dData_max = np.max( [dData_max, np.max(aData_variable)] )
 
 print(dData_max)
-dData_max = 15.0
+dData_max = 40.0
 
 #plot them separately
 sUnit = r"Units: m"
 sTitle = 'River water depth'
 aExtent= [-80.96294746398925, -48.94024314880371, -21.183916664123537, 6.4270845413208]
+aExtent_zoom = [-67.77681716624677222 , -64.78182220078018361 ,-3.45411640498741868,  -1.83608365420328745]
+sColormap= 'Blues'
 mosart_map_variable_unstructured(oCase_structured,
                                  iFlag_monthly_in=1,
                                  iFlag_scientific_notation_colorbar_in=0,
+                                 #iFlag_openstreetmap_in=1,
                                  dData_min_in=dData_min,
                                  dData_max_in=dData_max,
                                  sVariable_in = sVariable,
+                                 sColormap_in = sColormap,
+                                 #sFilename_suffix_in = '_zoom',
                                  sUnit_in= sUnit,
                                  sTitle_in=sTitle,
                                  aExtent_in = aExtent)
 
+
+
 mosart_map_variable_unstructured(oCase_unstructured,
                                  iFlag_monthly_in=1,
                                  iFlag_scientific_notation_colorbar_in=0,
+                                 #iFlag_openstreetmap_in=1,
                                   dData_min_in=dData_min,
                                  dData_max_in=dData_max,
                                  sVariable_in = sVariable,
+                                  sColormap_in = sColormap,
+                                  #sFilename_suffix_in = '_zoom',
                                  sUnit_in= sUnit,
                                  sTitle_in=sTitle,
                                  aExtent_in = aExtent)

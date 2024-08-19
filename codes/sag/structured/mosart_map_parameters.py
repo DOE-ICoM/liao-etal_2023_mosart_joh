@@ -3,10 +3,10 @@ from pye3sm.mosart.map.unstructured.mosart_map_unstructured_parameters import mo
 from pye3sm.mosart.map.unstructured.mosart_map_unstructured_flow_direction import mosart_map_unstructured_flow_direction
 
 
-
-sFilename_domain_in= '/compyfs/liao313/04model/e3sm/sag/cases_aux/e3sm20230101001/mosart_sag_domain.nc'
-sFilename_parameter_in='/compyfs/liao313/04model/e3sm/sag/cases_aux/e3sm20230101001/mosart_sag_parameter.nc'
-sFilename_geojson_out='/compyfs/liao313/04model/e3sm/sag/cases_aux/e3sm20230101001/mosart_sag_parameter.geojson'
+#e3sm20230101001
+sFilename_domain_in= '/compyfs/liao313/04model/e3sm/sag/cases_aux/e3sm20240101002/mosart_sag_domain.nc'
+sFilename_parameter_in='/compyfs/liao313/04model/e3sm/sag/cases_aux/e3sm20240101002/mosart_sag_parameter.nc'
+sFilename_geojson_out='/compyfs/liao313/04model/e3sm/sag/cases_aux/e3sm20240101002/mosart_sag_parameter.geojson'
 
 aExtent = [-150.015625, -146.234375, 67.921875, 70.328125]
 
@@ -17,15 +17,24 @@ aVariable_parameter= ['rwid', 'rdep']
 aVariable_short= ['rwid', 'rdep']
 aTitle = ['Main channel width', 'Main channel depth']
 aTitle = ['', '']
-aDate_max = [0, 0]
-aDate_max = [250, 2.50]
+aData_min = [0, 0]
+aData_max = [250, None]
 aUnit = ['Unit: m', 'Unit: m']
+aColormap = ['YlGnBu', 'Blues']
+
+#aVariable_parameter= ['rslp']
+#aVariable_short= ['rslp']
+#aTitle = ['Main channel slope']
+#aTitle = ['']
+#aData_min = None
+#aData_max =None
+#aUnit = ['percent']
 
 aFlag_scientific_notation_colorbar=[0 ,0]
-aFlag_colorbar = [0,0]
+aFlag_colorbar = [0,1]
 
 iFlag_parameter =1
-iFlag_flow_direction = 1
+iFlag_flow_direction = 0
 if iFlag_parameter == 1:
     mosart_map_unstructured_parameters(sFilename_domain_in, sFilename_parameter_in, sFilename_geojson_out,
                                            aVariable_parameter,
@@ -33,7 +42,9 @@ if iFlag_parameter == 1:
                                            aTitle,
                                            aFlag_colorbar_in = aFlag_colorbar,
                                            aFlag_scientific_notation_colorbar_in = aFlag_scientific_notation_colorbar,
-                                           aData_max_in= aDate_max,
+                                           aColormap_in=aColormap,
+                                           aData_min_in= aData_min,
+                                           aData_max_in= aData_max,
                                            aUnit_in= aUnit,
                                            iSize_x_in=6,
                                            iSize_y_in=8,

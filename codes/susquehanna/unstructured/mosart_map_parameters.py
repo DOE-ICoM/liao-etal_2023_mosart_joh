@@ -18,6 +18,14 @@ aTitle = ['', '']
 aDate_max = [0, 0]
 aDate_max = [800, 5.0]
 aUnit = ['Unit: m', 'Unit: m']
+aColormap = ['YlGnBu', 'Blues']
+#aVariable_parameter= ['rslp']
+#aVariable_short= ['rslp']
+#aTitle = ['Main channel slope']
+#aTitle = ['']
+#aData_min = None
+#aData_max =None
+#aUnit = ['percent']
 
 aFlag_scientific_notation_colorbar=[0 ,0]
 aFlag_colorbar = [0,0]
@@ -33,6 +41,7 @@ if iFlag_parameter == 1:
                                          aTitle,
                                         aFlag_colorbar_in=aFlag_colorbar,
                                        aFlag_scientific_notation_colorbar_in= aFlag_scientific_notation_colorbar,
+                                              aColormap_in=aColormap,
                                        aUnit_in= aUnit,
                                        aData_max_in= aDate_max,
                                           iSize_x_in=7,

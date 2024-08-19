@@ -27,11 +27,23 @@ aDate_max = [0, 0]
 aDate_max = [250, 2.50]
 aUnit = ['Unit: m', 'Unit: m']
 
+aColormap = ['YlGnBu', 'Blues']
+
+#aVariable_parameter= ['rslp']
+#aVariable_short= ['rslp']
+#aTitle = ['Main channel slope']
+#aTitle = ['']
+#aData_min = None
+#aData_max =None
+#aUnit = ['percent']
+
 aFlag_scientific_notation_colorbar=[0 ,0]
 aFlag_colorbar = [0,0]
 
 iFlag_parameter =1
-iFlag_flow_direction = 1
+iFlag_flow_direction = 0
+
+
 if iFlag_parameter == 1:
       mosart_map_unstructured_parameters(sFilename_domain_in,
                                          sFilename_parameter_in,
@@ -41,6 +53,7 @@ if iFlag_parameter == 1:
                                                aTitle,
                                               aFlag_colorbar_in = aFlag_colorbar,
                                            aFlag_scientific_notation_colorbar_in = aFlag_scientific_notation_colorbar,
+                                           aColormap_in=aColormap,
                                          aData_max_in= aDate_max,
                                           aUnit_in= aUnit,
                                             iSize_x_in=6,
