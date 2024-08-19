@@ -13,6 +13,6 @@ sWorkspace_original_in = '/compyfs/icom/liao-etal_2023_mosart_joh/code/matlab/ou
 
 e3sm_rename_case(sFilename_case_configuration , sDate, sWorkspace_original_in,
                   iCase_index_in = 2,
-                  iYear_start_in=2009,
-                     iYear_end_in=2019,
+                  iYear_start_in=2000,
+                     iYear_end_in=2008,
         sModel_in = sModel, sRegion_in = sRegion)

@@ -95,8 +95,8 @@ else:
     aLatitude_gage_in = np.array( dummy[:, 10]).astype(float)
     aDrainage_area_in = np.array([float(x) if x != 'NA' else np.nan for x in dummy[:, 13]])
 
-sFilename_domain_in= '/compyfs/liao313/04model/e3sm/susquehanna/cases_aux/e3sm20230329001/mosart_susquehanna_domain.nc'
-sFilename_parameter_structured_in='/compyfs/liao313/04model/e3sm/susquehanna/cases_aux/e3sm20230329001/mosart_susquehanna_parameter.nc'
+sFilename_domain_in= '/compyfs/liao313/04model/e3sm/susquehanna/cases_aux/e3sm20240101002/mosart_susquehanna_domain.nc'
+sFilename_parameter_structured_in='/compyfs/liao313/04model/e3sm/susquehanna/cases_aux/e3sm20240101002/mosart_susquehanna_parameter.nc'
 
 aIndex_structured, aCellID_structured = find_gage_mesh_cell_id(aSitename, aLongitude_gage_in, aLatitude_gage_in, aDrainage_area_in,
                             sFilename_domain_in,
@@ -152,7 +152,7 @@ for sKey, aValue in aDatasets.variables.items():
         if sKey == 'ID':
             aID =  (aValue[:]).data
 for i in range(nCell_shared):
-    iindex =cell_index_unstructured[i]
+    iindex = cell_index_unstructured[i]
     iCellID  = aCellID_unstructured[iindex]
     lCell_index_unstructured[i] = np.where(aID == iCellID)[0]
 aDatasets = None
@@ -170,8 +170,8 @@ aParameter_e3sm = pye3sm_read_e3sm_configuration_file(sFilename_e3sm_configurati
 oE3SM = pye3sm(aParameter_e3sm)
 #==============================================================================
 #read structure mosart result
-sDate_structured = '20230329'
-iCase_index_e3sm_structurd = 1
+sDate_structured = '20240101'
+iCase_index_e3sm_structurd = 2
 
 dData_min = 0
 dData_max = -9999
@@ -223,7 +223,7 @@ for iYear in range(iYear_start, iYear_end + 1):
             pDatasets = nc.Dataset(sFilename)
             #get the variable
             for sKey, aValue in pDatasets.variables.items():
-                if sKey.lower() == sVariable.lower() :
+                if sKey.lower() == sVariable.lower():
                     aData_variable = (aValue[:]).data
                     #get fillvalue
                     dFillvalue = float(aValue._FillValue )
