@@ -388,3 +388,167 @@
 20231009 101226.523 INFO             PET0 Finalizing ESMF
 20231009 101226.567 INFO             PET0 Running with ESMF Version 7.1.0r
 20231009 101233.949 INFO             PET0 Finalizing ESMF
+20231117 163807.081 INFO             PET0 Running with ESMF Version 7.1.0r
+20231117 163807.276 INFO             PET0 Finalizing ESMF
+20231117 163807.317 INFO             PET0 Running with ESMF Version 7.1.0r
+20231117 163807.494 INFO             PET0 Finalizing ESMF
+20231117 191222.823 INFO             PET0 Running with ESMF Version 7.1.0r
+20231117 191223.327 INFO             PET0 Finalizing ESMF
+20231117 191223.358 INFO             PET0 Running with ESMF Version 7.1.0r
+20231117 191223.716 INFO             PET0 Finalizing ESMF
+20231117 194701.599 INFO             PET0 Running with ESMF Version 7.1.0r
+20231117 194702.098 INFO             PET0 Finalizing ESMF
+20231117 194702.129 INFO             PET0 Running with ESMF Version 7.1.0r
+20231117 194702.497 INFO             PET0 Finalizing ESMF
+20231120 092340.642 INFO             PET0 Running with ESMF Version 7.1.0r
+20231120 092341.119 INFO             PET0 Finalizing ESMF
+20231120 092341.149 INFO             PET0 Running with ESMF Version 7.1.0r
+20231120 092341.594 INFO             PET0 Finalizing ESMF
+20231120 220307.412 INFO             PET0 Running with ESMF Version 7.1.0r
+20231120 220307.858 INFO             PET0 Finalizing ESMF
+20231120 220307.938 INFO             PET0 Running with ESMF Version 7.1.0r
+20231120 220308.464 INFO             PET0 Finalizing ESMF
+20231120 221547.756 INFO             PET0 Running with ESMF Version 7.1.0r
+20231120 221548.236 INFO             PET0 Finalizing ESMF
+20231120 221548.333 INFO             PET0 Running with ESMF Version 7.1.0r
+20231120 221548.814 INFO             PET0 Finalizing ESMF
+20231120 221840.290 INFO             PET0 Running with ESMF Version 7.1.0r
+20231120 221840.809 INFO             PET0 Finalizing ESMF
+20231120 221840.886 INFO             PET0 Running with ESMF Version 7.1.0r
+20231120 221841.350 INFO             PET0 Finalizing ESMF
+20231120 222202.067 INFO             PET0 Running with ESMF Version 7.1.0r
+20231120 222202.332 INFO             PET0 Finalizing ESMF
+20231120 222202.415 INFO             PET0 Running with ESMF Version 7.1.0r
+20231120 222202.691 INFO             PET0 Finalizing ESMF
+20231120 224406.515 INFO             PET0 Running with ESMF Version 7.1.0r
+20231120 224406.703 INFO             PET0 Finalizing ESMF
+20231120 224406.778 INFO             PET0 Running with ESMF Version 7.1.0r
+20231120 224407.044 INFO             PET0 Finalizing ESMF
+20231121 093317.955 INFO             PET0 Running with ESMF Version 7.1.0r
+20231121 093318.313 INFO             PET0 Finalizing ESMF
+20231121 093318.344 INFO             PET0 Running with ESMF Version 7.1.0r
+20231121 093318.703 INFO             PET0 Finalizing ESMF
+20231127 183507.503 INFO             PET0 Running with ESMF Version 7.1.0r
+20231127 183507.960 INFO             PET0 Finalizing ESMF
+20231127 183507.983 INFO             PET0 Running with ESMF Version 7.1.0r
+20231127 183508.248 INFO             PET0 Finalizing ESMF
+20231128 080801.132 INFO             PET0 Running with ESMF Version 7.1.0r
+20231128 080801.415 INFO             PET0 Finalizing ESMF
+20231128 080801.441 INFO             PET0 Running with ESMF Version 7.1.0r
+20231128 080801.790 INFO             PET0 Finalizing ESMF
+20231128 184348.163 INFO             PET0 Running with ESMF Version 7.1.0r
+20231128 184348.341 INFO             PET0 Finalizing ESMF
+20231128 184348.379 INFO             PET0 Running with ESMF Version 7.1.0r
+20231128 184348.645 INFO             PET0 Finalizing ESMF
+20231128 192657.315 INFO             PET0 Running with ESMF Version 7.1.0r
+20231128 192657.588 INFO             PET0 Finalizing ESMF
+20231128 192657.627 INFO             PET0 Running with ESMF Version 7.1.0r
+20231128 192657.884 INFO             PET0 Finalizing ESMF
+20231128 193527.692 INFO             PET0 Running with ESMF Version 7.1.0r
+20231128 193527.861 INFO             PET0 Finalizing ESMF
+20231128 193527.953 INFO             PET0 Running with ESMF Version 7.1.0r
+20231128 193528.159 INFO             PET0 Finalizing ESMF
+20231128 194830.945 INFO             PET0 Running with ESMF Version 7.1.0r
+20231128 194831.267 INFO             PET0 Finalizing ESMF
+20231128 194831.330 INFO             PET0 Running with ESMF Version 7.1.0r
+20231128 194831.546 INFO             PET0 Finalizing ESMF
+20231128 200601.169 INFO             PET0 Running with ESMF Version 7.1.0r
+20231128 200601.427 INFO             PET0 Finalizing ESMF
+20231128 200601.588 INFO             PET0 Running with ESMF Version 7.1.0r
+20231128 200601.862 INFO             PET0 Finalizing ESMF
+20231129 101722.804 INFO             PET0 Running with ESMF Version 7.1.0r
+20231129 101723.163 INFO             PET0 Finalizing ESMF
+20231129 101723.190 INFO             PET0 Running with ESMF Version 7.1.0r
+20231129 101723.735 INFO             PET0 Finalizing ESMF
+20231129 130642.526 INFO             PET0 Running with ESMF Version 7.1.0r
+20231129 130644.149 INFO             PET0 Finalizing ESMF
+20231129 130644.182 INFO             PET0 Running with ESMF Version 7.1.0r
+20231129 130644.566 INFO             PET0 Finalizing ESMF
+20231130 101302.968 INFO             PET0 Running with ESMF Version 7.1.0r
+20231130 101315.441 INFO             PET0 Finalizing ESMF
+20231130 101315.604 INFO             PET0 Running with ESMF Version 7.1.0r
+20231130 101329.433 INFO             PET0 Finalizing ESMF
+20240208 101011.338 INFO             PET0 Running with ESMF Version 7.1.0r
+20240208 101011.523 INFO             PET0 Finalizing ESMF
+20240208 101011.581 INFO             PET0 Running with ESMF Version 7.1.0r
+20240208 101011.820 INFO             PET0 Finalizing ESMF
+20240220 143935.625 INFO             PET0 Running with ESMF Version 7.1.0r
+20240220 143936.237 INFO             PET0 Finalizing ESMF
+20240220 143936.547 INFO             PET0 Running with ESMF Version 7.1.0r
+20240220 143936.870 INFO             PET0 Finalizing ESMF
+20240225 185412.846 INFO             PET0 Running with ESMF Version 7.1.0r
+20240225 185413.174 INFO             PET0 Finalizing ESMF
+20240225 185413.203 INFO             PET0 Running with ESMF Version 7.1.0r
+20240225 185413.610 INFO             PET0 Finalizing ESMF
+20240318 110113.640 INFO             PET0 Running with ESMF Version 7.1.0r
+20240318 110113.649 ERROR            PET0 ESMF_IOFileTypeCheck.F90:112 ESMF_FileTypeCheck netCDF Status Return Error
+20240318 110113.650 INFO             PET0 Finalizing ESMF
+20240318 110113.666 INFO             PET0 Running with ESMF Version 7.1.0r
+20240318 110113.673 ERROR            PET0 ESMF_IOFileTypeCheck.F90:112 ESMF_FileTypeCheck netCDF Status Return Error
+20240318 110113.673 INFO             PET0 Finalizing ESMF
+20240318 122942.560 INFO             PET0 Running with ESMF Version 7.1.0r
+20240318 122943.333 INFO             PET0 Finalizing ESMF
+20240318 122943.355 INFO             PET0 Running with ESMF Version 7.1.0r
+20240318 122944.140 INFO             PET0 Finalizing ESMF
+20240319 223042.223 INFO             PET0 Running with ESMF Version 7.1.0r
+20240319 223047.280 INFO             PET0 Finalizing ESMF
+20240319 223047.312 INFO             PET0 Running with ESMF Version 7.1.0r
+20240319 223053.012 INFO             PET0 Finalizing ESMF
+20240325 150755.092 INFO             PET0 Running with ESMF Version 7.1.0r
+20240325 150800.165 INFO             PET0 Finalizing ESMF
+20240325 150800.206 INFO             PET0 Running with ESMF Version 7.1.0r
+20240325 150805.678 INFO             PET0 Finalizing ESMF
+20240401 130338.137 INFO             PET0 Running with ESMF Version 7.1.0r
+20240401 130338.158 ERROR            PET0 ESMF_IOFileTypeCheck.F90:112 ESMF_FileTypeCheck netCDF Status Return Error
+20240401 130338.158 INFO             PET0 Finalizing ESMF
+20240401 130338.197 INFO             PET0 Running with ESMF Version 7.1.0r
+20240401 130338.201 ERROR            PET0 ESMF_IOFileTypeCheck.F90:112 ESMF_FileTypeCheck netCDF Status Return Error
+20240401 130338.201 INFO             PET0 Finalizing ESMF
+20240401 130451.460 INFO             PET0 Running with ESMF Version 7.1.0r
+20240401 130451.470 ERROR            PET0 ESMF_IOFileTypeCheck.F90:112 ESMF_FileTypeCheck netCDF Status Return Error
+20240401 130451.470 INFO             PET0 Finalizing ESMF
+20240401 130451.490 INFO             PET0 Running with ESMF Version 7.1.0r
+20240401 130451.496 ERROR            PET0 ESMF_IOFileTypeCheck.F90:112 ESMF_FileTypeCheck netCDF Status Return Error
+20240401 130451.496 INFO             PET0 Finalizing ESMF
+20240401 130610.865 INFO             PET0 Running with ESMF Version 7.1.0r
+20240401 130617.616 INFO             PET0 Finalizing ESMF
+20240401 130617.649 INFO             PET0 Running with ESMF Version 7.1.0r
+20240401 130625.000 INFO             PET0 Finalizing ESMF
+20240411 104650.788 INFO             PET0 Running with ESMF Version 7.1.0r
+20240411 104658.077 INFO             PET0 Finalizing ESMF
+20240411 104658.123 INFO             PET0 Running with ESMF Version 7.1.0r
+20240411 104706.039 INFO             PET0 Finalizing ESMF
+20240411 113315.908 INFO             PET0 Running with ESMF Version 7.1.0r
+20240411 113322.086 INFO             PET0 Finalizing ESMF
+20240411 113322.128 INFO             PET0 Running with ESMF Version 7.1.0r
+20240411 113328.575 INFO             PET0 Finalizing ESMF
+20240415 101143.166 INFO             PET0 Running with ESMF Version 7.1.0r
+20240415 101150.239 INFO             PET0 Finalizing ESMF
+20240415 101150.271 INFO             PET0 Running with ESMF Version 7.1.0r
+20240415 101157.438 INFO             PET0 Finalizing ESMF
+20240530 150549.166 INFO             PET0 Running with ESMF Version 7.1.0r
+20240530 150549.173 ERROR            PET0 ESMF_IOFileTypeCheck.F90:112 ESMF_FileTypeCheck netCDF Status Return Error
+20240530 150549.191 INFO             PET0 Finalizing ESMF
+20240530 150549.215 INFO             PET0 Running with ESMF Version 7.1.0r
+20240530 150549.226 ERROR            PET0 ESMF_IOFileTypeCheck.F90:112 ESMF_FileTypeCheck netCDF Status Return Error
+20240530 150549.226 INFO             PET0 Finalizing ESMF
+20240530 150749.611 INFO             PET0 Running with ESMF Version 7.1.0r
+20240530 150749.997 INFO             PET0 Finalizing ESMF
+20240530 150750.028 INFO             PET0 Running with ESMF Version 7.1.0r
+20240530 150750.428 INFO             PET0 Finalizing ESMF
+20240530 151031.425 INFO             PET0 Running with ESMF Version 7.1.0r
+20240530 151031.726 INFO             PET0 Finalizing ESMF
+20240530 151031.749 INFO             PET0 Running with ESMF Version 7.1.0r
+20240530 151032.032 INFO             PET0 Finalizing ESMF
+20240530 184841.741 INFO             PET0 Running with ESMF Version 7.1.0r
+20240530 184842.165 INFO             PET0 Finalizing ESMF
+20240530 184842.193 INFO             PET0 Running with ESMF Version 7.1.0r
+20240530 184842.532 INFO             PET0 Finalizing ESMF
+20240531 094239.881 INFO             PET0 Running with ESMF Version 7.1.0r
+20240531 094240.191 INFO             PET0 Finalizing ESMF
+20240531 094240.218 INFO             PET0 Running with ESMF Version 7.1.0r
+20240531 094240.589 INFO             PET0 Finalizing ESMF
+20240620 105405.490 INFO             PET0 Running with ESMF Version 7.1.0r
+20240620 105410.596 INFO             PET0 Finalizing ESMF
+20240620 105410.639 INFO             PET0 Running with ESMF Version 7.1.0r
+20240620 105416.107 INFO             PET0 Finalizing ESMF
