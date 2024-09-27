@@ -1,18 +1,18 @@
 
-# Liao. et al. 2022 Journal of Hydrology
+# Liao. et al. 2024 Journal of Advances in Modeling Earth Systems
 
-**Evaluation of river routing on a unstructured mesh for coupled earth system modeling**
+**Evaluation of flow routing on the unstructured Voronoi meshes in earth system modeling**
 
-Chang Liao<sup>1\*</sup>, 
+Chang Liao<sup>1\*</sup>,
 Donghui Xu<sup>1</sup>,
-Darren Engwirda<sup>2</sup>, 
 Matt Cooper<sup>1</sup>,
 Tian Zhou<sup>1\*</sup>,
+Darren Engwirda<sup>2</sup>,
+Zeli Tan<sup>1\*</sup>,
 Gautam Bisht<sup>1</sup>,
 Hong-Yi Li<sup>3</sup>,
 Lingcheng Li<sup>1\*</sup>,
 Dongyu Feng<sup>1\*</sup>,
-Ning Sun<sup>4</sup>,
 and L. Ruby Leung<sup>1</sup>
 
 <sup>1 </sup> Atmospheric Sciences and Global Change, Pacific Northwest National Laboratory, Richland, WA, USA
@@ -21,20 +21,20 @@ and L. Ruby Leung<sup>1</sup>
 
 <sup>3 </sup> University of Houston, Houston, TX, USA
 
-<sup>4 </sup> Hydrology Group, Pacific Northwest National Laboratory, Richland, WA, USA
 
 \* corresponding author:  chang.liao@pnnl.gov; tian.zhou@pnnl.gov
 
 ## Abstract
 
-Spatial discretization is critical in robustly modeling spatially distributed hydrologic processes, particularly runoff routing. Flow routing models that use a Cartesian grid have several limitations including inconstancy in travel time in different directions, inaccurate representation of watershed boundary with sharp corners, and lacking of interface connection between land and ocean in Earth Systems Models (ESMs), in which ocean models routinely use a variable-resolution Voronoi grid. The different types of grids used by the river, land and ocean components in ESMs leads to significant challenges in capturing river-land-ocean continuum. Earlier studies have suggested that use of a hexagonal grid within flow routing models has the potential to resolve aforementioned limitations, yet the applications of such grids are rare in ESMs. In this study, we extend MOSART, the flow routing model of the Energy Exascale Earth System Model (E3SM), to use a hexagonal grid. We evaluate MOSART simulation that use hexagonal and cartesian grids against multiple observational datasets and compare the performance at multiple spatial resolutions. This study improves our understanding of the impacts of spatial discretization on flow routing model performance and the corresponding uncertainties. It also paves the way to better coupling river, land and ocean components in ESMs. 
+Flow routing is a fundamental process of Earth System Models' (ESMs) river component. Traditional flow routing models rely on Cartesian rectangular meshes, which exhibit limitations, particularly when coupled with unstructured mesh-based ocean components. They also lack the support for regionally refined models (RRMs).
+While previous studies have highlighted the potential benefits of unstructured meshes for flow routing, their widespread application and comprehensive evaluation within ESMs remain limited. This study extends the river component of the Energy Exascale Earth System Model (E3SM) to unstructured Voronoi meshes. We evaluated the model's performance in simulating river discharge and water depth across three watersheds spanning the Arctic, temperate, and tropical regions. The results show that while providing several benefits, unstructured mesh-based flow routing can achieve comparable performance to structured mesh-based routing, and their difference is often less than 10%. Although the unstructured mesh-based method could address several existing limitations, this research also shows that additional improvements in the numerical method are needed to fully exploit the advantages of unstructured mesh for hydrologic and ESMs.
 
 ## Journal reference
-Liao. et al. (2022). Evaluation of river routing on a unstructured grid for coupled earth system modeling. 
+Liao. et al. (2024). Evaluation of flow routing on the unstructured Voronoi meshes in earth system modeling.
 
 ## Code reference
 
-References for each minted software release for all code involved.  
+References for each minted software release for all code involved.
 
 Liao, Chang, & Cooper, Matt. (2022). Pyflowline: a mesh-independent river networks generator for hydrologic models (0.1.22). Zenodo. https://doi.org/10.5281/zenodo.6604337
 
@@ -63,7 +63,7 @@ Reference for each minted data source for your output data.  For example:
 
 ## Reproduce my experiment
 
-You need to follow three major steps to reproduce this study: 
+You need to follow three major steps to reproduce this study:
 
 1. Run the [MPAS model](https://github.com/DOE-ICoM/mpas_mosart/blob/main/workflow/jigsaw_mpas.md)
 2. Run the [HexWaterhshed model](https://github.com/DOE-ICoM/mpas_mosart/blob/main/workflow/hexwatershed.md)

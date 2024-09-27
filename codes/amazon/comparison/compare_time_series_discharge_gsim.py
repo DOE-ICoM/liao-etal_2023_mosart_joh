@@ -15,7 +15,7 @@ import pyearth.toolbox.date.julian as julian
 
 from pyearth.toolbox.data.gsim.read_gsim_indices_data import read_gsim_indices_data
 from hexwatershed_utility.mosart.calculate_nse import calculate_nse
-from pyearth.visual.map.vector.map_vector_point_file import map_vector_point_file
+
 
 from hexwatershed_utility.mosart.find_gage_mesh_cell_id import find_gage_mesh_cell_id
 
@@ -87,7 +87,7 @@ aDrainage_area_in = np.array([float(x) if x != 'NA' else np.nan for x in dummy[:
 sFilename_domain_in= '/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20240501004/mosart_amazon_domain.nc'
 sFilename_parameter_structured_in='/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20240501004/mosart_amazon_parameter.nc'
 
-aIndex_structured, aCellID_structured = find_gage_mesh_cell_id(aSitename, aLongitude_gage_in, aLatitude_gage_in, aDrainage_area_in,
+aIndex_structured, aCellID_structured,aDrainage_area_structured = find_gage_mesh_cell_id(aSitename, aLongitude_gage_in, aLatitude_gage_in, aDrainage_area_in,
                             sFilename_domain_in,
                             sFilename_parameter_structured_in,
                             dThreshold_drainage_in = 1.0E8,
@@ -97,7 +97,7 @@ aIndex_structured, aCellID_structured = find_gage_mesh_cell_id(aSitename, aLongi
 
 sFilename_domain_in= '/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20240102007/mosart_amazon_domain.nc'
 sFilename_parameter_unstructured_in='/compyfs/liao313/04model/e3sm/amazon/cases_aux/e3sm20240102007/mosart_amazon_parameter.nc'
-aIndex_unstructured, aCellID_unstructured = find_gage_mesh_cell_id(aSitename, aLongitude_gage_in, aLatitude_gage_in, aDrainage_area_in,
+aIndex_unstructured, aCellID_unstructured,aDrainage_area_unstructured = find_gage_mesh_cell_id(aSitename, aLongitude_gage_in, aLatitude_gage_in, aDrainage_area_in,
                             sFilename_domain_in,
                             sFilename_parameter_unstructured_in,
                             dThreshold_drainage_in = 1.0E8,
@@ -279,7 +279,10 @@ sFolder_fig  ='/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/fi
 
 aNSE_structured = np.full(nCell_shared, -9999, dtype= float)
 aNSE_unstructured = np.full(nCell_shared, -9999, dtype= float)
-
+sFilename_log = os.path.join(sFolder_fig, 'log.txt')
+f = open(sFilename_log, 'w')
+index_dry = np.arange(7, nstress, 12)
+index_wet = np.arange(1, nstress, 12)
 for iSite in range(nCell_shared):
     sSite = aSitename[aIndex_common[iSite]]
     sFilename_site = os.path.join(sFolder_obs, sSite + '.mon')
@@ -296,6 +299,12 @@ for iSite in range(nCell_shared):
     else:
         sLongitude = 'Longitude: ' + "{:.2f}".format(aLongitude_gage_in[aIndex_common[iSite]])
         sLatitude = 'Latitude: ' + "{:.2f}".format(aLatitude_gage_in[aIndex_common[iSite]])
+        dDrainage_area = aDrainage_area_in[aIndex_common[iSite]]
+        dDrainage_area_structured  = aDrainage_area_structured[cell_index_structured[iSite]]
+        dDrainage_area_unstructured = aDrainage_area_unstructured[cell_index_unstructured[iSite]]
+        sDrainage_area = 'drainage area: ' + "{:.2E}".format(dDrainage_area) + r' $km^{2}$'
+        sDrainage_area_structured = 'drainage area: ' + "{:.2E}".format(dDrainage_area_structured)  + r' $km^{2}$'
+        sDrainage_area_unstructured = 'drainage area: ' + "{:.2E}".format(dDrainage_area_unstructured)  + r' $km^{2}$'
         #sName = aRivername[aIndex_common[iSite]]
         #only the first letter is capitalized
         #sName = sName.capitalize()
@@ -308,7 +317,7 @@ for iSite in range(nCell_shared):
                       dMin_y_in = 0,
                       sTitle_in = sTitle,
                       sLabel_y_in= r'River discharge ($m^{3}/s$)',
-                      aLabel_legend_in=['GSIM','1/8 DRT mesh-based','MPAS mesh-based'],
+                      aLabel_legend_in=['Observation, ' + sDrainage_area,'DRT mesh-based, ' + sDrainage_area_structured,'MPAS mesh-based, ' + sDrainage_area_unstructured],
                         aColor_in=['black','red','blue'],
                           aLinestyle_in=['solid','solid','solid'],
                             aMarker_in=['None','None','None'],
@@ -318,7 +327,11 @@ for iSite in range(nCell_shared):
         diff = np.abs(aData_structured0 - aData_unstructured0)
         dummy = np.max([aData_structured0, aData_unstructured0], axis = 0)
         diff_ratio = diff/ dummy
-        print(sName, np.max(diff_ratio))
+        print(sName, np.max(diff_ratio), np.max(diff_ratio[index_dry]), np.max(diff_ratio[index_wet]))
+
+        f.write(sName + ' ' + "{:.3f}".format(np.max(diff_ratio))
+                 + ' ' + "{:.3f}".format(np.max(diff_ratio[index_dry]))
+                 + ' ' + "{:.3f}".format(np.max(diff_ratio[index_wet]) ) + '\n')
 
         nse0 = calculate_nse(aDischarge_obs, aData_structured0)
         if nse0 < -1:
@@ -351,6 +364,7 @@ pLayer_gage = pDataset_gage.CreateLayer('nse', pSpatial_reference_gcs, ogr.wkbPo
 pLayer_gage.CreateField(ogr.FieldDefn('name', ogr.OFTString))
 pLayer_gage.CreateField(ogr.FieldDefn('lon', ogr.OFTReal))
 pLayer_gage.CreateField(ogr.FieldDefn('lat', ogr.OFTReal))
+pLayer_gage.CreateField(ogr.FieldDefn('drai', ogr.OFTReal))
 pLayer_gage.CreateField(ogr.FieldDefn('nse0', ogr.OFTReal))
 pLayer_gage.CreateField(ogr.FieldDefn('nse1', ogr.OFTReal))
 
@@ -363,6 +377,7 @@ for iSite in range(nCell_shared):
         pFeature.SetField('name', sSite)
         pFeature.SetField('lon', aLongitude_gage_in[aIndex_common[iSite]])
         pFeature.SetField('lat', aLatitude_gage_in[aIndex_common[iSite]])
+        pFeature.SetField('drai', aDrainage_area_in[aIndex_common[iSite]])
         pFeature.SetField('nse0', aNSE_structured[iSite])
         pFeature.SetField('nse1', aNSE_unstructured[iSite])
         pPoint = ogr.Geometry(ogr.wkbPoint)
@@ -373,7 +388,7 @@ for iSite in range(nCell_shared):
         #print('bad data')
         continue
 
-
+f.close()
 print('Finished')
 
 

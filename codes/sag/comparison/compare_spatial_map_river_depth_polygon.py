@@ -1,6 +1,6 @@
 import numpy as np
 from pyearth.system.define_global_variables import *
-from pyearth.visual.map.vector.map_vector_polygon_data import map_vector_polygon_data
+from pyearth.visual.map.vector.map_vector_polygon_file import map_vector_polygon_file
 from pyearth.toolbox.management.vector.polygon_calculator import polygon_difference_cython, polygon_difference_cython_channel
 from pyearth.toolbox.data.geoparquet.convert_geojson_to_geoparquet import convert_geojson_to_geoparquet
 from pye3sm.mosart.general.unstructured.retrieve.mosart_retrieve_main_channel import mosart_retrieve_main_channel
@@ -66,7 +66,7 @@ if iFlag_percent == 1:
                                    aChannel_base,
                                       aChannel_new,
                                       sFilename_diff)
-    
+
     aData_diff = retrieve_field_value(sFilename_diff, sVar)
 
     aData_diff[np.where(aData_diff >= 95)] = 0.0
@@ -103,9 +103,10 @@ sFilename_output_png = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosa
 
 sTitle = 'Water depth difference'
 aExtent = [-150.015625, -146.234375, 67.921875, 70.328125]
+aLegend=list()
+aLegend.append('(c)')
+map_vector_polygon_file(1, sFilename_diff,
 
-map_vector_polygon_data(1, sFilename_diff,
-                                         sVariable_in=sVar,
                                          iFlag_scientific_notation_colorbar_in=iFlag_scientific_notation_colorbar_in,
                                          iFlag_colorbar_in=1,
                                          iFlag_color_in = 1,
@@ -113,11 +114,12 @@ map_vector_polygon_data(1, sFilename_diff,
                                          iDPI_in= 300,
                                          dData_max_in= dData_max,
                                          dData_min_in= dData_min,
+                                            sField_color_in=sVar,
                                          sFilename_output_in=sFilename_output_png,
                                          sColormap_in = sColormap,
                                          dMissing_value_in = -9999,
                                          sTitle_in=sTitle,
                                          sUnit_in=sUnit,
                                          sExtend_in='both',
-                                         aExtent_in=aExtent,
-                                         iFlag_debug=0)
+                                             aLegend_in=aLegend,
+                                         aExtent_in=aExtent)

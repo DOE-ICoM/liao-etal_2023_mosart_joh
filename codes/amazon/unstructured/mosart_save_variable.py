@@ -19,6 +19,7 @@ from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_case_config
 from pye3sm.shared.pye3sm_read_configuration_file import pye3sm_read_e3sm_configuration_file
 
 from pye3sm.mosart.general.unstructured.save.mosart_save_variable_unstructured import mosart_save_variable_unstructured
+from pye3sm.mosart.general.unstructured.save.mosart_merge_variable_unstructured import mosart_merge_variable_unstructured
 
 
 iFlag_run_hexwatershed  = 0
@@ -81,20 +82,24 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 
 oCase = pycase(aParameter_case)
 
-mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_intensity_in= 0, iFlag_monthly_in =1)
+#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_intensity_in= 0, iFlag_monthly_in =1)
 
 sVariable= 'Main_Channel_Water_Depth_LIQ'
-mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_intensity_in= 0, iFlag_monthly_in =1)
+#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_intensity_in= 0, iFlag_monthly_in =1)
 
 sVariable= 'Main_Channel_STORAGE_LIQ'
 #mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_monthly_in =1)
 
 sVariable= 'QSUR_LIQ'
-#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_intensity_in =1, iFlag_monthly_in= 1)
 
 sVariable= 'QSUB_LIQ'
-#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable)
+mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_intensity_in =1, iFlag_monthly_in= 1)
+aVariable_in = ['QSUR_LIQ', 'QSUB_LIQ']
+sVariable_out = 'Q_LIQ'
+
+mosart_merge_variable_unstructured(oCase, aVariable_in, sVariable_out, iFlag_monthly_in= 1)
 
 sVariable= 'FLOODED_FRACTION'
-mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_resolution =1, dResolution_in=1/8.0, iFlag_intensity_in= 0, iFlag_monthly_in= 1)
+#mosart_save_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_resolution =1, dResolution_in=1/8.0, iFlag_intensity_in= 0, iFlag_monthly_in= 1)
 

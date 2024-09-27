@@ -1,6 +1,6 @@
 import numpy as np
 from pyearth.system.define_global_variables import *
-from pyearth.visual.map.vector.map_vector_polygon_data import map_vector_polygon_data
+from pyearth.visual.map.vector.map_vector_polygon_file import map_vector_polygon_file
 from pyearth.toolbox.management.vector.polygon_calculator import polygon_difference_cython_channel, polygon_difference_cython
 from pyearth.toolbox.data.geoparquet.convert_geojson_to_geoparquet import convert_geojson_to_geoparquet
 from pye3sm.mosart.general.unstructured.retrieve.mosart_retrieve_main_channel import mosart_retrieve_main_channel
@@ -100,9 +100,10 @@ else:
 sTitle = 'Water depth difference'
 aExtent = [-79.10236320495605, -74.35684242248536, 39.374137496948244, 42.9556583404541]
 #sFilename_output_png = None
-
-map_vector_polygon_data(1, sFilename_diff,
-                                         sVariable_in=sVar,
+aLegend=list()
+aLegend.append('(c)')
+map_vector_polygon_file(1, sFilename_diff,
+                                         sField_color_in=sVar,
                                          iFlag_scientific_notation_colorbar_in=iFlag_scientific_notation_colorbar_in,
                                          iFlag_color_in=1,
                                          iFlag_colorbar_in=1,
@@ -116,4 +117,5 @@ map_vector_polygon_data(1, sFilename_diff,
                                          sTitle_in=sTitle,
                                          sUnit_in=sUnit,
                                          sExtend_in=sExtend,
+                                          aLegend_in=aLegend,
                                          aExtent_in=aExtent )

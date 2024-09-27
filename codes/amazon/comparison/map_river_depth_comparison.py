@@ -60,7 +60,7 @@ dValue_max= 40.0 # 6.0E12
 sColormap = 'Blues'
 sExtend =  'max'
 sUnit= r'Unit: m'
-cmap = cm.get_cmap(sColormap)
+cmap = plt.colormaps[sColormap]
 if iFlag_colorbar ==1:
     ax_pos0 = axs[0].get_position()
     ax_pos1 = axs[1].get_position()

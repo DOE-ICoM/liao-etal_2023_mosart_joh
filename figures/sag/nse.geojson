@@ -1,0 +1,12 @@
+{
+"type": "FeatureCollection",
+"name": "nse",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "name": "15908000", "lon": -148.817778, "lat": 69.015833, "drai": 4790.0, "nse0": 0.57680929855858987, "nse1": 0.60057123019105907 }, "geometry": { "type": "Point", "coordinates": [ -148.817778, 69.015833, 0.0 ] } },
+{ "type": "Feature", "properties": { "name": "15905100", "lon": -149.37333, "lat": 68.4522222, "drai": 769.0, "nse0": 0.59518167014851153, "nse1": 0.62654521793895657 }, "geometry": { "type": "Point", "coordinates": [ -149.37333, 68.4522222, 0.0 ] } },
+{ "type": "Feature", "properties": { "name": "bl_lvishak_dss2", "lon": -148.6261, "lat": 69.5959, "drai": 11800.0, "nse0": -0.12451837273552302, "nse1": 0.036852126429815613 }, "geometry": { "type": "Point", "coordinates": [ -148.6261, 69.5959, 0.0 ] } },
+{ "type": "Feature", "properties": { "name": "happyvalley_dss3", "lon": -148.8232, "lat": 69.1507, "drai": 5800.0, "nse0": -0.86776727897491557, "nse1": -0.62911500398089526 }, "geometry": { "type": "Point", "coordinates": [ -148.8232, 69.1507, 0.0 ] } },
+{ "type": "Feature", "properties": { "name": "nr_mp318_dss4", "lon": -148.86, "lat": 68.9583, "drai": 4730.0, "nse0": -0.52617417809373168, "nse1": -0.42784729713162162 }, "geometry": { "type": "Point", "coordinates": [ -148.86, 68.9583, 0.0 ] } }
+]
+}

@@ -164,6 +164,9 @@ sUnit = r"Unit: m"
 sTitle = 'River water depth'
 aExtent = [-150.015625, -146.234375, 67.921875, 70.328125]
 sColormap = 'Blues'
+aLegend=list()
+aLegend.append('(a)')
+aLegend.append('Case 1')
 mosart_map_variable_unstructured(oCase_structured,
                                  iFlag_monthly_in=1,
                                  iFlag_scientific_notation_colorbar_in=0,
@@ -173,8 +176,11 @@ mosart_map_variable_unstructured(oCase_structured,
                                  sColormap_in=sColormap,
                                  sUnit_in= sUnit,
                                  sTitle_in=sTitle,
+                                  aLegend_in=aLegend,
                                  aExtent_in = aExtent)
-
+aLegend=list()
+aLegend.append('(b)')
+aLegend.append('Case 2')
 mosart_map_variable_unstructured(oCase_unstructured,
                                  iFlag_monthly_in=1,
                                  iFlag_scientific_notation_colorbar_in=0,
@@ -184,4 +190,5 @@ mosart_map_variable_unstructured(oCase_unstructured,
                                  sColormap_in=sColormap,
                                  sUnit_in= sUnit,
                                  sTitle_in=sTitle,
+                                  aLegend_in=aLegend,
                                  aExtent_in = aExtent)

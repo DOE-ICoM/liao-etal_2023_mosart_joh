@@ -30,8 +30,12 @@ aColormap = ['YlGnBu', 'Blues']
 aFlag_scientific_notation_colorbar=[0 ,0]
 aFlag_colorbar = [0,0]
 aExtent = [-79.10236320495605, -74.35684242248536, 39.374137496948244, 42.9556583404541]
-iFlag_parameter =1
-iFlag_flow_direction = 1
+iFlag_parameter = 1
+iFlag_flow_direction = 0
+
+aLegend=list()
+aLegend.append('(a)')
+aLegend.append('Case 4')
 if iFlag_parameter == 1:
     mosart_map_unstructured_parameters(sFilename_domain_in,
                                         sFilename_parameter_in,
@@ -46,15 +50,21 @@ if iFlag_parameter == 1:
                                        aData_max_in= aDate_max,
                                           iSize_x_in=7,
                                           iSize_y_in=8 ,
+                                              aLegend_in=aLegend,
                                           aExtent_in=aExtent)
 if iFlag_flow_direction == 1:
     sFilename_geojson_out='/compyfs/liao313/04model/e3sm/susquehanna/cases_aux/e3sm20230401002/mosart_susquehanna_flow_direction.geojson'
     #sFilename_geojson_out='/compyfs/liao313/04model/e3sm/susquehanna/cases_aux/e3sm20240102001/mosart_susquehanna_flow_direction.geojson'
+    dData_max = 7.0E4 #* 1.0E6
+    dData_min = 0
     mosart_map_unstructured_flow_direction(sFilename_domain_in,
                                             sFilename_parameter_in,
                                             sFilename_geojson_out,
                                        iSize_x_in=7,
                                        iSize_y_in=8,
+                                        dData_max_in = dData_max,
+                                        dData_min_in = dData_min,
+                                           aLegend_in=aLegend,
                                          aExtent_in=aExtent )
 
 
