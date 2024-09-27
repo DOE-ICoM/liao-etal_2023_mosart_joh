@@ -161,10 +161,13 @@ print(dData_max)
 dData_max = 5.0
 
 #plot them separately
-sUnit = r"Units: m"
+sUnit = r"Unit: m"
 sTitle = 'River water depth'
 aExtent = [-79.10236320495605, -74.35684242248536, 39.374137496948244, 42.9556583404541]
 sColormap = 'Blues'
+aLegend=list()
+aLegend.append('(a)')
+aLegend.append('Case 3')
 mosart_map_variable_unstructured(oCase_structured,
                                  iFlag_monthly_in=1,
                                  iFlag_scientific_notation_colorbar_in=0,
@@ -174,8 +177,12 @@ mosart_map_variable_unstructured(oCase_structured,
                                  sColormap_in=sColormap,
                                  sUnit_in= sUnit,
                                  sTitle_in=sTitle,
+                                        aLegend_in=aLegend,
                                  aExtent_in = aExtent)
 
+aLegend=list()
+aLegend.append('(b)')
+aLegend.append('Case 4')
 mosart_map_variable_unstructured(oCase_unstructured,
                                  iFlag_monthly_in=1,
                                  iFlag_scientific_notation_colorbar_in=0,
@@ -185,4 +192,5 @@ mosart_map_variable_unstructured(oCase_unstructured,
                                  sVariable_in = sVariable,
                                  sUnit_in= sUnit,
                                  sTitle_in=sTitle,
+                                        aLegend_in=aLegend,
                                  aExtent_in = aExtent)

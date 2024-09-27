@@ -71,14 +71,15 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
 
 
 oCase = pycase(aParameter_case)
+aLegend=list()
+aLegend.append('(a)')
 sUnit = r"Units: ${m}^3/s$"
-# sUnit = r"$\frac{\mathrm{1}}{{\mathrm{Distance}}^2 \ (\mathrm{m}^2)}$"
 
-#sTitle = 'River discharge over land'
-#mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_monthly_in=1,
-#                                 dData_min_in=0, dData_max_in= 4.0E2, sUnit_in= sUnit,
-#                                 sTitle_in=sTitle,
-#                                 iFlag_scientific_notation_colorbar_in=1)
+sTitle = 'River discharge over land'
+mosart_map_variable_unstructured(oCase, sVariable_in = sVariable, iFlag_monthly_in=1,
+                                 dData_min_in=0, dData_max_in= 4.0E2, sUnit_in= sUnit,
+                                 sTitle_in=sTitle,
+                                 iFlag_scientific_notation_colorbar_in=1)
 
 sVariable = 'Main_Channel_STORAGE_LIQ'
 sUnit = r"${m}^3/s$"
@@ -88,14 +89,14 @@ sTitle = 'Main channel storage (liquid)'
 sVariable = 'Main_Channel_Water_Depth_LIQ'
 sUnit = r"Unit: m"
 sTitle = 'Main channel water depth'
-mosart_map_variable_unstructured(oCase,
-                                 sVariable_in = sVariable,
-                                  iFlag_monthly_in=1,
-                                 dData_min_in=0,
-                                 dData_max_in=2.0,
-                                   sUnit_in= sUnit,
-                                   sTitle_in=sTitle,
-                                   iFlag_scientific_notation_colorbar_in=0)
+#mosart_map_variable_unstructured(oCase,
+#                                 sVariable_in = sVariable,
+#                                  iFlag_monthly_in=1,
+#                                 dData_min_in=0,
+#                                 dData_max_in=2.0,
+#                                   sUnit_in= sUnit,
+#                                   sTitle_in=sTitle,
+#                                   iFlag_scientific_notation_colorbar_in=0)
 
 sVariable = 'QSUR_LIQ'
 sUnit = r"${\mathrm{mm}}/s$"

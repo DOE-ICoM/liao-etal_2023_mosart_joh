@@ -160,6 +160,9 @@ aExtent = [-79.10236320495605, -74.35684242248536, 39.374137496948244, 42.955658
 sUnit = r"Units: ${m}^3/s$"
 sTitle = 'River discharge'
 sColormap = 'bwr'
+aLegend=list()
+aLegend.append('(a)')
+aLegend.append('Case 3')
 mosart_map_variable_unstructured(oCase_structured,
                                   iFlag_monthly_in=1,
                                  iFlag_scientific_notation_colorbar_in=1,
@@ -169,8 +172,11 @@ mosart_map_variable_unstructured(oCase_structured,
                                  sColormap_in=sColormap,
                                  sUnit_in= sUnit,
                                  sTitle_in=sTitle,
+                                     aLegend_in=aLegend,
                                  aExtent_in = aExtent)
-
+aLegend=list()
+aLegend.append('(b)')
+aLegend.append('Case 4')
 mosart_map_variable_unstructured(oCase_unstructured,
                                   iFlag_monthly_in=1,
                                  iFlag_scientific_notation_colorbar_in=1,
@@ -180,4 +186,5 @@ mosart_map_variable_unstructured(oCase_unstructured,
                                  sColormap_in=sColormap,
                                  sUnit_in= sUnit,
                                  sTitle_in=sTitle,
+                                     aLegend_in=aLegend,
                                  aExtent_in = aExtent)

@@ -164,11 +164,14 @@ sTitle = 'River discharge'
 aExtent= [-80.96294746398925, -48.94024314880371, -21.183916664123537, 6.4270845413208]
 aExtent_zoom = [-67.77681716624677222 , -64.78182220078018361 ,-3.45411640498741868,  -1.83608365420328745]
 sColormap = 'bwr'
+aLegend=list()
+aLegend.append('(a)')
+aLegend.append('Case 5')
 mosart_map_variable_unstructured(oCase_structured,
                                     iFlag_monthly_in=1,
                                  iFlag_scientific_notation_colorbar_in=1,
                                    iFlag_resolution=1, dResolution_in=1/8.0,
-                                    #iFlag_openstreetmap_in=1,
+                                       #iFlag_terrain_image_in=1,
                                  dData_min_in=dData_min,
                                  dData_max_in=dData_max,
                                  sVariable_in = sVariable,
@@ -176,13 +179,16 @@ mosart_map_variable_unstructured(oCase_structured,
                                  #sFilename_suffix_in = '_zoom',
                                  sUnit_in= sUnit,
                                  sTitle_in=sTitle,
+                                 aLegend_in=aLegend,
                                  aExtent_in = aExtent)
-
+aLegend=list()
+aLegend.append('(b)')
+aLegend.append('Case 6')
 mosart_map_variable_unstructured(oCase_unstructured,
                                     iFlag_monthly_in=1,
                                  iFlag_scientific_notation_colorbar_in=1,
                                    iFlag_resolution=1, dResolution_in=1/8.0,
-                                    #iFlag_openstreetmap_in=1,
+                                    #iFlag_terrain_image_in=1,
                                   dData_min_in=dData_min,
                                  dData_max_in=dData_max,
                                  sVariable_in = sVariable,
@@ -190,4 +196,5 @@ mosart_map_variable_unstructured(oCase_unstructured,
                                  #sFilename_suffix_in = '_zoom',
                                  sUnit_in= sUnit,
                                  sTitle_in=sTitle,
+                                 aLegend_in=aLegend,
                                  aExtent_in = aExtent)

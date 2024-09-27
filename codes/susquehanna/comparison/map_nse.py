@@ -1,6 +1,15 @@
 import os
-from pyearth.visual.map.vector.map_vector_point_file import map_vector_point_file
+import sys
+from osgeo import osr
+from pyearth.visual.map.map_servers import calculate_zoom_level, calculate_scale_denominator
 from pyearth.visual.map.pick_colormap import pick_colormap_hydrology
+from osgeo import osr
+
+sPath_project = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh'
+#add the project path of the pythonpath
+sys.path.append(sPath_project)
+from codes.shared.map_vector_point_file import map_vector_point_file
+
 sWorkspace_figure  = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/figures/susquehanna'
 sFilename_geojson_nse = os.path.join(sWorkspace_figure, 'nse.geojson')
 
@@ -11,11 +20,19 @@ sFilename_in=sFilename_geojson_nse
 sFilename_output_in=sFilename_geojson_nse = os.path.join(sWorkspace_figure, 'nse.png')
 
 aExtent = [-79.10236320495605, -74.35684242248536, 39.374137496948244, 42.9556583404541]
-
+image_size = [1000, 1000]
+dpi = 150
+scale_denominator = calculate_scale_denominator(aExtent, image_size)
+pSrc = osr.SpatialReference()
+pSrc.ImportFromEPSG(3857) # mercator
+pProjection = pSrc.ExportToWkt()
+iFlag_openstreetmap_level = calculate_zoom_level(scale_denominator, pProjection, dpi=dpi)
+print(iFlag_openstreetmap_level)
 map_vector_point_file(iFiletype_in,
                           sFilename_in,
                           sFilename_output_in= sFilename_output_in,
-                          iFlag_openstreetmap_in = 1,
+                          iFlag_terrain_image_in = 1,
+                          iFlag_openstreetmap_level_in = iFlag_openstreetmap_level,
                           iFlag_scientific_notation_colorbar_in=None,
                           sColormap_in=sColormap,
                           sTitle_in='DRT and MPAS mesh-based discharge observation-model comparison',
@@ -24,7 +41,7 @@ map_vector_point_file(iFiletype_in,
                           iFlag_size_in= 1,
                           iFlag_colorbar_in = 1,
                           sField_color_in = 'nse0',
-                          sField_size_in = 'nse0',
+                          sField_size_in = 'drai',
                           iDPI_in=None,
                           dMissing_value_in=None,
                           dData_max_in=1,

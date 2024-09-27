@@ -66,7 +66,8 @@ dValue_max= 2.50 # 6.0E12
 sColormap = 'Blues'
 sExtend =  'max'
 sUnit= r'Unit: m'
-cmap = cm.get_cmap(sColormap)
+#cmap = cm.get_cmap(sColormap)
+cmap = plt.colormaps[sColormap]
 if iFlag_colorbar ==1:
     ax_pos0 = axs[0].get_position()
     ax_pos1 = axs[1].get_position()
@@ -96,4 +97,5 @@ if iFlag_colorbar ==1:
 sFilename_out = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh/codes/sag/comparison/river_depth_comparison.png'
 #plt.show()
 plt.savefig(sFilename_out,  bbox_inches='tight', pad_inches=0)
+print(f"Saved {sFilename_out}")
 
