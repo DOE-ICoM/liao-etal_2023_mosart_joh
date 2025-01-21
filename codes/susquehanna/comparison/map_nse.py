@@ -3,7 +3,7 @@ import sys
 from osgeo import osr
 from pyearth.visual.map.map_servers import calculate_zoom_level, calculate_scale_denominator
 from pyearth.visual.map.pick_colormap import pick_colormap_hydrology
-from osgeo import osr
+
 
 sPath_project = '/qfs/people/liao313/workspace/python/liao-etal_2023_mosart_joh'
 #add the project path of the pythonpath
