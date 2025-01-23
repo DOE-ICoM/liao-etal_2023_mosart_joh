@@ -1,0 +1,3 @@
+[submodule "code/matlab/Setup-E3SM-Mac"]
+	path = code/matlab/Setup-E3SM-Mac
+	url = git@github.com:donghuix/Setup-E3SM-Mac.git
