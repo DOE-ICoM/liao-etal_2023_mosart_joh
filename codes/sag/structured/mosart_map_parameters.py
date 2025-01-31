@@ -5,7 +5,7 @@ from pye3sm.mosart.map.unstructured.mosart_map_unstructured_flow_direction impor
 
 #e3sm20230101001
 sFilename_domain_in= '/compyfs/liao313/04model/e3sm/sag/cases_aux/e3sm20240101002/mosart_sag_domain.nc'
-sFilename_parameter_in='/compyfs/liao313/04model/e3sm/sag/cases_aux/e3sm20240101002/mosart_sag_parameter.nc'
+sFilename_parameter_in='/compyfs/liao313/04model/e3sm/sag/cases_aux/e3sm20240101002/mosart_sag_parameter_drainage.nc'
 sFilename_geojson_out='/compyfs/liao313/04model/e3sm/sag/cases_aux/e3sm20240101002/mosart_sag_parameter.geojson'
 
 aExtent = [-150.015625, -146.234375, 67.921875, 70.328125]
