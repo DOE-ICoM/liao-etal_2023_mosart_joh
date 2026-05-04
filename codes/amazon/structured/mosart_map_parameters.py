@@ -11,8 +11,8 @@ aVariable_parameter= ['rwid', 'rdep']
 aVariable_short= ['rwid', 'rdep']
 aTitle = ['Main channel width', 'Main channel depth']
 aTitle = ['', '']
-aDate_max = [0, 0]
-aDate_max = [7000, 40]
+aData_max = [0, 0]
+aData_max = [7000, 40]
 aUnit = ['Unit: m', 'Unit: m']
 
 aFlag_scientific_notation_colorbar=[0 ,0]
@@ -36,7 +36,7 @@ if iFlag_parameter == 1:
                                        aFlag_scientific_notation_colorbar_in = aFlag_scientific_notation_colorbar,
                                        aUnit_in=aUnit,
                                         aColormap_in=aColormap,
-                                       aData_max_in=aDate_max,
+                                       aData_max_in=aData_max,
                                           iSize_x_in=8,
                                             iSize_y_in=8,
                                              aLegend_in=aLegend,

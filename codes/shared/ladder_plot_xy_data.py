@@ -3,12 +3,9 @@ from datetime import datetime
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-
 from pyearth.system.define_global_variables import *
 from pyearth.visual.color.create_diverge_rgb_color_hex import create_diverge_rgb_color_hex
-
 from pyearth.toolbox.data.list.list_alg import list_max, list_min
-
 
 def ladder_plot_xy_data(aX_all,
                         aY_all,

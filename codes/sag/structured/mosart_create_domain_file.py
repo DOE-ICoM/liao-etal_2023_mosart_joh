@@ -53,7 +53,6 @@ aParameter_case = pye3sm_read_case_configuration_file(sFilename_case_configurati
                                                           sWorkspace_scratch_in =   sWorkspace_scratch )
 
 
-
 oCase = pycase(aParameter_case)
 sWorkspace_case_aux = oCase.sWorkspace_case_aux
 sWorkspace_simulation_case_run = oCase.sWorkspace_simulation_case_run
